@@ -1,0 +1,65 @@
+<!-- PÁGINA DE TESTE DE CRIAÇÃO DE XML  -->
+
+
+<div class="span-22 push-2">
+
+	<div class="span-4"> <b>Número do lote</b> </div>
+	<div class="span-4"> <b>Data de geração</b> </div>
+	<div class="span-4"> <b>Usuario</b> </div>
+	<div class="span-4"> <b>Contrato</b> </div>
+	<div class="span-4"> <b>Comando</b> </div>
+	<p>&nbsp;</p>
+	<div class="span-18"> </div>
+	<div class="span-18"> <hr> </div>
+</div>	
+
+
+
+
+
+
+
+<?php
+
+
+ // CHAMADA DE CSS
+	$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');	
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');
+	
+  
+ // CHAMADA DE JS  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+    $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+
+//PARA FORMULARIO
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/validador.js');
+  
+?>
+
+<script>
+	$(function() {
+		$( ".submit" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        });
+	});
+</script>

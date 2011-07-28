@@ -1,0 +1,14 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.php.server.core,2.2.0.v20100616-1900,"org.eclipse.php.server.core",1307707988553
+started,bundle,org.eclipse.php.debug.core,2.2.0.v20100616-1900,"org.eclipse.php.debug.core",1307707988732
+started,bundle,org.eclipse.update.configurator,3.3.100.v20100512,"org.eclipse.update.configurator",1307707988833
+started,bundle,org.eclipse.update.core,3.2.400.v20100512,"org.eclipse.update.core",1307707989085
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1307707989139
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1307707990251
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1307707991348
+deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1307707991468
+started,bundle,org.eclipse.dltk.rse.core,2.0.0.v20100115-2213,"org.eclipse.dltk.rse.core",1307707991480
+started,bundle,org.eclipse.rse.core,3.1.100.v201003151933,"org.eclipse.rse.core",1307707991657
+started,bundle,org.eclipse.rse.services,3.2.0.v201006041352,"org.eclipse.rse.services",1307707991826
+activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1307707991871
+closed,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1307707992010

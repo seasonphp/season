@@ -1,0 +1,140 @@
+<?php 
+$this->headScript()->appendFile($this->baseUrl().'/js/chart/highcharts.js');
+
+$this->headScript()->appendFile($this->baseUrl().'/js/chart/modules/exporting.js');
+	  	  
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/cupertino/jquery-ui-1.8.11.custom.css');
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ 
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+ ?>
+<script>
+	var chart;
+	$(document).ready(function() {
+		$("#painelnoticia").hide();
+		chart = new Highcharts.Chart({
+			chart: {
+				renderTo: 'grafico'
+			},
+			title: {
+				text: 'Situacao do contrato'
+			},
+			plotArea: {
+				shadow: null,
+				borderWidth: null,
+				backgroundColor: null
+			},
+			tooltip: {
+				formatter: function() {
+					return '<b>'+ this.point.name +'</b>: '+ this.y +' beneficiarios';
+				}
+			},
+			credits: {
+				enabled: false
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false
+					},
+					showInLegend: true
+				}
+			},
+		    series: [{
+				type: 'pie',
+				name: 'Browser share',
+				data: [
+						['Titulares',<?php echo $this->tab_tit;?>],
+						['Dependentes',<?php echo $this->tab_dep;?>],
+						['Inativos',<?php echo $this->tab_inat;?>]
+				]
+			}]
+		});
+	}); 
+</script>
+<div class="span-7 painel_verde">
+<div class="title"><b>Mensagens Unimed</b>
+	<div class="clear"></div>
+	<div class="span-2">Data </div> <div class="span-4"> Titulo</div>
+	<div class="clear"></div>
+</div>
+	<ul style="margin-left:opx;padding-left:0px;">
+	<?php 	
+		foreach($this->teste as $key=>$reg){
+		
+			echo '<li><a style="cursor: pointer; cursor: hand;" onclick="getNoticia('.$reg['idNoticias'].')">'.$this->Date($reg['data']).' &nbsp&nbsp&nbsp&nbsp&nbsp '.$reg['titulo'].'</a></li>';
+		}
+		
+	?>
+	
+	</ul>
+</div>
+<div class="span-8 painel_verde">
+<div class="title">
+	<b>Ultimas ações</b>
+	<div class="clear"></div>
+		<div class="span-5"> Nome </div>
+		<div class="span-2"> Tipo <img src="<?php echo $this->baseUrl()?>/imagens/ajuda.png" title="O tipo informado é referente ao tipo de movimentação cadastral efetuada com o beneficiário. " width="15" height="15"  /> </div>
+	<div class="clear"></div>
+
+</div>
+<!-- <div class="span-7 descreve" title="< ? php echo $reg['Nome']; ? >">< ? php echo $reg['Nome']; ?>&nbsp; </div> -->
+
+<?php 
+foreach($this->ultima as $i => $r){ ?>
+
+	<div class="span-5 descreve" title="<?php echo $r['Nome'] ?>">&nbsp;<?php echo $r['Nome'] ?></div> 
+	<div class="span-2">
+        <?php   if($r['status'] == 1){ 
+                    echo "<b style='color:#33FF00'>Inclusão</b>"; } 
+                if($r['status'] == 2){ 
+                    echo "<b style='color:#009999'>Alteração</b>"; }
+                if($r['status'] == 3){ 
+                    echo "<b style='color:#f00'>Suspensão</b>"; }
+                if($r['status'] == 0){
+                    echo "<b style='color:#333333'>Enviado</b>";
+                }
+	//echo ($r['status'] == 1)? "<b style='color:#33FF00'>Inclusão" : ($r['status'] == 2)? "<b style='color:#009999'>Alteração</b>" : "<b style='color:#f00'>Suspensão</b>" ;?></div>
+<?php
+}
+?>
+</div>
+<div class="span-8 graficoHome" id="grafico">
+
+</div>
+<div id="painelnoticia"></div>
+<script>
+function getNoticia(noticia){
+	$.ajax({
+		type:	"POST",
+		url:	"/principal/exibenoticia",
+		data:	"noticia="+noticia,
+		success:function(data){			
+			//if(data != null){
+				$("#painelnoticia").text("").append($(data).find("#subconteudo"));
+			
+			
+				$( "#painelnoticia" ).dialog({
+					modal: true,
+					title: "UNIMED INFORMATIVO",
+					width: 900,
+					height: 550,
+					show: "fold",
+					hide: "fold",
+					buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+			}
+		});
+		//	}
+		}
+	});
+}
+</script>

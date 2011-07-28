@@ -1,0 +1,94 @@
+<div id="subconteudo">
+	<?php echo $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');?>
+	
+	<br>
+	<h3>Suspensão de <?php echo $this->nome;?></h3></br></br>
+	<input type="hidden" id="idBenef" value="<?php echo $this->id;?>">
+
+	<div class="erro span-23">
+
+		<h2>Atenção você esta prestes a excluir <b style="color:red"> <?php echo $this->nome;?> </b> </h2>
+		</br>
+		- <?php echo $this->nome;?> não poderá mais receber atendimento pelo convênio UNIMED
+		<br>
+		- Todos os dependentes (caso existam) de <?php echo $this->nome;?> serão excluidos automaticamente
+		<br>
+		- A Unimed não se responsabiliza quando uma exclusão é feita pela empresa
+		<br>
+		- Caso tenha dúvidas não confirme a suspensão
+
+		<p>
+		
+
+
+		</p>
+	</div>
+	</br></br>
+	
+	<div class="span-21"> <b> Você está de acordo com a suspensão do beneficiario ? </b>
+	<br>	
+	<br>	
+		<div id="carrega" class="hide">
+			<h2>Aguarde, suspendendo <?php echo $this->nome;?>...</h2><br>
+			<img  src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  />
+		</div>
+	</div>
+	
+	<div id="choice" class="span-3" style="padding-top:10px;"> 	
+	<br>
+		<input type="radio" id="sim" name="choice" /><label onClick="verificarOpcao(this)" for="sim">  Sim  </label> 
+		<input type="radio" id="nao" name="choice" checked="checked" /><label onClick="verificarOpcao(this)" for="nao">  Não  </label> 		
+	</div>
+	<div class="span-12">
+		</br></br>
+		<p class="error"><b>Para confirmar a Suspensão clique em Sim, digite a data de suspensão,  e confirme</b></p>
+	</div> 
+	<div class="span-9 last" style="height:28px;"></div>
+	<form name="suspendebenef" id="suspendebenef" >
+		<div id="confirmar" class="span-24 last hide"style="padding-top:10px;float:right;">		
+			Informe a data de suspensão 
+			<input type="text" name="datasuspensao" id="datasuspensao" class="dateBR" > <br>
+			<div class="span-5 append-18 last hide erro" id="erro" > Informe a data* </div>
+			<div class="span-7 append-15 hide erro" id="erroRetro" > Não permitido data retroativa* </div>		
+			<br>
+		</div>
+		<div id="botao-suspender" class="span-23 last hide">
+			<a class="botao" onClick="suspender()">Confirmar </a>
+		</div>	
+	</form>
+	<div class="clear"><br></div>
+	</br></br>
+
+<?php
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+		
+		
+		//PARA FORMULARIO
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.validate.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/views/data.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/views/suspender.js');
+
+?>
+	
+
+</div>

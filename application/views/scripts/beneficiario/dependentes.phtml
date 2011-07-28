@@ -1,0 +1,456 @@
+
+<!-- ADICIONAR DEPENDENTES -->
+<input type="hidden" name="titular" id="titular" value="<?php echo $this->nome; ?>" />
+<!-- PESQUISA DE CIDADE -->
+<div id="pesquisa" title="Pesquisa de cidade">
+		
+	<div class="span-12">
+	Nome da cidade <input type="text" name="cidadeNome" id="cidadeNome" /> <button class="pesquisa" onclick="$( '#carregaCid').show(),$('#res_pesquisa').load('/beneficiario/pesqcidade',{t:1,q:$('#cidadeNome').val()})"> Pesquisar </button>
+	</div>
+	<div class="span-12" id="res_pesquisa">
+				<div id="carregaCid" class="hide">
+	<center> <h2 class="branco">Aguarde, estamos localizando a cidade</h2> <img src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  /></center>
+		</div>
+	
+	</div>
+	
+</div> 
+
+<!-- PESQUISA DE NATURALIDADE -->
+<div id="pesquisa_naturalidade" title="Pesquisa de cidade de naturalidade">
+		
+	<div class="span-12">
+		Nome da cidade <input type="text" name="cidadeNomeNaturalidade" id="cidadeNomeNaturalidade" /> <button class="pesquisa" onclick="$( '#carregaNat').show(),$('#res_pesquisa_naturalidade').load('/beneficiario/pesqcidade',{t:2,q:$('#cidadeNomeNaturalidade').val()})"> Pesquisar </button>
+	</div>
+	<div class="span-12" id="res_pesquisa_naturalidade">
+		<div id="carregaNat" class="hide">
+	<center> <h2 class="branco">Aguarde, estamos localizando a cidade</h2> <img src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  /></center>
+		</div>
+	
+	</div>
+</div> 
+
+
+
+<div class="span-23">	
+	<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1"><h4 class="branco">Cadastro de dependentes de <b> <?php echo $this->nome; ?> </b></h4> </a></li>
+			<!-- <li><a href="#tabs-2"><h4 class="branco">Adicionar dependente</h4></a></li> -->
+			<!-- antigas tabs	<li><a href="#tabs-3">Finalizar cadastro</a></li> -->
+			</ul>			
+			<!-- TABS - PÁGINAS -->
+	<div id="tabs-1">
+		<p> 
+			<div class="span-14"><b> Dados do beneficiário </b></div>					
+			<div class="span-7">
+				<a class="baixar" target="_blank" href="/manual/manualdepreenchimento.pdf">Baixar manual de preenchimento</a> 
+			</div>
+		</p> 
+		
+		<!-- FORM GRANDE - AQUI VAO TODOS OS DADOS -->
+	<form name="novobeneficiario" id="novobeneficiario" method="POST" action="/beneficiario/caddependente">
+			<div class="span-21 quadroGrande">
+			
+				<!--MANDO O VALOR DA FAMILIA PRA O CONTROLLER-->
+				<input type="hidden" name="Familia" value="<?php echo $this->familia ?>">
+                                <input type="hidden" name="nomeTitular" id="titular" value="<?php echo $this->nome; ?>" />
+                                <input type="hidden" name="idTitular" id="idtitular" value="<?php echo $this->id; ?>" />
+				
+				<!-- NOMES LINHA 1 -->
+				<div class="span-21">
+					<div class="span-3"> Familia </div>
+					<div class="span-3"> Inicio Vigencia </div>
+					<div class="span-5"> Grau Dependencia </div>
+					<div class="span-6 hide" id="mostracasamento"> Informe a data do casamento </div> <!-- FICAR HIDE NORMALMENTE -->
+				</div>
+				
+				<!-- INPUTS LINHA 1 -->
+				<div class="span-21">
+							
+					<!-- TESTAR SE RDP JA EXISTE -->
+							
+								<div class="span-3">  <input type="text" name="Familia" readonly="true" id="Familia" size="9" value="<?php echo $this->familia ?>"/> </div>
+								<div class="span-3"> <input type="text" name="InicioVigencia" id="InicioVigencia" size="12" class="dateBR" value="<?php echo date('d/m/Y'); ?>" />
+										<!-- ADICIONAR UM DIV DE ERRO -->
+										
+										<div id="msgErro" class="hide error">
+											<img src="<?php echo $this->baseUrl()?>/imagens/erro.png"  />
+											Data invalida
+										</div>
+								</div>	
+					<div class="span-5"> 
+							
+								<!-- onChange="pegaRDP(this) -->
+								<select name="RDP" id="RDP" onChange="pegaRDP(this)">
+								<option value=""> Selecione </option>
+								<?php 	
+								foreach($this->rdp as $r=>$s){							
+										echo '<option value='.$r.'>'.$s.'</option>';							
+								} 
+								?>
+								</select>
+								<!-- OIII EU SOU O BLOQUEIA -->
+								<img id="erroimg" class="hide" src="<?php echo $this->baseUrl()?>/imagens/erro.png"  />
+								<img id="okimg" class="hide" src="<?php echo $this->baseUrl()?>/imagens/ok.png"  />
+								
+								<input type="hidden" name="bloqueia" id="bloqueia" />
+								<img id="carregardp" class="hide" src="<?php echo $this->baseUrl()?>/imagens/carregardp.gif"  />
+					</div>	
+					<div class="span-5 hide" id="mostrainput"> 
+							<input type="text" name="dataCasamento" id="dataCasamento" class=""/>
+					</div>	
+						
+				</div>	
+					
+				<!-- NOMES LINHA 2 -->
+				<div class="span-21">
+					<div class="span-6"> Nome</div> 
+					<div class="span-3"> Sexo </div>
+					<div class="span-3"> Nascimento </div>
+					<div class="span-3"> Estado civil </div>
+					<div class="span-3 DecNascidoVivo hide"> Dec. Nascido Vivo </div>
+				</div>		
+					
+				<!-- INPUTS LINHA 2 -->
+				<div class="span-21">
+					<div class="span-6">  <input type="text" name="Nome" id="Nome" size="28" /> </div> 
+					<div class="span-3">           
+						<select name="Sexo" id="Sexo">
+							<option value=""> Selecione </option>
+							<option value="F">Feminino</option>
+							<option value="M">Masculino</option>
+						</select>
+					</div>
+					
+					<div class="span-3"> <input type="text" name="DataNascimento" id="DataNascimento" size="12" class="dateBR" />
+							<br>
+							<div id="erroNasc" class="hide error"> <img src="<?php echo $this->baseUrl()?>/imagens/erro.png" /> Data errada </div>
+					</div>				
+					<div class="span-3"> 	
+						<select name="EstadoCivil" id="EstadoCivil">
+							<option value="1"> Selecione </option>
+							<option value="A">Separado</option>
+							<option value="D">Divorciado</option>
+							<option value="M">Casado</option>
+							<option value="S">Solteiro</option>
+							<option value="U">União estável</option>
+							<option value="W">Viúvo</option>
+						</select>
+					</div>
+					<div class="span-3 DecNascidoVivo hide"> 
+						<input type="text" name="DecNascidoVivo" id="DecNascidoVivo"/>
+					</div>
+				</div>
+					
+				<!-- NOMES LINHA 3  -->
+				<div class="span-21">
+						<div class="span-6"> Naturalidade</div> 
+						<div class="span-3"> CPF </div>
+						<div class="span-4"> PIS </div>
+				</div>					
+				<!-- INPUTS LINHA 3 -->
+				<div class="span-21">
+						<div class="span-6">
+							<input type="hidden" name="idNaturalidade" id="idNaturalidade" />
+							<input type="text" name="Naturalidade" id="Naturalidade" size="24" readonly="true"/>
+							<button class="naturalidade" ></button> 
+						</div> 
+						<div class="span-3">
+							<input type="text" name="Cnp" id="Cnp" class="cpf" size="12" />
+						</div>
+						<div class="span-4">
+							<input type="text" name="PIS" id="PIS" class="pis" size="12"  /> 
+						</div>
+				</div>
+					
+	<!-- NOVA LINHA INCLUIDA CPF E PIS -->
+				<div class="span-22">
+					<div class="span-4"> RG</div>					
+					<div class="span-4"> Orgão emissor</div>					
+					<div class="span-3"> UF</div>
+					<div class="span-4"> Data expedição</div>	
+				</div>
+				
+				<div class="span-22">
+					<div class="span-4"> 
+						<input type="text" name="RG" id="RG" onKeyUp="verificaRg(this)" class="rg" size="16" />
+					</div>						
+					<!-- ORÇÃO EXPEDITOR -->
+					<div class="span-4"> 
+						<?php echo $this->Orgaoexpeditor('Orgaoexpeditor'); ?>
+					</div>						
+					<!-- UF RG -->
+					<div class="span-3"> 
+						<?php echo $this->Estado('UFRG'); ?>
+					</div>	
+					<!-- DAT EXPED -->
+					<div class="span-4">
+						<input type="text" class="dateBR" name="dataExped" id="dataExped" size="12" /> 
+						<img id="erroExped" class="hide" src="<?php echo $this->baseUrl()?>/imagens/erro.png"  />
+					</div>
+				</div>
+				
+				<!-- NOMES LINHA 4  -->
+				<div class="span-21">
+					<div class="span-6"> Nome da Mãe</div> 
+					<div class="span-6"> Nome do Pai  </div>
+					<div class="span-3"> Nome Conjuge</div>
+				</div>
+									
+				<!-- INPUTS LINHA 4 -->
+				<div class="span-21">
+					<div class="span-6"> <input type="text" name="NomeMae" id="NomeMae" size="28" /> </div> 
+					<div class="span-6"> <input type="text" name="NomePai" id="NomePai" size="28" /> </div>
+					<div class="span-3"> <input type="text" name="NomeConjuge" id="NomeConjuge" size="28" /> </div>					
+				</div>
+				
+				<!-- NOMES LINHA 5 -->
+				<div class="span-21">
+					<div class="span-6"> E-mail</div> 
+				</div>
+								
+				<!-- INPUTS LINHA 5 -->
+				<div class="span-21">  
+					<div class="span-6"> <input type="text" name="Email" id="Email" class="email" size="28" /> </div>
+                                        <br>
+                                        <hr>
+                
+                                        <b class="btntel"> Adicionar telefone do titular </b>
+                                        <br></br>
+					<div class="span-21">
+                     
+						<div class="span-2"> DDD  </div>
+						<div class="span-4"> Telefone </div> 
+						<div class="span-2"> Tipo   </div>
+						
+					</div>
+									
+					<!-- INPUTS LINHA 6 -->
+                                                    <div id="titulartel">
+                                                        <?php foreach($this->dadosTel as $i=>$r){ ?>
+                                                            <input type="hidden" name="tel_tipo" id="tel_tipo" value="<?php echo $r['Tipo'];?>" />
+                                                            <input type="hidden" name="tel_ddd" id="tel_ddd" value="<?php echo $r['DDD'];?>" />
+                                                            <input type="hidden" name="tel_numero" id="tel_numero" value="<?php echo $r['Numero'];?>" />    
+                                                        <?php } ?>
+                                                    </div>
+                                        
+					<div class="span-21">
+					<div class="span-2">  
+						<input type="text" name="DDD" id="DDD" size="2" maxlength="2" class="ddd" /> 
+						</div>
+						<div class="span-4">  <input  type="text" name="Numero" id="Numero" size="8" class="telefone" />  </div> 
+						<div class="span-2">
+            
+							<select name="Tipo" id="Tipo">
+							  <option value=""> Selecione </option>
+							  <option value="1">Fixo</option>
+							  <option value="2">Movel</option>
+							  <option value="3">Fax</option>
+							</select>
+						</div>	
+						<br/><br/><br/>
+					</div>
+					
+			</div>
+		<hr/>	
+		<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>
+					
+				<p><b> Endereço </b> 
+				<br/>
+				<a class="incorpora"/> Adicionar endereço do titular </a> </p>
+		<!-- DADOS DO TITULAR -->
+			<div id="titularendereco">
+				<?php foreach($this->dadosEndereco as $k=>$r){ ?>
+					<input type="hidden" name="hide_tipo" id="hide_tipo" value="<?php echo $r['Tipo'];?>" />
+					<input type="hidden" name="hide_logradouro" id="hide_logradouro" value="<?php echo $r['Logradouro'];?>" />
+					<input type="hidden" name="hide_numero" id="hide_numero" value="<?php echo $r['NumLogradouro'];?>" />
+					<input type="hidden" name="hide_complemento" id="hide_complemento" value="<?php echo $r['ComplLogradouro'];?>" />
+					<input type="hidden" name="hide_caixapostal" id="hide_caixapostal" value="<?php echo $r['CaixaPostal'];?>" />
+					<input type="hidden" name="hide_cidade" id="hide_cidade" value="<?php echo $r['NomeCidade']."/".$r['UF'];?>" />
+					<input type="hidden" name="hide_idcidade" id="hide_idcidade" value="<?php echo $r['Cidade'];?>" />
+					<input type="hidden" name="hide_bairro" id="hide_bairro" value="<?php echo $r['Bairro'];?>" />
+					<input type="hidden" name="hide_cep" id="hide_cep" value="<?php echo $r['CEP'];?>" />
+					<input type="hidden" name="hide_pontoreferencia" id="hide_pontoreferencia" value="<?php echo $r['PontoReferencia'];?>" />
+				<?php } ?>
+			</div>
+		<!-- FIM DO DADOS DO TITULAR -->
+		
+				
+				<div class="clear"> &nbsp; </div>
+				<!-- DADOS REFERENTES AO ENDEREÇO DO USUÁRIO COMPLETO E DADOS --> 
+					
+					
+					<!-- NOMES LINHA 10 -->
+					<div class="span-21">
+					<div class="span-3"> Tipo </div> 
+					<div class="span-7"> Logradouro </div> 
+					<div class="span-2"> Número </div>
+					<div class="span-4"> Complemento </div>
+					<div class="span-4"> Caixa postal </div> 
+					</div>		
+					<!-- INPUTS LINHA 10 -->
+					<div class="span-21">
+					<!-- ESSE É O SEQ E ESTA OCULTO -->
+						<input type="hidden" name="Seq" id="Seq" size="2" value="1" />
+						<div class="span-3"> 
+							<select name="Endtipo" id="Endtipo">
+								<option value=""> Selecione </option>
+								<option value="1">Comercial</option>
+								<option value="2">Residencial</option>
+							</select>
+						</div>
+						<div class="span-7"> 
+							<input type="text" name="Logradouro" id="Logradouro" size="40" value="" /> 
+						</div>
+						<div class="span-2"> 
+							<input type="text" name="NumLogradouro" id="NumLogradouro" size="6" maxlength="6" value="" /> 
+							</div>
+						<div class="span-4"> 
+							<input type="text" name="ComplLogradouro" id="ComplLogradouro" size="15" value="" /> 
+						</div>				
+						<div class="span-4">  
+							<input type="text" name="CaixaPostal" id="CaixaPostal" size="15" value="" /> 
+						</div>
+					</div>
+					
+					
+					<!-- NOMES LINHA 11 -->
+					<div class="span-21">
+						<div class="span-6"> Cidade </div>
+						<div class="span-4"> Bairro </div>
+						<div class="span-3"> CEP </div> 
+						<div class="span-4"> Ponto de referência </div>
+					</div>
+					
+					<!-- INPUTS LINHA 11 -->
+					<div class="span-21">
+                        <div class="span-6">
+							<input type="hidden" name="idCidade" id="idCidade">
+							<input type="text" name="Cidade" id="Cidade" size="24" value="" readonly="true" />
+							<button class="cidade" ></button>
+						</div>
+						<div class="span-4">  
+							<input type="text" name="Bairro" id="Bairro" size="20" value="" /> 
+						</div>
+						<div class="span-3">
+							<input type="text" name="CEP" id="CEP" size="8" class="cep" value="" />
+						</div>
+						<div class="span-4">  
+							<input type="text" name="PontoReferencia" id="PontoReferencia" size="20" value="" /> 
+						</div>
+					</div>	
+					
+			<div class="span-2"> &nbsp; </div>
+			<div class="span-2"> &nbsp; </div>	
+					
+					<hr><!--DIVISÃO ENTRE ENDEREÇO E MODULO-->
+					<!-- NOMES LINHA 7  -->
+					<div class="span-6"><b>Plano</b></div> 
+					<div class="span-12">											
+						<select name="Modulo" id="Modulo">
+							<option value=""> Selecione </option>
+								<?php 
+									foreach($this->dadosModulo as $r=>$s){							
+										echo "<option value=".$s['Codigo'].">".$s['Nome']."</option>";
+									}
+								?>			
+						</select>					
+					</div> 
+					
+					<!-- NOMES LINHA 8 -->
+					<div class="span-6"><b> Local atendimento</b></div> 
+					<div class="span-12"> 
+						<select name="LocalAtendimento" id="localAtend">
+							<option value=""> Selecione </option>
+								<?php						
+									foreach($this->dadosLocalAtendimento as $r=>$s){ 						
+										echo "<option value=".$s['AutoId'].">".$s['NomeReduzido']."</option>";
+									}
+								?>				
+						</select>
+					</div> 									
+					
+					<!-- NOMES LINHA 9 -->
+					<div class="span-6"><b>Lotação</b></div> 
+					<div class="span-12"> 
+						<input type="hidden" name="lotacao" value="<?php echo $this->dadosLotacao['Codigo']?>">
+						<input type="hidden" name="nome" value="<?php echo $this->dadosLotacao['Nome']?>">
+						<?php 
+							if($this->dadosLotacao['Nome'] != null){
+								echo $this->dadosLotacao['Nome'];
+							}else{
+								echo "SEM LOTAÇÃO";
+							}
+						?>
+						<br/>
+						<br/>
+					</div> 
+			
+		<hr>					
+		
+					
+								
+		
+			<br>					
+			<h3 class="branco">Inserir arquivos compactados </h3>
+			<input type="file" class="multi" accept="zip|rar" maxlength="2"/>
+			<br>
+			<hr>	
+			<button class="submit" type="submit" >Finalizar cadastro</button> 
+			<p>  &nbsp;  </p>			
+		</div>
+		</div>	
+		<!-- LIMPA DIVS VOANDO -->
+		<div class="clear"></div>			
+			
+		<!-- fechando formulario principal --> 
+	</form>
+	</div>
+</div>	
+
+
+
+<?php
+  
+ // CHAMADA DE JS  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+    $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+  
+  //CHAMANDO SELECT MENU 
+  //$this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/selectmenu.js');
+
+//PARA FORMULARIO
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.validate.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/arruma.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/views/data.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/views/dependentes.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/views/validarRg.js');
+  
+  
+?>
+
+
+
+
+
+
+

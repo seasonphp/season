@@ -1,0 +1,58 @@
+<?xml version='1.0' standalone='yes'?>
+<MovimentacaoCadastralAtualizacaoCompleta xmlns='MovimentacaoCadastralAtualizacaoCompleta.xsd'>
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>39</RDP>
+ <Familia>53</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>10</GrauDependencia>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000053394</CodigoExterno>
+<Pessoa>
+<Nome>FILHA DA AYANE</Nome>
+<DataNascimento>09/08/2006 00:00:00</DataNascimento>
+<Cnp>43167777346</Cnp>
+<Tipo>2</Tipo>
+<Sexo>f</Sexo>
+<EstadoCivil>A</EstadoCivil>
+<Naturalidade>4</Naturalidade>
+<NomePai>SEM NOME</NomePai>
+<NomeMae>AYANE</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>2314324</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>2134</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>366</NumLogradouro>
+<NomeLogradouro>RUA FAIXA DO OLEODUTO 366 </NomeLogradouro>
+<ComplLogradouro></ComplLogradouro>
+<Bairro>PINHAL DO MIRANDA   </Bairro>
+<Cidade>554</Cidade>
+<Cep>11543300</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+</Pessoa>
+ <Modulos>
+<Codigo>001076617</Codigo>
+<DataBaseCob>07/07/2011 00:00:00</DataBaseCob>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<QteMensRetr>0</QteMensRetr>
+</Modulos>
+<Titular>
+<Codigo>10766000053009</Codigo>
+</Titular>
+</AtualizacaoCompleta> 
+</MovimentacaoCadastralAtualizacaoCompleta>

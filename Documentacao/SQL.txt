@@ -1,0 +1,15 @@
+Tabela lote 
+============
+
+CREATE TABLE `unimed`.`lote` (
+`numero` INT( 100 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`data` DATE NOT NULL ,
+`usuario` INT( 10 ) NOT NULL ,
+`contrato` INT( 10 ) NOT NULL ,
+`status` BOOLEAN NOT NULL 
+) ENGINE = MYISAM ;
+
+
+
+============
+

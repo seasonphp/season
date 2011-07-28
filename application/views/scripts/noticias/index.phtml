@@ -1,0 +1,224 @@
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+$this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+ 
+ 
+ //chamando ckeditor o js
+  $this->headScript()->appendFile($this->baseUrl().'/js/formularios/ckeditor/ckeditor.js');
+  
+  
+   $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+?>
+
+
+
+<div class="span-22 push-1">
+	<div id="accordion">
+
+		<h3><a href="#">Nóticias  </a></h3>
+		<div>	
+		
+			
+			<h2 class="branco"> Notícias no sistema</h2>
+				<div class="span-20">
+					<div class="span-20">
+						<div class="span-2"> <b>Data</b> </div>
+						<div class="span-4"> <b>Título</b> </div>
+						<div class="span-9"> <b>Texto</b> </div>
+						<div class="span-3"> <b>Imagem</b> </div>
+						<div class="span-1"> <b>Ação</b> </div>
+					</div>
+					<div class="clear"><br></div>
+					<?php foreach($this->resultado as $i => $r){ ?> 
+					<div class="span-20">
+						<div class="span-2"> <?php echo $this->Date($r['data']); ?>&nbsp;</div>
+						<div class="span-4"> <b><?php echo $r['titulo']; ?></b> &nbsp;</div>
+						<div class="span-9"> <?php echo $r['descricao']; ?> &nbsp;</div>
+						<div class="span-3"> <img src="<?php echo '/imagens'.$r['img']; ?>" width="50" height="50"> &nbsp;</div>
+						<div class="span-1"> <a class="deletar" href="/noticias/deleta/id/<?php echo $r['idNoticias']; ?>/img/<?php echo 'imagens'.$r['img']; ?>">Deletar</a> </div>
+					</div>
+					<div class="clear"><br></div>
+					<hr>
+					<?php } ?>
+					 
+				</div>
+
+			
+		
+		
+		</div>
+		<h3><a href="#"> Inserir nova noticia </a></h3>
+		<div>
+			<div class="span-19 push-1">
+				<h2 class="branco"> Inserir notícia </h2>
+
+						<img id="cadastrando" class="hide" src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  />
+						<img id="ok" class="hide" src="<?php echo $this->baseUrl()?>/imagens/ok.png"  />
+
+					<form name="noticia" id="noticia" action="/noticias/inserir" method="POST" enctype="multipart/form-data" />
+						
+						<div class="span-10">
+							<div class="span-2"><b> Título </b></div> 
+							<div class="span-10"> <input type="text" name="titulo" /> </div> 	
+							
+							<div class="span-2"><b> Data </b></div> 
+							<div class="span-10"> <input type="text" name="data" class="dateBR" value="<?php echo date('d/m/Y'); ?>" /> </div> 	
+						</div>
+						
+						<br>
+						<div class="span-8">
+						<b>Imagem  </b>  <input type="file" name="img" id="img" />
+						</div>
+						
+						<br>
+						<div class="span-18"><b> Texto Completo </b></div>
+						
+						<br>
+						<div class="span-19"> <textarea  name="descricao" id="descricao" ></textarea> </div> 
+						
+						
+						
+					   <div class="clear"></div>
+					   <button type="submit" class="btnnoticia" name="cadastra" value="vai"> Inserir noticia </button>
+					   
+				   </form>
+				<div class="clear"></div>
+					
+			</div>
+
+		</div>
+		<h3><a href="#">Instruções de uso</a></h3>
+			<div>
+				<h2 style="color:#fff"> Instruções de uso simples do painel de novidades </h2><br>
+				O uso do painel de notícias é simples, existem 2 abas com funcionalidades exatas sendo uma para visualizar as notícias e outra para inserir conforme mostra a seguir:
+				<br>
+				<br>
+				<b> Aba Notícias </b>
+				<br>
+				Essa aba exibe as notícias atualmente no sistema, a notícia mais nova é mostrada na parte superior.
+				<br>
+				Existe ainda a opção de deletar a notícia, para deletar pasta clicar no botão 'deletar' a direita da notícia.
+				<br>
+				<br>
+				<b> Aba de Inserir Notícia </b>
+				<br>
+					Um painel completo para formatar a notícia tem as seguintes especificações:
+				<br>
+					<b> - Título </b> Informe o título da notícia. <br>
+					<b> - Imagem </b> Caso seja necessário adicionar uma imagem. <br>
+					<b> - Data </b> Informe a data da notícia, por padrão aparece a data atual. <br>
+					<b> - Texto completo </b> A novidade fica ai, todos os detalhes com um editor de texto igual ao microsoft WORD que facilita o uso. <br>
+				
+				<div class="clear"><br></div>
+				<br>
+				<h2 style="color:#f00"> Atenção </h2><br>
+				Tome cuidado com as informações inseridas pois todas as empresas tem acesso em tempo real.
+				<br>
+				Imagens são importantes para a novidade mas não são obrigatórias.
+				<br>
+				<br>
+				
+				
+			</div>
+		
+	</div>
+</div>
+
+
+<script>
+$(function() {
+		$( "#accordion" ).accordion({
+		//ASSS POPIEDADIS :]
+		collapsible: true,
+		autoHeight: false,
+		navigation: true
+
+
+		
+		});
+	});
+</script>
+
+
+<script>
+$(function() {
+	$( ".btnnoticia" ).button({
+		icons: {
+			primary: "ui-icon-person"
+		}
+	});
+
+	$( ".alterar" ).button({
+		icons: {
+			primary: "ui-icon-check"
+		}
+	});	
+
+	$( ".deletar" ).button({
+		icons: {
+			primary: "ui-icon-trash"
+		}
+	});			
+	
+});
+</script>
+
+
+<!-- SCRIPT PARA MASCARA DE FORMULÁRIOS --> 
+<script type="text/javascript">
+	$(document).ready(function(){
+			
+		$(".dateBR").mask("99/99/9999");
+
+		CKEDITOR.replace( 'descricao',
+			{
+				skin : 'office2003'
+			} 
+		);	
+			
+	});
+</script>	
+
+
+
+<!-- AJAX DESATIVADO -->
+<script>
+$('.btnnoticiaOLD').click(function(){
+
+		$('.success').hide();
+		$('#cadastrando').show();
+	
+		var dados = $('#noticia').serialize();
+		
+		$.ajax({
+		type:"POST",
+		data: dados,
+		//url: "<?php echo $this->baseUrl().'ajax/testardp'?>",
+		url: $('#noticia').attr('action'),
+		
+		success: function(data){
+		
+				if(data == true){
+				
+					$('#cadastrando').hide();
+					$('#ok').show();
+					$('.success').show();
+
+				}else{
+				
+					alert('ERROOOO');			
+				
+				}
+		
+			}
+		
+		});
+	
+	
+});
+</script>

@@ -1,0 +1,128 @@
+<?php echo $this->doctype() ?>
+<html>
+<head>
+<base href="/">
+
+    <?php echo $this->headTitle() ;
+          echo $this->headMeta() ;
+          $this->headLink()->appendStylesheet($this->baseUrl().'/css/blueprint/screen.css'); 
+          $this->headLink()->appendStylesheet($this->baseUrl().'/css/blueprint/print.css' , 'print'); 
+          $this->headLink()->appendStylesheet($this->baseUrl().'/css/blueprint/ie.css', 'screen', 'IE'); 
+          echo $this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css'); 
+          
+		  echo $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');	
+          
+          echo $this->headStyle();
+    ?> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <?php echo  $this->headScript();?>
+	  
+  
+	  
+</head>    
+<body class="fundogradient">
+<div class="container" style="align:center">
+<div class="span-24"> 
+	<div class="span-7" >
+		<img class="logo" src="<?php echo $this->baseUrl()?>/imagens/logo.png"/>
+	</div>
+
+	<div class="span-17 last">
+			<div class="headerMyAccount" id="loginMyAccount">
+				<div id="HeaderSeason-bg">
+				 
+				 <?php if ( ! Zend_Auth::getInstance()->hasIdentity() ){ ?>
+				    <a href="/auth/login" id="headerLogin" rel="nofollow">Entrar</a>
+		        <?php } else { ?>
+   				    Bem vindo,&nbsp;<?php echo Zend_Auth::getInstance()->getStorage()->read()->nome ?> &nbsp;<a href="/auth/logout" id="headerLogin">Sair</a> 
+				<?php } ?>
+				 
+				 
+				</div>
+			</div>
+			
+				<div class="span-9 push-1 prepend-top">
+					
+					<?php $user = Zend_Registry::get('zend_auth_user'); 
+		//echo ($user==null or @$user->contrato==null)?'':"<div class='contrato'>Contrato: </div> <b>".$user->contrato."</b> - <a href='/index' title='Clique para alterar o contrato'> [Alterar contrato] </a>";
+		if($user==null or (@$user->contrato==null and $user->perfil!='A')){'';
+		}
+		else
+		{
+			//SE O USUARIO FOR ADMIN, NAO VAI MOSTRAR O CONTRATO, POIS O CONTRATO É SÓ PARA EMPRESAS
+			if($user->perfil=='A'){
+			}else{
+				   										          //$user é o num do contrato
+				echo "<div class='contrato'>Contrato: </div> <b>".$user->codigo."</b> - <a href='/index'> [Alterar contrato] </a>"; 
+			}
+				
+			
+		
+						  
+					?>
+				</div>
+				
+            <div id="jq-secondaryNavigation">
+				<ul>
+					 <?php 
+					 // se não estiver autenticado tambem não mostra menu
+					 if ( ! Zend_Auth::getInstance()->hasIdentity() ){ 
+					  // NAO EXIBE MENU ?>
+				           
+					<?php } else { ?>	
+
+						<?php  if ( Zend_Auth::getInstance()->getStorage()->read()->perfil != 'A' ) { ?>
+						<li class="jq-popularPlugins jq-first"><a href="/principal"><span>Início</span></a></li>
+						<li class="jq-popularPlugins jq-first"><a href="/beneficiario"><span>Administrar beneficiários</span></a></li>
+						<?php }else{?> 
+						<li class="jq-popularPlugins jq-first"><a href="/noticias"><span>Noticias</span></a></li>
+						<li class="jq-popularPlugins jq-first"><a href="/empresa"><span>Administrar Empresas</span></a></li>
+						<li class="jq-popularPlugins jq-first"><a href="/xml"><span>Receber Xml</span></a></li>
+						<?php } ?>
+					
+
+					<li class="jq-allPlugins jq-last"><a href="/admin"><span>Configurações</span></a></li>
+					<?php } 
+					
+					
+						//fecha a condição principal
+						}?>
+				</ul>
+			</div>
+	</div>
+</div>
+
+<div class="conteudo">
+	<div class="span-24 conteudo last"> 
+	
+	
+		<?php
+		  echo $this->layout()->content;
+		?>
+	
+		
+	</div>
+	
+</div>
+
+<div class="span-24 rodape"> 
+
+	<div class="span-4">
+		<a href="#"><img class="logo" src="<?php echo $this->baseUrl()?>/imagens/logo_registro_ans.jpg" alt="Registro ans"/></a>
+	</div>
+
+	<div class="span-20 last">
+		<div class="arruma">
+		Copyright © 2011 Unimed-santos.com.br - 
+		<a href="http://www.unimed-santos.com.br/layouts/sites/default_singulares.asp?cod=758&site=90">Política de Privacidade</a>
+		<br />
+		Av. Dona Ana Costa, 211 - Encruzilhada - Santos - SP 
+		<br />
+		Cep: 11.060-001 - Tels.: (13) 2102-8100 / 8300
+		<br />
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

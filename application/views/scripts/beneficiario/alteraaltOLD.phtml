@@ -1,0 +1,1187 @@
+<!-- VIEW QUE EXIBE DADOS DO BENE -->
+
+<?php
+ // CHAMADA DE CSS
+	$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');	
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');
+	
+ 
+?>
+	
+<!-- MODULO --> 	
+<div id="altmodulo" title="Alteração de modulo">
+	<table border="1">
+		<tr>
+			<td>Nome do Modulo</td>
+			<td>Data Inicio</td>
+			<td>Data Fim</td>
+		</tr>		
+		<?php 
+					$moduloOld 		= null;
+					$inicioVigenciaOld = null;
+					$idModulo  		= null;
+		
+		
+			foreach ($this->dadosModuloHistorico as $value) {					
+				if($this->date($value['FimVigencia']) == null){
+					$moduloOld 		= $value['Codigo'];
+					$inicioVigenciaOld = $this->date($value['InicioVigencia']);
+					$idModulo 		= $value['idModulo'];
+				}
+				?>
+				<tr>
+					<td><?php echo $value['Descricao']?></td>
+					<td><?php echo $this->date($value['InicioVigencia'])?></td>
+					<td><?php echo $this->date($value['FimVigencia'])?></td>
+				</tr>
+		<?php 	
+			}
+		?>
+	</table>
+	<button type="submit" id="exibir" class="botao" >Inserir novo modulo</button> 
+	
+	
+	<div id="conteudoModulo">
+		<form action="/beneficiario/altmodulo" method="post" id="alteraModulo">
+			<input type="hidden" name="id" value="<?php echo $this->id?>">
+			<select name="modulo" onChange="pegaDescricao(this)">
+				<option></option>
+				<?php foreach ($this->dadosModuloContrato as $key=>$reg) { ?>
+					<option value="<?php echo $reg['Codigo']?>"><?php echo $reg['Nome']?></option>
+				<?php }?>
+			</select>
+			
+			Data Inicio:
+			<input name="inicioVigencia" id="inicioVigencia" class="dateBR" type="text" size="10">
+			
+			<br/>
+			<!-- Old vao ser usados para dar um update do fimVigencia -->
+			<input type="hidden" name="inicioVigenciaOld" value="<?php echo $inicioVigenciaOld?>">
+			<input type="hidden" name="idModulo" value="<?php  echo $idModulo?>">
+			<input type="hidden" name="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId'];?>">
+			
+			<!-- AQUI PEGAREMOS A DESCRICAO PARA COLOCAR NO BD ENTAO O INPUT EH ESCONDIDO -->
+			<input type="hidden" name="descricao" id="descricao" value="">
+		</form>
+			<input id="vaiajax" class="botao" type="submit" name="confirmar" value="Confirmar">
+			<input  class="botao" type="button" value="Cancelar" id="cancelar">
+	
+	</div>	
+</div> 
+
+
+<!--LOCAL DE ATENDIMENTO-->
+<div id="altlocal" title="Alterar local de atendimento">
+	<table border="1">
+		<tr>
+			<td>Nome do Local de Atendimento</td>
+			<td>Data Inicio</td>
+			<td>Data Fim</td>
+		</tr>	
+		<?php 	
+				$idlcat 		= null;			
+		
+			foreach ($this->dadosLocalHistorico as $value) {
+				if($this->date($value['FimVigencia']) == null){
+					$idlcat 		= $value['idlcat'];
+				}
+		?>
+				<?php 
+				if($value['Descricao'] == null){ ?>
+					<tr>
+						<td>SEM LOCAL DE ATENDIMENTO</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				<?php 
+				}else{?>
+					<tr>
+						<td><?php echo $value['Descricao']?></td>
+						<td><?php echo $this->date($value['InicioVigencia'])?></td>
+						<td><?php echo $this->date($value['FimVigencia'])?></td>
+					</tr>
+				<?php
+				}
+				?>
+				
+		<?php 	
+			}
+		?>
+	</table>
+	<button type="submit" id="exibirLcat" class="botao" >Inserir novo Local</button> 
+	<div id="conteudoLcat">
+		<form id="alteraLcat" action="/beneficiario/altlocal" method="post" >
+			<input type="hidden" name="id" value="<?php echo $this->id?>">
+			<select name="local" onChange="pegaDescricaoLcat(this)">
+				<option></option>
+				<?php 
+					if($this->dadosLocalContrato == null){?>
+				<?php
+					}else{
+						foreach ($this->dadosLocalContrato as $key=>$reg) { ?>
+				<option value="<?php echo $reg['Codigo']?>"><?php echo $reg['NomeReduzido']?></option>
+					<?php 
+						}
+				}?>
+			</select>
+			
+			Data Inicio:
+			<input name="inicioVigenciaLcat" class="dateBR" type="text" size="10" id="inicioVigenciaLcat" >
+			
+			<br/>
+			
+			<!-- Old vao ser usados para dar um update do fimVigencia -->
+			<input type="hidden" name="idlcat" value="<?php echo $idlcat?>">
+			<input type="hidden" name="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId'];?>">
+
+			<!-- AQUI PEGAREMOS A DESCRICAO PARA COLOCAR NO BD ENTAO O INPUT EH ESCONDIDO -->
+			<input type="hidden" name="descricaoLcat" id="descricaoLcat" value="">
+			
+		</form>
+			<input  class="botao" id="altLcat" name="confirmar" value="Confirmar">
+			<input  class="botao" type="button" value="Cancelar" id="cancelar">
+	</div> 
+</div>
+
+
+<!-- LOTAÇÃO -->
+<div id="altlotacao" title="Alterar lotação do usuario">
+	<table border="1">
+		<tr>
+			<td>Nome do Modulo</td>
+			<td>Data Inicio</td>
+			<td>Data Fim</td>
+		</tr>		
+		<?php 
+					$moduloOld 		= null;
+					$inicioVigenciaOld = null;
+					$idlotacao 		= null;
+				
+			foreach ($this->dadosLotacaoHistorico as $value) {
+				if($this->date($value['FimVigencia']) == null){
+					$moduloOld 		= $value['Codigo'];
+					$inicioVigenciaOld = $this->date($value['InicioVigencia']);
+					$idlotacao 		= $value['idLotacao'];
+				}
+				?>
+				<?php 
+				if($value['Descricao'] == null){ ?>
+					<tr>
+						<td>SEM LOTAÇÃO</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				<?php 
+				}else{?>
+					<tr>
+						<td><?php echo $value['Descricao']?></td>
+						<td><?php echo $this->date($value['InicioVigencia'])?></td>
+						<td><?php echo $this->date($value['FimVigencia'])?></td>
+					</tr>
+				<?php
+				}
+				?>
+		<?php 	
+			}
+		?>
+	</table>
+	<button type="submit" id="exibirLotacao" class="botao" >Inserir nova Lotação</button> 
+	<div id="conteudoLotacao">
+		<form action="/beneficiario/altlotacao" method="post" id="dadosLotacao">
+			<input type="hidden" name="id" value="<?php echo $this->id?>">
+			<select name="lotacao" onChange="pegaDescricaoLotacao(this)";>
+				<option></option>
+				<?php 
+					if($this->dadosLotacaoContrato == null){?>
+						
+				<?php
+					}else{
+						foreach ($this->dadosLotacaoContrato as $key=>$reg) { ?>
+							<option value="<?php echo $reg['Codigo']?>"><?php echo $reg['Nome']?></option>
+					<?php 
+						}
+				}?>
+			</select>
+			
+			Data Inicio:
+			<input class="dateBR" name="inicioVigenciaLotacao" class="data" type="text" size="10" id="inicioVigenciaLotacao">
+			
+			<br/>
+			<!-- Old vao ser usados para dar um update do fimVigencia -->
+			<input type="hidden" name="inicioVigenciaOld" value="<?php echo $inicioVigenciaOld?>">
+			<input type="hidden" name="idLotacao" value="<?php echo $idlotacao?>">
+			
+			<input type="hidden" name="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId'];?>">
+			
+			<!-- AQUI PEGAREMOS A DESCRICAO PARA COLOCAR NO BD ENTAO O INPUT EH ESCONDIDO -->
+			<input type="hidden" name="descricaoLotacao" id="descricaoLotacao" value="">
+			
+		
+			
+		</form>
+			<input  class="botao" type="submit" name="confirmar" value="Confirmar" id="confirmaLotacao">
+			<input  class="botao" type="button" value="Cancelar" id="cancelar">
+	</div>
+</div> 
+
+
+<!--ENDERECO-->
+<div id="altendereco" title="Alterar Endereco">
+	<!-- 1 LINHA DE LABEL -->
+	<form action="beneficiario/cadendereco" method="POST">
+		<?php foreach($this->dadosEndereco as $k=>$r){ ?>
+				<br>
+				<br>
+				<!-- 1 LINHA DE LABEL -->
+				<div class="span-2"> Seq: </div> 
+				<div class="span-4"> Logradouro </div>
+				<div class="span-3"> &nbsp;</div>
+				<div class="span-3"> &nbsp; </div>
+				<div class="span-3"> Número </div>
+				<div class="span-4"> Complemento </div>					
+				<!-- LINHA DE INPUTS -->
+				<div class="span-2"><input type="text" name="endSeq" id="endSeq" size="2" value="<?php echo $r['Seq'];?>" /></div>
+				<div class="span-4">  <input type="text" name="NomeLogradouro" id="NomeLogradouro" size="50" value="<?php echo $r['NomeLogradouro'];?>" /> </div>				
+				<div class="span-3">  &nbsp;  </div>
+				<div class="span-3"> &nbsp; </div>				
+				<div class="span-3"> <input type="text" name="NumLogradouro" id="NumLogradouro" size="5" maxlength="5" value="<?php echo $r['NumLogradouro'];?>" /> </div>
+				<div class="span-4"> <input type="text" name="ComplLogradouro" id="ComplLogradouro" size="6" value="<?php echo $r['ComplLogradouro'];?>" /> </div>
+
+				<!-- 2 LINHA DE LABEL -->
+				<div class="span-3"> Tipo </div> 
+				<div class="span-4"> Bairro </div>
+				<div class="span-3"> Cidade </div>
+				<div class="span-2"> &nbsp; </div>
+				<div class="span-3"> &nbsp;</div>
+				<div class="span-4"> &nbsp; </div>					
+				<!-- LINHA DE INPUTS -->
+			
+				<div class="span-3"> 
+					<select name="Endtipo" id="Endtipo">
+						<?php if($r['Tipo'] == 1){ ?>
+							<option value="1" selected >Comercial</option>
+							<option value="2">Residencial</option>
+						<?php }else{?>
+							<option value="1">Comercial</option>
+							<option value="2"selected >Residencial</option>
+						<?php }?> 
+					</select>
+				</div>
+
+				
+				<div class="span-4">  <input type="text" name="Bairro" id="Bairro" size="20"
+				value="<?php echo $r['Bairro'];?>" /> </div>
+				
+				<div class="span-3">  <input type="text" name="Cidade" id="Cidade" size="26" 
+				value="<?php echo $r['NomeCidade'].' / '.$r['UF'];?>" /> 
+				</div>
+				<div class="span-2"> &nbsp; </div>				
+				<div class="span-3"> &nbsp; </div>
+				
+				<div class="span-4"> &nbsp; </div>	
+				
+				<div class="clear"> <!-- LIMPA LINHA  --> </div>
+				
+				<!-- 3 LINHA DE LABEL -->
+				<div class="span-3"> CEP </div> 
+				<div class="span-4"> Ponto de referência </div>
+				<div class="span-2"> &nbsp;</div>
+				<div class="span-3"> &nbsp; </div>
+				<div class="span-3"> &nbsp; </div>
+				<div class="span-4"> &nbsp; </div>					
+				<!-- LINHA DE INPUTS -->
+				<div class="span-3">  <input type="text" name="CEP" id="CEP" size="11" 
+				value="<?php echo $r['CEP'];?>" /> </div>
+				
+				<div class="span-4">  <input type="text" name="PontoReferencia" id="PontoReferencia" size="20" 
+				value="<?php echo $r['PontoReferencia'];?>" /> </div>
+				
+				<div class="span-2">  &nbsp;  </div>
+				<div class="span-3"> &nbsp; </div>				
+				<div class="span-3"> &nbsp;  </div>
+				<div class="span-4"> &nbsp; </div>	
+				
+				<div class="clear"> <!-- LIMPA LINHA  --> </div>
+				
+				<!-- 3 LINHA DE LABEL -->
+				<div class="span-4"> Caixa postal </div> 
+				<div class="span-2"> &nbsp; </div>
+				<div class="span-3"> &nbsp;</div>
+				<div class="span-3"> &nbsp; </div>
+				<div class="span-3"> Inicio vigência</div>
+				<div class="span-4"> Fim vigência  </div>					
+				<!-- LINHA DE INPUTS -->
+				<div class="span-4">  <input type="text" name="CaixaPostal" id="CaixaPostal" size="33" 
+					value="<?php echo $r['CaixaPostal'];?>" /> </div>					
+				<div class="span-2">  &nbsp;  </div>
+				<div class="span-3">  &nbsp;  </div>
+				<div class="span-3"> &nbsp; </div>				
+				<div class="span-3"> <input type="text" name="iniCaixaVig" id="iniCaixaVig" class="data" size="10" 
+				value="<?php echo $this->date($r['InicioVigencia']);?>" /> </div>	
+				
+				<div class="span-4"> <input type="text" name="iniCaixaVig" id="iniCaixaVig" class="data" size="10" 
+				value="<?php echo $this->date($r['FimVigencia']);?>" /> </div>						
+				
+				
+				<div class="clear"> <!-- LIMPA LINHA  --> </div>
+				
+				<!-- 4 LINHA DE LABEL -->
+				<div class="span-4"> 
+					<label>
+						<input type="checkbox" name="ParaCorrespondencia" id="correspondencia"							
+							<?php $situacao = $r['ParaCorrespondencia'];
+								if($situacao){?> checked="checked"
+							<?php } ?> />
+						Correspondência
+					</label> 
+				</div> 
+				
+				<div class="span-3"> 						
+					<label>
+					<input type="checkbox" name="ParaFaturamento" id="faturamento"						
+						<?php $situacaoF = $r['ParaFaturamento'];
+							if($situacaoF){?> checked="checked"
+						<?php } ?> />
+					Faturamento
+					</label>  
+				</div>
+					
+				<div class="span-4"> 						
+					<label>
+					<input type="checkbox" name="ParaCobranca" id="cobranca"						
+						<?php $situacaoC = $r['ParaCobranca'];
+							if($situacaoC){?>checked="checked"
+						<?php } ?> />
+					Cobrança
+					</label> 
+				</div>
+				<div class="span-4"> 						
+					<label>
+						<input type="checkbox" name="ParaPublicacao" id="ParaPublicacao" 
+							<?php $situacaoP = $r['ParaPublicacao'];
+								if($situacaoP){?>checked="checked"
+							<?php } ?> />
+						Publicação
+					</label> 
+				</div>
+				<div class="span-2"> &nbsp; </div>
+				<div class="span-2"> &nbsp; </div>
+				<div class="span-2"> &nbsp; </div>					
+				
+				<br>
+				<br>
+			<?php } ?>
+		<div class="span-2"> &nbsp; </div>
+		<div class="span-2"> &nbsp; </div>
+		<div class="span-2"> &nbsp; </div>					
+		</div>
+	</form>
+</div> 
+ 
+<!-- PRINCIPAL -->
+<div class="span-23">
+	
+	
+	<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1"><a href="#tabs-1"><h3 class="branco">Beneficiario <?php echo $this->dados['Nome'];?> </h3>  </a></li>
+				<!--<li><a href="#tabs-2">Anexar arquivos</a></li>
+				<li><a href="#tabs-3">Finalizar cadastro</a></li> -->
+			</ul>
+			
+		<!-- TABS - PÁGINAS -->
+		<div id="tabs-1">
+	
+
+			<form name="novobeneficiario" id="novobeneficiario" method="POST" action="/beneficiario/altalterados ">	
+			
+			
+			<button type="submit" class="botao" >Confirmar alteração</button> 
+	
+	
+				<p><b><h4 class="branco">Dados </h4></b></p>
+
+				<div class="span-21 quadroGrande">
+					<input type="hidden" name="idBeneficiario" value="<?php echo $this->dados['idBeneficiario'];?>" />
+					
+					<!-- 1LINHA DE LABEL -->
+					<div class="span-3"> Contrato </div> 
+					<div class="span-3"> Familia </div>
+					<div class="span-5"> RDP </div>
+					<div class="span-3"> Inicio Vigencia </div>
+					<div class="span-3"> Fim vigência</div>
+					<div class="span-3"> &nbsp;  </div>					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-3">  <input type="text" name="contrato" id="contrato" size="6" 
+					value="<?php echo $this->dados['Contrato'];?>" readonly="true" /> 
+					</div> 
+					<div class="span-3">  <input type="text" name="Familia" id="Familia" size="9" 
+					value="<?php echo $this->dados['Familia'];?>" /></div>
+					
+					<div class="span-5">  
+					
+					<select name="RDP" id="RDP"> 
+					<?php if($this->dados['RDP'] == 0){ ?>
+					<option value="0">Titular</option>
+					<?php
+					}else{ ?>
+					
+							
+							<option>Selecione</option>
+							<?php 	
+								foreach($this->rdp as $r=>$s){							
+										echo '<option>'.$s.'</option>';							
+								} 
+							?>
+							
+					<?php } ?> 
+					</select>
+					
+					
+					</div>
+					
+					
+					<div class="span-3"> <input class="dateBR" type="text" name="InicioVigencia" id="InicioVigencia" size="8"
+					value="<?php echo $this->date($this->dados['InicioVigencia']);?>"/></div>				
+					<div class="span-3">  <input class="data" type="text" name="FimVigencia" id="FimVigencia" size="8"	/> </div>
+					<div class="span-3"> &nbsp;  </div>	
+					<div class="clear"> &nbsp; </div>	
+					
+					
+					<!-- 2 LINHA DE LABEL -->
+					<div class="span-6"> Nome</div> 
+					<div class="span-3"> Sexo </div>
+					<div class="span-3"> Nascimento </div>
+					<div class="span-3"> Estado civil </div>
+					<div class="span-3"> &nbsp;  </div>					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-6">  <input type="text" name="Nome" id="Nome" size="28" 
+					value="<?php echo $this->dados['Nome'];?>"	 /> </div> 
+					<div class="span-3">           
+						<select name="Sexo" id="Sexo">
+							<?php if($this->dados['Sexo'] == 'F'){?>
+								<option value="F" selected>Feminino</option>
+							<?php }else{?>
+								<option value="M" selected>Masculino</option>
+							<?php }?>
+						</select>
+					</div>
+					
+					<div class="span-3"> <input type="text" name="DataNascimento" id="DataNascimento" size="8" 
+					value="<?php echo $this->date($this->dados ['DataNascimento']);?>" /></div>				
+					<div class="span-3"> 	
+						<select name="EstadoCivil" id="EstadoCivil">
+						  <option value="<?php $this->dados['EstadoCivil']; ?>"/>
+						  <?php 
+						  /*
+						  switch ($this->dados['EstadoCivil']) {
+									case "A":
+										echo "Separado";
+										break;
+									case "D":
+										echo "Divorciado";
+										break;
+									case "M":
+										echo "Casado";
+										break;
+									case "S":
+										echo "Solteiro";
+										break;
+									case "U":
+										echo "União estável";
+										break;
+									case "W":
+										echo "Viúvo";
+										break;																    																    	
+								}*/
+							?>	
+						
+						  <option value="A">Separado</option>
+						  <option value="D">Divorciado</option>
+						  <option value="M">Casado</option>
+						  <option value="S">Solteiro</option>
+						  <option value="U">União estável</option>
+						  <option value="W">Viúvo</option> 
+						  </option>
+						  
+						</select>
+					</div>
+					
+					<div class="span-3"> &nbsp;  </div>	
+					<div class="clear"> &nbsp; </div>	
+					
+					
+						<!-- 3 LINHA DE LABEL -->
+					<div class="span-6"> Naturalidade</div> 
+					<div class="span-3"> CPF </div>
+					<div class="span-3"> RG </div>
+					<div class="span-3"> PIS</div>
+					<div class="span-3"> &nbsp; </div>					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-6">  
+						<input type="text" name="Naturalidade" id="Naturalidade" size="28" value="<?php echo ($this->dados['NomeCidade'] != null)? $this->dados['NomeCidade']." / ".$this->dados['UF'] : "";?>" /> 
+					</div> 
+					<div class="span-3">  <input type="text" name="Cnp" id="Cnp" size="12" value="<?php echo $this->dados['Cnp'];?>" />  </div>
+					
+					<div class="span-3"> <input type="text" name="RG" id="RG" size="12" class="numero" value=""/><!-- esse é tipo 1 --> </div>				
+					<div class="span-3"> <input type="text" name="PIS" id="PIS" size="" value="" /><!-- esse é tipo 9 --> </div>
+					<div class="span-3"> &nbsp; </div>	
+					
+					<div class="clear"> &nbsp; </div>	
+					
+					
+					<!-- 4 LINHA DE LABEL -->
+					<div class="span-6"> Nome mãe</div> 
+					<div class="span-3"> Nome pai  </div>
+					<div class="span-3"> &nbsp; </div>
+					<div class="span-3"> &nbsp; </div>
+					<div class="span-3"> &nbsp;	</div>					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-6"> <input type="text" name="NomeMae" id="NomeMae" size="28" value="<?php echo $this->dados['NomeMae'];?>" />  </div> 
+					<div class="span-3"> <input type="text" name="NomePai" id="NomePai" size="28" 
+					value="<?php echo $this->dados['NomePai'];?>" /> </div>
+					<div class="span-3"> &nbsp; </div>				
+					<div class="span-3"> &nbsp;  </div>
+					<div class="span-3"> &nbsp; </div>	
+					<div class="clear"> &nbsp; </div>	
+					
+					<!-- 5 LINHA DE LABEL -->
+					<div class="span-6"> Nome conjugue</div> 
+					<div class="span-3"> Admissão </div>
+					<div class="span-3"> &nbsp;  </div>
+					<div class="span-3"> &nbsp;  </div>
+					<div class="span-3"> &nbsp; 	</div>	
+					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-6">  <input type="text" name="NomeConjuge" id="NomeConjuge" size="28" 
+					value="<?php echo $this->dados['NomeConjuge'];?>" />  </div> 
+					<div class="span-3"> <input type="text" name="Admissao" id="Admissao" size="8" 
+					value="<?php echo $this->date($this->dados['DataAdmissao']);?>" /> </div>	
+					
+					<div class="span-3"> &nbsp;  </div>
+					<div class="span-3"> &nbsp;   </div>						
+						<div class="clear"> &nbsp; </div>	
+					
+					<!-- 6 NAO EXISTE MAIS :( -->
+					
+					
+					
+					
+					<!-- 7 LINHA DE LABEL -->
+					<div class="span-6"> E-mail</div> 
+					<div class="span-3"> DDD </div>
+					<div class="span-3"> Telefone </div>
+					<div class="span-3"> &nbsp; </div>
+					<div class="span-3"> &nbsp;	</div>	
+					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-6"><input type="text" name="Email" id="Email" size="28" /> </div>		
+					<div class="span-3"><input type="text" name="DDD" id="DDD" size="11" /></div>
+					<div class="span-3"><input type="text" name="Telefone" id="Telefone" size="11" /> </div>
+					<div class="span-3">&nbsp;  </div>
+					<div class="span-3">&nbsp;  </div>
+					
+					<div class="clear"> &nbsp; </div>						
+					
+					<!-- 8 LINHA DE LABEL -->
+					<div class="span-10"><b>Modulo</b></div> 
+					<div class="span-3"> Inicio  </div>
+					<div class="span-3"> Fim </div>
+					
+					<!-- LINHA DE INPUTS -->	
+					<?php 
+							if($this->dadosModulo['Descricao'] == null){ ?>
+								<div class="span-10"><?php echo "SEM MODULO	"?></div>
+								<div class="span-3">&nbsp;</div>
+								<div class="span-3">&nbsp;</div>
+							<?php 
+							}else{?>
+								<div class="span-10"><?php echo $this->dadosModulo['Descricao']?></div>
+								<div class="span-3"><?php echo $this->date($this->dadosModulo['InicioVigencia'])?></div>
+								<div class="span-3">&nbsp;</div>
+							<?php 
+							}
+							?>
+					<div class="span-3"><button class="modulo" ></button></div> 
+					<div class="clear"> &nbsp; </div>	
+					
+					<!-- 9 LINHA DE LABEL -->
+					<div class="span-10"><b>Local atendimento</b></div> 
+					<div class="span-3"> Inicio </div>
+					<div class="span-3"> Fim </div>
+					
+					<!-- LINHA DE INPUTS LOCAL DE ATENDIMENTO-->		
+					<?php  	
+							if($this->dadosLocal['Descricao'] == null){
+							?>
+                                <div class="span-10"><?php echo "SEM LOCAL DE ATEND."?></div>
+								<div class="span-3">&nbsp;</div>
+								<div class="span-3">&nbsp;</div>
+							<?php
+							}else{?>
+								<div class="span-10"><?php echo $this->dadosLocal['Descricao']?></div>
+								<div class="span-3"><?php echo $this->date($this->dadosLocal['InicioVigencia'])?></div>
+								<div class="span-3">&nbsp;</div>
+							<?php
+							}
+							?>
+												
+
+					<div class="span-3"><button class="local" ></button></div>
+					<div class="clear"> &nbsp; </div>	
+					
+					
+					
+					<!-- 10 LINHA DE LABEL -->
+					<div class="span-10"><b>Lotação</b></div> 
+					<div class="span-3"> Inicio </div>
+					<div class="span-3"> Fim </div>	
+					
+					<!-- LINHA DE INPUTS -->	
+					<?php	
+						if($this->dadosLotacao['Descricao'] == null){
+							?>
+                                <div class="span-10"><?php echo "SEM LOTAÇÃO"?></div>
+								<div class="span-3">&nbsp;</div>
+								<div class="span-3">&nbsp;</div>
+							<?php
+							}else{?>
+								<div class="span-10"><?php echo $this->dadosLotacao['Descricao']?></div>
+								<div class="span-3"><?php echo $this->date($this->dadosLotacao['InicioVigencia'])?></div>
+								<div class="span-3">&nbsp;</div>
+							<?php
+							}
+							?>
+				
+					<div class="span-3"><button class="lotacao" ></button></div>
+					
+						<div class="span-3"> &nbsp;  </div>	
+					<hr>
+					<br>
+					<!-- DADOS AGORA REFERENTES AO ENDEREÇO DO USUÁRIO COMPLETO E DADOS --> 
+					<b>Endereços do beneficiario </b> <button class="endereco" ></button>	</a> 
+					
+					
+				<?php foreach($this->dadosEndereco as $k=>$r){ ?>
+					<br>
+					<br>
+					<!-- 1 LINHA DE LABEL -->
+					<div class="span-2"><b>Seq:</b> </div> 
+					<div class="span-8"><b>Logradouro</b> </div>
+					<div class="span-1">&nbsp;</div>
+					<div class="span-1">&nbsp; </div>
+					<div class="span-3"><b>Número</b></div>
+					<div class="span-4"><b>Complemento</b> </div>
+					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-2"><?php echo $r['Seq'];?>&nbsp;</div>					
+					<div class="span-8"><?php echo $r['NomeLogradouro'];?>&nbsp;</div>					
+					<div class="span-1">&nbsp;  </div>
+					<div class="span-1">&nbsp; </div>				
+					<div class="span-3"><?php echo $r['NumLogradouro'];?>&nbsp;</div>					
+					<div class="span-4"><?php echo $r['ComplLogradouro'];?>&nbsp; </div>					
+					
+					<!-- 2 LINHA DE LABEL -->
+					<div class="span-2"><b>Tipo</b> </div> 
+					<div class="span-8"><b>Bairro</b> </div>
+					<div class="span-1">&nbsp;</div>
+					<div class="span-1">&nbsp; </div>
+					<div class="span-3"><b>Cidade</b></div>
+					<div class="span-4">&nbsp; </div>	
+					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-2"><?php echo $r['Tipo'];?>&nbsp;</div>					
+					<div class="span-8"><?php echo $r['Bairro'];?>&nbsp;</div>					
+					<div class="span-1">&nbsp;  </div>
+					<div class="span-1">&nbsp; </div>				
+					<div class="span-3"><?php echo $r['NomeCidade'].' / '.$r['UF'];?>&nbsp;</div>					
+					<div class="span-4">&nbsp; </div>	
+					
+					<div class="clear"> <!-- LIMPA LINHA  --> </div>
+					
+					<!-- 3 LINHA DE LABEL -->
+					<div class="span-2"><b>CEP</b> </div> 
+					<div class="span-4"><b>Ponto de referência</b> </div>
+					<div class="span-3">&nbsp;</div>
+					<div class="span-3">&nbsp; </div>
+					<div class="span-3">&nbsp; </div>
+					<div class="span-4">&nbsp; </div>
+					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-2"><?php echo $r['CEP'];?>&nbsp;</div>					
+					<div class="span-4"><?php echo $r['PontoReferencia'];?>&nbsp;</div>					
+					<div class="span-3">&nbsp;  </div>
+					<div class="span-3">&nbsp; </div>				
+					<div class="span-3">&nbsp;  </div>
+					<div class="span-4">&nbsp; </div>	
+					
+					<div class="clear"> <!-- LIMPA LINHA  --> </div>
+					
+					<!-- 3 LINHA DE LABEL -->
+					<div class="span-4"><b>Caixa postal</b> </div> 
+					<div class="span-2">&nbsp; </div>
+					<div class="span-3">&nbsp;</div>
+					<div class="span-3">&nbsp; </div>
+					<div class="span-3"><b>Inicio vigência</b></div>
+					<div class="span-4"><b>Fim vigência</b> </div>
+					
+					<!-- LINHA DE INPUTS -->
+					<div class="span-4"><?php echo $r['CaixaPostal'];?>&nbsp;</div>					
+					<div class="span-2">&nbsp;</div>
+					<div class="span-3">&nbsp;</div>
+					<div class="span-3">&nbsp;</div>				
+					<div class="span-3"><?php echo $this->date($r['InicioVigencia']);?>&nbsp;</div>					
+					<div class="span-4"><?php echo $r['FimVigencia'];?>&nbsp;</div>	
+					
+					
+					<div class="clear"> <!-- LIMPA LINHA  --> </div>
+					
+					<!-- 4 LINHA DE LABEL -->
+					<div class="span-4"> 
+						<label>
+						 <input type="checkbox" name="ParaCorrespondencia" id="correspondencia" 
+							
+							<?php $situacao = $r['ParaCorrespondencia'];
+							if($situacao){?> checked="checked"
+							<?php } ?> />
+						Correspondência
+						</label> 
+					</div> 
+					
+					<div class="span-3"> 						
+						<label>
+						<input type="checkbox" name="ParaFaturamento" id="faturamento" 
+						
+						<?php $situacaoF = $r['ParaFaturamento'];
+							if($situacaoF){?> checked="checked"
+							<?php } ?> />					
+						Faturamento
+						</label>  
+					</div>
+						
+					<div class="span-4"> 						
+						<label>
+						<input type="checkbox" name="ParaCobranca" id="cobranca"  
+						
+							<?php $situacaoC = $r['ParaCobranca'];
+							if($situacaoC){?>checked="checked"
+							<?php } ?> />
+						
+						Cobrança
+						</label> 
+					</div>
+					<div class="span-4"> 						
+						<label>
+							<input type="checkbox" name="ParaPublicacao" id="publicacao" 
+								<?php $situacaoP = $r['ParaPublicacao'];
+									if($situacaoP){?>checked="checked"
+								<?php } ?> />
+							Publicação
+						</label> 
+					</div>	
+					<div class="span-2"> &nbsp; </div>
+					<div class="span-2"> &nbsp; </div>
+					<div class="span-2"> &nbsp; </div>					
+					
+					<br>
+					<br>
+				<?php } ?>
+
+			<hr>
+			<br>			
+			<h3 class="branco">Inserir arquivos compactados </h3>
+			<input id="botao" type="file" class="multi" accept="zip|rar" maxlength="2"/>
+			<br>
+			<hr>	
+					
+					<button class="botao" >Confirmar alteração</button> 
+					<br />	
+				</div>				
+		</div>
+				
+		<!-- LIMPA DIVS VOANDO -->
+		<div class="clear"></div>		
+		</form>
+			
+
+	</div>
+
+
+<!-- JS -->
+<?php 
+ // CHAMADA DE JS  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+    $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+
+//PARA FORMULARIO
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.validate.js');
+ 
+ ?>
+
+
+<!-- TABS DO JQUERY UI --> 
+<script>
+	$(function() {
+		$( "#tabs" ).tabs().find( ".ui-tabs-nav" ).sortable({ axis: "x" });
+
+	});	
+</script>
+	
+<!-- SCRIPT PARA MASCARA DE FORMULÁRIOS --> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#Cnp").mask("999.999.999-99");
+		$(".telefone").mask("9999-9999");
+		$(".dateBR").mask("99/99/9999");
+		$(".data").mask("99/99/9999");
+		$(".numero").mask("999999999");
+		$(".ddd").mask("99");
+	});
+</script>	
+
+
+
+<!-- TRATAMENTO DE ERROS COM FORMULÁRIO --> 
+<script type="text/javascript">
+// QUANDO O DOCUMENTO ESTIVER PRONTO
+$(document).ready(function(){
+   // CONFIGURA A VALIDACAO DO FORMULARIO
+   $("#novobeneficiario").validate({
+      rules: {
+         Nome: {required: true},
+		 NomeMae: {required: true},
+		 Sexo: {required: true},
+		 EstadoCivil: {required: true},
+         data: {required: true, dateBR: true},
+         cnpj: {cnpj: true},
+		 email: {required: true}
+      },
+      messages: {
+         Nome: {required: 'Informe o nome' },
+         NomeMae: {required: 'Informe o nome da mãe' },
+		 Sexo: {required: 'Informe o sexo' },
+		 EstadoCivil: {required: 'Informe o estado civil' },
+         email: {required: 'Informe o e-mail' },
+         data: {required: 'Informe a data', dateBR: 'Digite uma data válida'}
+		 
+      }
+      ,
+	  //submitHandler:function(form) {
+     //    alert('ok');
+     // }
+   });
+
+   $('#result').html('jQuery Validate com novos métodos: cpf, cnpj, dateBR, dateTimeBR, notEqual');
+});
+
+</script>
+
+<!-- FUNÇÃO PARA BOTÕES --> 
+<script>
+	$(function() {
+		$( ".botao" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        }),
+		
+		$( "#botao" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        }),
+
+		$( ".modulo" ).button({
+            icons: {
+                primary: "ui-icon-wrench"
+            }
+        }),
+		$( ".lotacao" ).button({
+            icons: {
+                primary: "ui-icon-wrench"
+            }
+        }),
+		
+		$( ".local" ).button({
+            icons: {
+                primary: "ui-icon-wrench"
+            }
+        });
+		
+		$( ".endereco" ).button({
+            icons: {
+                primary: "ui-icon-wrench"
+            }
+        });
+
+		});
+</script>
+
+<!-- PARA LIGHTBOX --> 
+<script>
+	// increase the default animation speed to exaggerate the effect
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$( "#altmodulo" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 550,
+			width: 800,
+			hide: "explode"
+		});
+
+		$( ".modulo" ).click(function() {
+			$( "#altmodulo" ).dialog( "open" );
+			return false;
+		}),
+		$( "#altlocal" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 550,
+			width: 700,
+			hide: "explode"
+		});
+
+		$( ".local" ).click(function() {
+			$( "#altlocal" ).dialog( "open" );
+			return false;
+		}),
+			$( "#altlotacao" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 550,
+			width: 700,
+			hide: "explode"
+		});
+
+		$( ".lotacao" ).click(function() {
+			$( "#altlotacao" ).dialog( "open" );
+			return false;
+		});
+		
+		$( "#altendereco" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 550,
+			width: 820,
+			hide: "explode"
+		});
+
+		$( ".endereco" ).click(function() {
+			$( "#altendereco" ).dialog( "open" );
+			return false;
+		});
+	});
+	</script>
+	
+<!-- FUNÇÃO PARA EXIBIR E OCULTAR MODULO, LOTAÇÃO E LCAT --> 	
+<script>
+ 
+	$(document).ready(function(){	    
+		$('#conteudoModulo').hide();	    
+	    	$('#exibir').click(function(){
+		    	$('#conteudoModulo').show('slow');});	
+				
+		$('#conteudoLcat').hide();
+			$('#exibirLcat').click(function(){
+		    	$('#conteudoLcat').show('slow');});	
+				
+		$('#conteudoLotacao').hide();	
+			$('#exibirLotacao').click(function(){
+				$('#conteudoLotacao').show('fast');});
+				
+		//CASO CLIQUE EM CANCELAR FECHA OU SEJA DA UM HIDE
+		$('#cancelar').click(function(){
+		$('#conteudoModulo').hide('slow');
+		$('#conteudoLcat').hide('slow');
+		$('#conteudoLotacao').hide('slow');
+
+
+
+		});
+		
+	 });
+	    
+ </script>
+ 
+ 
+ 
+ <!-- FUNÇÃO PARA PEGAR DESCRIÇÃO DO ALTERA MODULO --> 
+<script>
+ function pegaDescricao(select){
+ 
+	$("#descricao").attr("value",$(select).find('option:selected').text());
+	//alert($('#descricao').val());
+
+ }
+ 
+ </script>
+
+<!-- AJAX DO ALTERAR MODULO  -->
+<script>
+	$('#vaiajax').click(function(){
+	
+	
+		$('#conteudoModulo').addClass('carrega');
+		
+		var nome = $('#alteraModulo').find('select option:selected').val();
+		var texto = $('#alteraModulo').find('select option:selected').text();
+		var dataVig = $('#inicioVigencia').val();
+		var dados = $('#alteraModulo').serialize();
+		
+		$.ajax({
+		type:"POST",
+		data: dados,
+		url: $('#alteraModulo').attr('action'),
+		
+		success: function(data){
+		
+				if(data == true){
+				$('#conteudoModulo').hide('slow');
+				$('#conteudoModulo').removeClass('carrega');
+				
+				//SUMINDO COM A TABLE
+				$('#altmodulo').find('table').hide('slow');
+				
+				//AQUI ESTOU ADICIONANDO PARA A ULTIMA TD
+				$('#altmodulo').find('table tr td:last').append(dataVig);
+				
+				// ADICIONANDO NOVA LINHA E EXIBINDO
+				$('#altmodulo').find('table').append('<tr><td>'+ texto +'</td><td>'+ dataVig +'</td><td></td></tr>');
+				$('#altmodulo').find('table').show('slow');
+				
+				}else{
+				alert(data);
+				}
+		
+			}
+		
+		});
+		
+		
+	});
+</script>
+
+
+
+
+<!-- FUNÇÃO PARA PEGAR DESCRIÇÃO DA ALTERAR LCAT --> 
+<script>
+ function pegaDescricaoLcat(select){
+	
+	//conteudoLcat
+	$("#descricaoLcat").attr("value",$(select).find('option:selected').text());
+	//alert($('#descricaoLcat').val());
+
+ }
+ </script>
+
+<!-- AJAX DO ALTERAR LOCAL DE ATENDIMENTO  -->
+<script>
+	$('#altLcat').click(function(){
+	
+		$('#conteudoLcat').addClass('carrega');
+		
+		var nome = $('#alteraLcat').find('select option:selected').val();
+		var texto = $('#alteraLcat').find('select option:selected').text();
+		var dataVig = $('#inicioVigenciaLcat').val();
+		var dados = $('#alteraLcat').serialize();
+		
+		$.ajax({
+		type:"POST",
+		data: dados,
+		url: $('#alteraLcat').attr('action'),
+		
+		success: function(data){
+		
+				if(data == true){
+				$('#conteudoLcat').hide('slow');
+				$('#conteudoLcat').removeClass('carrega');
+				$('#altlocal').find('table tr td:last').append(dataVig);
+				$('#altlocal').find('table').hide('slow');
+				$('#altlocal').find('table').append('<tr><td>'+ texto +'</td><td>'+ dataVig +'</td></tr>');
+				$('#altlocal').find('table').show('slow');
+				
+				}else{
+				$('#conteudoLcat').hide('slow');
+				$('#conteudoLcat').removeClass('carrega');
+				alert("Você não pode adicionar nada!");
+				}
+		
+			}
+		
+		});
+		
+		
+	});
+</script>
+
+<!-- FUNÇÃO PARA PEGAR DESCRIÇÃO DA ALTERAR lotacao --> 
+<script>
+ function pegaDescricaoLotacao(select){
+	
+	//conteudoLcat
+	$("#descricaoLotacao").attr("value",$(select).find('option:selected').text());
+	//alert($('#descricaoLcat').val());
+
+ }
+ </script>
+ 
+ 
+<!-- AJAX DO ALTERAR LOTAÇÃO -->
+<script>
+
+	$('#confirmaLotacao').click(function(){
+	
+		$('#conteudoLotacao').addClass('carrega');
+		
+		var nome = $('#dadosLotacao').find('select option:selected').val();
+		var texto = $('#dadosLotacao').find('select option:selected').text();
+		var dataVig = $('#inicioVigenciaLotacao').val();
+		var dados = $('#dadosLotacao').serialize();
+		
+		$.ajax({
+		type:"POST",
+		data: dados,
+		url: $('#dadosLotacao').attr('action'),
+		
+		success: function(data){
+		
+				if(data == true){
+					$('#conteudoLotacao').hide('fast');
+					$('#conteudoLotacao').removeClass('carrega');
+					$('#altlotacao').find('table tr td:last').append(dataVig);
+					$('#altlotacao').find('table').hide('fast');
+					$('#altlotacao').find('table').append('<tr><td>'+ texto +'</td><td>'+ dataVig +'</td></tr>');
+					$('#altlotacao').find('table').show('fast');
+				}else{
+					$('#conteudoLotacao').hide('slow');
+					$('#conteudoLotacao').removeClass('carrega');
+					alert("Você não pode adicionar nada!");
+				}
+		
+			}
+		
+		});
+		
+		
+	});
+</script>

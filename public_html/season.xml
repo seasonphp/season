@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MovimentacoesCadastrais>
+  <lote>
+    <nomeA>Rafael Clares</nomeA>
+    <telefone>(11) 5500-0055</telefone>
+    <endereco>Av. longa n 1</endereco>
+  </lote>
+  <teste>
+    <teste1>123</teste1>
+  </teste>
+</MovimentacoesCadastrais>

@@ -1,0 +1,188 @@
+<!-- ADMIN INDEX, CONFIGURAÇÕES, COMO ADMINISTRAÇÃO DE USUÁRIOS - ALTERAR PLANO - ALTERAR DADOS PESSOAIS -->
+<?php
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');   
+
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+
+ 
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+	 
+	 //CHAMADA DO BOTÃO CHEIO DE GUERI GUERI
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+	
+?> 
+
+<div id="altsenha" title="Alterar senha">
+		
+	<div class="span-12">
+		<form name="mudaSenha" action="/admin/altsenha" id="mudaSenha" />
+		
+		
+		<div class="span-3">Nova senha</div> <input type="password" name="senhaTeste" id="senhaTeste" /> 
+	<br>
+		<div class="span-3">Confirme a senha</div> <input type="password" name="senha" id="senha" /> 
+	<br>
+		<input type="hidden" name="id" value="<?php echo Zend_Auth::getInstance()->getStorage()->read()->id ?>" >
+		</form>
+		
+	<button class="alterar" > <div class="pequeno">Alterar senha</div> </button>
+	</div>
+	<div class="clear"><br></div>
+	<div class="success hide" id="sucesso"> SENHA ALTERADA COM SUCESSO </div>
+</div> 
+
+
+<!-- Validação de campos -->
+<script>
+
+
+</script>
+
+
+<!-- SCRIPT LIGHTBOX -->
+<script>
+	// increase the default animation speed to exaggerate the effect
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$( "#altsenha" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 400,
+			width: 500,
+			hide: "blind"
+		});
+		$( ".senha" ).click(function() {
+		    //alert('Cidade');
+			$( "#altsenha" ).dialog( "open" );
+			return false;
+		});
+
+	});
+
+</script>
+
+<!-- FUNÇÃO DO BOTÃO --> 
+<script>
+	$(function() {
+		$( ".submit" ).button({
+            icons: {
+                primary: "ui-icon-play"
+            }
+        });
+		$( ".senha" ).button({
+            icons: {
+                primary: "ui-icon-key"
+            }
+        });
+		$( ".alterar" ).button({
+            icons: {
+                primary: "ui-icon-key"
+            }
+        });
+	});
+</script>
+
+
+<div class="span-14">
+
+
+	<form method="post" action="/admin/index" >
+	
+	<br>
+	<b>  CONFIGURAÇÕES DE ACESSO DA EMPRESA </b>
+	<br>
+	<!-- ARMAZENA ID OCULTO -->
+	<input type="hidden" name="id" value="<?php echo Zend_Auth::getInstance()->getStorage()->read()->id ?>" >
+	
+	
+	<div class="span-3"><b>Nome da empresa:</b></div> <input name="nome" size="50" value="<?php foreach($this->empresa as $key=>$reg){echo $reg['nome'];}?> ">
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>		
+	<div class="span-3"><b>Usuario:</b></div> <input name="usuario" readonly="true" size="50" value="<?php foreach($this->empresa as $key=>$reg){echo $reg['usuario'];}?> ">
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+	<div class="span-3"><b>Senha:</b></div> <button class="senha" > <div class="pequeno">Alterar senha</div> </button>  <?php // foreach($this->empresa as $key=>$reg){echo $reg['senha'];}?> 
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+	<div class="span-3"><b>CNPJ:</b></div><input name="cnpj" size="50" value="<?php foreach($this->empresa as $key=>$reg){echo $reg['cnpj'];}?> ">
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>		
+	<div class="span-3"><b>Endereço:</b></div><input name="endereco" size="50" value="<?php foreach($this->empresa as $key=>$reg){echo $reg['endereco'];}?> ">
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+	<div class="span-3"><b>E-mail:</b></div><input name="email" size="50" value="<?php foreach($this->empresa as $key=>$reg){echo $reg['email'];}?>">
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+	<div class="span-3"><b>Site:</b></div><input name="site" size="50" value="<?php foreach($this->empresa as $key=>$reg){echo $reg['site'];}?>">
+	
+	<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+	<button class="submit" type="submit" >Alterar dados</button> 
+	
+	</form>
+	<br>
+	<br>
+	<b><?php echo $this->mensagem; ?></b>
+	<br>
+	<br>
+	
+</div><!-- FIM DO SPAN -->
+
+<div class="span-9">
+
+	<!-- AQUI VAI FICAR UM LOGO DA EMPRESA --> 
+		<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+		<div class="clear"> <!-- ESPAÇO BOM  --> <br /></div>	
+	<a href="http://www.unimed.com.br/widget/" target="_blank">
+	<img src="http://www.unimed.com.br/portal/conteudo/chamadas/1292532577062_banner-widget1.jpg" alt="widget unimed"  >
+	</a>
+</div>
+
+
+
+<!-- AJAX PARA ALTERAR SENHA --> 
+
+<script>
+
+	$('.alterar').click(function(){
+	
+	
+		
+		var senha1 = $('#mudaSenha').find('#senhaTeste').val();
+		var senha2 = $('#mudaSenha').find('#senha').val();
+		
+		if(senha1 == senha2){
+		
+		$('#mudaSenha').addClass('carrega');
+		
+		var dados = $('#mudaSenha').serialize();
+		
+			$.ajax({
+			type:"POST",
+			data: dados,
+			url: $('#mudaSenha').attr('action'),
+			
+			success: function(data){
+			
+					if(data == true){
+					$('#mudaSenha').hide('fast');
+					$('#mudaSenha').removeClass('carrega');
+					$('#mudaSenha').show();
+					$('#sucesso').show('fast');
+					
+					
+					}else{
+					$('#mudaSenha').hide('slow');
+					$('#mudaSenha').removeClass('carrega');
+					alert("PROBLEMA AO ADICIONAR A SENHA, TENTE NOVAMENTE MAIS TARDE");
+					}
+			
+				}
+		
+			});
+		
+		}else{ alert("A senha não é igual"); }
+	});
+</script>
+
+

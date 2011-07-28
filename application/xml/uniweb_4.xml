@@ -1,0 +1,73 @@
+<?xml version='1.0' standalone='yes'?>
+<MovimentacaoCadastralAtualizacaoCompleta xmlns='MovimentacaoCadastralAtualizacaoCompleta.xsd'>
+<AtualizacaoCompleta>
+<Contrato>1678400</Contrato>
+<RDP>0</RDP>
+ <Familia>1216</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>0</GrauDependencia>
+<InicioVigencia>06/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>16784001216000</CodigoExterno>
+<Pessoa>
+<Nome>PATO DONALD</Nome>
+<DataNascimento>01/02/1948 00:00:00</DataNascimento>
+<Cnp>75518235739</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<Naturalidade>572</Naturalidade>
+<NomePai>DISNEY</NomePai>
+<NomeMae>DISNEY</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>124556</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>120</NumLogradouro>
+<NomeLogradouro>AV GOIABIANA</NomeLogradouro>
+<ComplLogradouro>SALA 37</ComplLogradouro>
+<Bairro>BERMUDAS</Bairro>
+<Cidade>10</Cidade>
+<Cep>11089110</Cep>
+<PontoReferencia>APAS</PontoReferencia>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>06/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>2</Tipo>
+<DDD>13</DDD>
+<Numero>33445566</Numero>
+<InicioVigencia>06/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Telefone>
+</Pessoa>
+ <Modulos>
+<Codigo>001678413</Codigo>
+<DataBaseCob>06/07/2011 00:00:00</DataBaseCob>
+<InicioVigencia>06/07/2011 00:00:00</InicioVigencia>
+<QteMensRetr>0</QteMensRetr>
+</Modulos>
+<Lotacao>
+<Codigo>67840008</Codigo>
+<InicioVigencia>06/07/2011 00:00:00</InicioVigencia>
+</Lotacao>
+<LocalAtendimento>
+<LcAt>333</LcAt>
+<Tipo>2</Tipo>
+<InicioVigencia>06/07/2011 00:00:00</InicioVigencia>
+</LocalAtendimento>
+</AtualizacaoCompleta> 
+</MovimentacaoCadastralAtualizacaoCompleta>

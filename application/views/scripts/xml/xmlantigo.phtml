@@ -1,0 +1,379 @@
+<!-- PÁGINA/ QUE EXIBE OS XMLs para gera-los (baixa-los) -->
+<style>
+.pagination {
+            font-size: 80%;
+        }
+        
+.pagination a {
+    text-decoration: none;
+	border: solid 1px #AAE;
+	color: #006600;
+}
+
+.pagination a, .pagination span {
+    display: block;
+    float: left;
+    padding: 0.3em 0.5em;
+    margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.pagination .current {
+    background: #006600;
+    color: #fff;
+	border: solid 1px #AAE;
+}
+
+.pagination .current.prev, .pagination .current.next{
+	color:#999;
+	border-color:#999;
+	background:#fff;
+}
+
+
+
+</style>
+
+
+<script type="text/javascript"> 
+
+			function pageselectCallback(page_index, jq){
+                // Get number of elements per pagionation page from form
+                var items_per_page = $('#items_per_page').val();
+                var max_elem = Math.min((page_index+1) * items_per_page, members.length);
+                var newcontent = '';
+                
+                // Iterate through a selection of the content and build an HTML string
+                for(var i=page_index*items_per_page;i<max_elem;i++)
+                {
+					newcontent += '<div class="span-19">';
+						newcontent += '<div class="span-2">' + members[i][0] + '</div>';
+						newcontent += '<div class="span-3">' + members[i][3] + '</div>';
+						// AUTO ID
+						newcontent += '<div class="span-4">' + members[i][2] + '</div>';
+						newcontent += '<div class="span-3">' + members[i][1] + '</div>';
+						newcontent += '<div class="span-3"> <a href="' + members[i][4] + '"  target="_blank" > GERAR </a> </div>';
+						newcontent += '<div class="span-3"> <a target="_blank" href="' + members[i][5] + '"><img src="<?php echo $this->baseUrl()?>/imagens/lupa.png" title="Visualizar em PDF"/></a></div>';
+                    newcontent += '</div>';
+					newcontent += '<div class="clear"><br></div>';
+                }
+                
+                // Replace old content with new content
+                $('#Searchresult').html(newcontent);
+                
+                // Prevent click eventpropagation
+                return false;
+            }
+            
+            // The form contains fields for many pagiantion optiosn so you can 
+            // quickly see the resuluts of the different options.
+            // This function creates an option object for the pagination function.
+            // This will be be unnecessary in your application where you just set
+            // the options once.
+            function getOptionsFromForm(){
+                var opt = {callback: pageselectCallback};
+                // Collect options from the text fields - the fields are named like their option counterparts
+                $("input:text").each(function(){
+                    opt[this.name] = this.className.match(/numeric/) ? parseInt(this.value) : this.value;
+                });
+                // Avoid html injections in this demo
+                var htmlspecialchars ={ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;"}
+                $.each(htmlspecialchars, function(k,v){
+                    opt.prev_text = opt.prev_text.replace(k,v);
+                    opt.next_text = opt.next_text.replace(k,v);
+                })
+                return opt;
+            }
+			
+            // When document has loaded, initialize pagination and form 
+            $(document).ready(function(){
+				// Create pagination element with options from form
+                var optInit = getOptionsFromForm();
+                $("#Pagination").pagination(members.length, optInit);
+                
+				// Event Handler for for button
+				$("#setoptions").click(function(){
+                    var opt = getOptionsFromForm();
+                    // Re-create pagination content with new parameters
+                    $("#Pagination").pagination(members.length, opt);
+                }); 
+ 
+            });
+            
+</script> 
+
+
+
+<script>
+var members = <?php //PEGAR JSON AQUI 
+		echo $this->json;
+?>;
+
+</script>
+
+<div class="span-22 push-2">
+
+<a class="voltar" href="/xml/index"> XML novos </a>
+	<div class="clear"><br></div>
+
+	<!-- XML NOVOS --> 
+	<div class="span-19 erro">
+		<h3> LISTA DE XML BAIXADOS </h3>
+		<br />
+		<div class="span-2"> <b>Lote</b> </div>
+		<div class="span-3"> <b>Data de geração</b> </div>
+		<div class="span-4"> <b>Usuario</b> </div>
+		<div class="span-3"> <b>Contrato</b> </div>
+		<div class="span-3"> <b>Comando</b> </div>
+		<div class="span-3"> <b>Relatório</b> </div>
+		<p>&nbsp;</p>
+		<div class="span-18"> <hr> </div>
+		<br style="clear:both;" /> 
+		<dl id="Searchresult"> 
+			<dt>Nenhum XML...</dt> 
+		</dl> 
+		<div id="Pagination" class="pagination"> 
+        </div> 
+		<div class="clear"><br></div>
+        <!-- This form is just to demonstrate the whole range of options and display styles. --> 
+		<form name="paginationoptions"> 
+			<label for="items_per_page"> </label><input class="hide" readonly type="text" value="20" name="items_per_page" id="items_per_page" class="numeric" size="2"/>
+			<label for="prev_text"></label><input class="hide" readonly type="text" value="Anterior" name="prev_text" id="prev_text" size="6"/>
+			<label for="next_text"></label><input class="hide" readonly type="text" value="Proximo" name="next_text" id="next_text" size="6" />
+				
+		</form>
+	</div>
+</div>
+
+
+<?php
+
+
+ // CHAMADA DE CSS
+	$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');	
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');
+	
+  
+ // CHAMADA DE JS  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+    $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+  
+  
+
+  
+?>
+
+
+
+<script>
+	$(function() {
+		$( ".submit" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        });		
+		
+		$( ".relatorio" ).button({
+            icons: {
+                primary: "ui-icon-search"
+            }
+        });		
+		
+		$( "#setoptions" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        });		
+		
+		$( ".voltar" ).button({
+            icons: {
+                primary: "ui-icon-circle-arrow-w"
+            }
+        });
+	});
+</script>
+
+
+<script>
+
+/**
+PAGINAÇÃO JQUERY 
+ */
+jQuery.fn.pagination = function(maxentries, opts){
+	opts = jQuery.extend({
+		items_per_page:10,
+		num_display_entries:10,
+		current_page:0,
+		num_edge_entries:0,
+		link_to:"#",
+		prev_text:"Prev",
+		next_text:"Next",
+		ellipse_text:"...",
+		prev_show_always:true,
+		next_show_always:true,
+		callback:function(){return false;}
+	},opts||{});
+	
+	return this.each(function() {
+		/**
+		 * Calculate the maximum number of pages
+		 */
+		function numPages() {
+			return Math.ceil(maxentries/opts.items_per_page);
+		}
+		
+		/**
+		 * Calculate start and end point of pagination links depending on 
+		 * current_page and num_display_entries.
+		 * @return {Array}
+		 */
+		function getInterval()  {
+			var ne_half = Math.ceil(opts.num_display_entries/2);
+			var np = numPages();
+			var upper_limit = np-opts.num_display_entries;
+			var start = current_page>ne_half?Math.max(Math.min(current_page-ne_half, upper_limit), 0):0;
+			var end = current_page>ne_half?Math.min(current_page+ne_half, np):Math.min(opts.num_display_entries, np);
+			return [start,end];
+		}
+		
+		/**
+		 * This is the event handling function for the pagination links. 
+		 * @param {int} page_id The new page number
+		 */
+		function pageSelected(page_id, evt){
+			current_page = page_id;
+			drawLinks();
+			var continuePropagation = opts.callback(page_id, panel);
+			if (!continuePropagation) {
+				if (evt.stopPropagation) {
+					evt.stopPropagation();
+				}
+				else {
+					evt.cancelBubble = true;
+				}
+			}
+			return continuePropagation;
+		}
+		
+		/**
+		 * This function inserts the pagination links into the container element
+		 */
+		function drawLinks() {
+			panel.empty();
+			var interval = getInterval();
+			var np = numPages();
+			// This helper function returns a handler function that calls pageSelected with the right page_id
+			var getClickHandler = function(page_id) {
+				return function(evt){ return pageSelected(page_id,evt); }
+			}
+			// Helper function for generating a single link (or a span tag if it's the current page)
+			var appendItem = function(page_id, appendopts){
+				page_id = page_id<0?0:(page_id<np?page_id:np-1); // Normalize page id to sane value
+				appendopts = jQuery.extend({text:page_id+1, classes:""}, appendopts||{});
+				if(page_id == current_page){
+					var lnk = jQuery("<span class='current'>"+(appendopts.text)+"</span>");
+				}
+				else
+				{
+					var lnk = jQuery("<a>"+(appendopts.text)+"</a>")
+						.bind("click", getClickHandler(page_id))
+						.attr('href', opts.link_to.replace(/__id__/,page_id));
+						
+						
+				}
+				if(appendopts.classes){lnk.addClass(appendopts.classes);}
+				panel.append(lnk);
+			}
+			
+			// Generate "Previous"-Link
+			if(opts.prev_text && (current_page > 0 || opts.prev_show_always)){
+				appendItem(current_page-1,{text:opts.prev_text, classes:"prev"});
+			}
+			
+			// Generate starting points
+			if (interval[0] > 0 && opts.num_edge_entries > 0)
+			{
+				var end = Math.min(opts.num_edge_entries, interval[0]);
+				for(var i=0; i<end; i++) {
+					appendItem(i);
+				}
+				if(opts.num_edge_entries < interval[0] && opts.ellipse_text)
+				{
+					jQuery("<span>"+opts.ellipse_text+"</span>").appendTo(panel);
+				}
+			}
+			// Generate interval links
+			for(var i=interval[0]; i<interval[1]; i++) {
+				appendItem(i);
+			}
+			// Generate ending points
+			if (interval[1] < np && opts.num_edge_entries > 0)
+			{
+				if(np-opts.num_edge_entries > interval[1]&& opts.ellipse_text)
+				{
+					jQuery("<span>"+opts.ellipse_text+"</span>").appendTo(panel);
+				}
+				var begin = Math.max(np-opts.num_edge_entries, interval[1]);
+				for(var i=begin; i<np; i++) {
+					appendItem(i);
+				}
+				
+			}
+			// Generate "Next"-Link
+			if(opts.next_text && (current_page < np-1 || opts.next_show_always)){
+				appendItem(current_page+1,{text:opts.next_text, classes:"next"});
+			}
+		}
+		
+		// Extract current_page from options
+		var current_page = opts.current_page;
+		// Create a sane value for maxentries and items_per_page
+		maxentries = (!maxentries || maxentries < 0)?1:maxentries;
+		opts.items_per_page = (!opts.items_per_page || opts.items_per_page < 0)?1:opts.items_per_page;
+		// Store DOM element for easy access from all inner functions
+		var panel = jQuery(this);
+		// Attach control functions to the DOM element 
+		this.selectPage = function(page_id){ pageSelected(page_id);}
+		this.prevPage = function(){ 
+			if (current_page > 0) {
+				pageSelected(current_page - 1);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		this.nextPage = function(){ 
+			if(current_page < numPages()-1) {
+				pageSelected(current_page+1);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		// When all initialisation is done, draw the links
+		drawLinks();
+        // call callback function
+        opts.callback(current_page, this);
+	});
+}
+
+</script>

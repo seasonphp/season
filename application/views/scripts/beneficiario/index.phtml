@@ -1,0 +1,175 @@
+<!-- PESQUISAS, FORMULÁRIO RELATÓRIOS TUDO COMPLETO  -->
+
+<?php
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+
+ 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ 
+
+  
+  
+  /* CSS PARA EFEITO NOS BOTOES */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');
+
+ /* js/jquery-ui/development-bundle/ui  */
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+
+  
+  
+  /* CHAMA EFEITO DO LIGHTBOX */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+ 
+?>
+
+	<script>
+	$(function() {
+		$( ".novo" ).button({
+            icons: {
+                primary: "ui-icon-person"
+            }
+        });
+
+		$( ".alterar" ).button({
+            icons: {
+                primary: "ui-icon-check"
+            }
+        });
+		
+		$( ".relatorio" ).button({
+            icons: {
+                primary: "ui-icon-image"
+            }
+        });		
+		
+		$( ".baixar" ).button({
+            icons: {
+                primary: "ui-icon-script"
+            }
+        });
+		
+	});
+	</script>
+	
+	
+	
+	
+
+<!-- FUNÇÃO PARA ENVIAR A PÁGINA A CRIAÇÃO DE NOVO FORMULÁRIO --> 
+<script>
+function novoform()
+{
+document.location.href='beneficiario/novo';
+}
+</script>
+
+
+
+
+<script type="text/javascript">
+	$(function(){ 
+		$("#jqgrid1tb").jqGrid({
+			url: '/beneficiario/jsonindex',
+			datatype: 'json',
+			colModel: [
+				{name:'codigo', index:'codigo', label: 'Codigo', sorttype:'text', width:80, align:'center'},
+				{name:'cpn', index:'cpn', label: 'CPF', sorttype:'text', width:100, align:'center'},
+				{name:'nomeBene', index:'nomeBene', label: 'Nome', sorttype:'text', width:170, align:'center'},
+				{name:'matricula', index:'matricula', label: 'Matricula', sorttype:'text', width:50, align:'center'}
+				
+			],
+			/*jsonReader: {
+				total: 'total_pages',
+				records: 'total'
+			},*/
+			loadonce: true, /*carrega todos os dados de uma vez*/
+			rowNum: 12,
+			sortname: 'Nome',
+			sortable: true,
+			viewrecords: true,
+			pager: '#jqgrid1pg',
+			caption: 'Pesquisa de usuários',
+			width:900,
+			height:280,
+			onSelectRow: function(id){window.location="/beneficiario/exibe/id/"+id;}
+		});
+		$('#jqgrid1tb').navGrid('#jqgrid1pg', {edit: false, add: false, del: false}, {}, {}, {}, {multipleSearch: true});
+		$('#jqgrid1tb').filterToolbar({stringResult:true, searchOnEnter:false});
+		$('#jqgrid1tb').navSeparatorAdd('#jqgrid1pg');
+	});	
+	
+		$(function(){ 
+		$("#alterados").jqGrid({
+			url: '/beneficiario/jsonalterados',
+			datatype: 'json',
+			colModel: [
+				{name:'Nome', index:'Nome', label: 'Nome', sorttype:'text', width:100, align:'center'},
+				{name:'Sexo', index:'Sexo', label: 'Sexo', sorttype:'text', width:100, align:'center'},
+				{name:'RDP', index:'RDP', label: 'RDP', sorttype:'text', width:100, align:'center'}				
+			],
+			/*jsonReader: {
+				total: 'total_pages',
+				records: 'total'
+			},*/
+			loadonce: true, /*carrega todos os dados de uma vez*/
+			rowNum: 12,
+			sortname: 'Nome',
+			hiddengrid: true,
+			sortable: true,
+			viewrecords: true,
+			pager: '#pagina',
+			caption: 'Beneficiarios aguardando alteração',
+			width:900,
+			height:280,
+			onSelectRow: function(id){window.location="/beneficiario/exibealterados/id/"+id;}
+		});
+		$('#alterados').navGrid('#pagina', {edit: false, add: false, del: false}, {}, {}, {}, {multipleSearch: true});
+		$('#alterados').filterToolbar({stringResult:true, searchOnEnter:false});
+		$('#alterados').navSeparatorAdd('#pagina');
+	});	
+	
+</script>
+
+
+<div class="span-23">
+
+
+			<!--  <button class="pesquisa" onClick="procura()">Pesquisar</button> -->
+			<a class="novo" href="/beneficiario/novo">Novo Titular/Família</button>
+			<a class="alterar" href="/beneficiario/enviaralteracoes">Enviar alterações</a> 
+			<a class="relatorio" href="/relatorio/index">Relatórios</a> 
+			<a class="baixar" target="_blank" href="/manual/manualdepreenchimento.pdf">Baixar manual de preenchimento</a> 
+			<br />
+			<br>
+			<hr>
+		
+		<div style="margin-left:25px;">
+		<table id="alterados"></table>
+		<div id="pagina"></div>
+
+		<table id="flex1" style="display:none"></table>
+		</div>
+	
+		<br>
+		
+		<div style="margin-left:25px;">
+		<table id="jqgrid1tb"></table>
+		<div id="jqgrid1pg"></div>
+
+		<table id="flex1" style="display:none"></table>
+		</div>	
+
+		<br>
+</div>
+
+	

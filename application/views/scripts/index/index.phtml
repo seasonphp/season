@@ -1,0 +1,51 @@
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+//$this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+$this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+?>
+
+
+<div style="margin-left:25px;">
+    
+    <center><h2> Selecione um contrato abaixo </h2></center>
+    
+    
+<table id="jqgrid1tb"></table>
+<div id="jqgrid1pg"></div>
+
+<table id="flex1" style="display:none"></table>
+</div>
+<script type="text/javascript">
+	$(function(){ 
+		$("#jqgrid1tb").jqGrid({
+			url: '/index/jsonprocesso',
+			datatype: 'json',
+			colModel: [
+				{name:'Codigo', index:'Codigo', label: 'Codigo', sorttype:'text', width:75, align:'center'},
+				{name:'Contratante', index:'Contratante', label: 'Contratante', sorttype:'text', width:75, align:'center'},
+				{name:'Modelo', index:'Modelo', label: 'Nome do contrato', sorttype:'text', width:150, align:'center'}
+			],
+			/*jsonReader: {
+				total: 'total_pages',
+				records: 'total'
+			},*/
+			loadonce: true, /*carrega todos os dados de uma vez*/
+			rowNum: 12,
+			sortname: 'Nome',
+			sortable: true,
+			viewrecords: true,
+			pager: '#jqgrid1pg',
+			caption: 'Contratos',
+			width:900,
+			height:230,
+			onSelectRow: function(id){window.location="/index/seleciona/id/" + id;}
+		});
+		$('#jqgrid1tb').navGrid('#jqgrid1pg', {edit: false, add: false, del: false}, {}, {}, {}, {multipleSearch: true});
+		$('#jqgrid1tb').filterToolbar({stringResult:true, searchOnEnter:false});
+		$('#jqgrid1tb').navSeparatorAdd('#jqgrid1pg');
+	});	
+</script>

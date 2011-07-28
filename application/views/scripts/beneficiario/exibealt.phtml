@@ -1,0 +1,970 @@
+<!-- VIEW QUE EXIBE DADOS DO BENE -->
+<?php
+// CHAMADA DE CSS
+$this->headLink()->appendStylesheet($this->baseUrl() . '/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');
+$this->headLink()->appendStylesheet($this->baseUrl() . '/css/estilo.css');
+?>
+
+<!-- MODULO -->
+<div id="altmodulo" title="Alteração de modulo">
+    <table border="1">
+        <tr>
+            <td>Nome do Modulo</td>
+            <td>Data Inicio</td>
+            <td>Data Fim</td>
+        </tr>
+        <?php
+        foreach ($this->dadosModuloHistorico as $value) {
+            if ($this->date($value['FimVigencia']) == null) {
+                $moduloOld = $value['Codigo'];
+                $inicioVigenciaOld = $this->date($value['InicioVigencia']);
+                $idModulo = $value['idModulo'];
+            }
+            ?>
+            <tr>
+                <td><?php echo $value['Nome'] ?></td>
+                <td><?php echo $this->date($value['InicioVigencia']) ?></td>
+                <td><?php echo $this->date($value['FimVigencia']) ?></td>
+            </tr>
+            <?php
+        }
+        ?>
+    </table>
+    <button type="submit" id="exibir" class="botao" >Inserir novo modulo</button>
+
+    <div id="conteudoModulo">
+        <form action="/beneficiario/altmodulo" method="post" id="alteraModulo">
+            <input type="hidden" name="id" value="<?php echo $this->id ?>">
+            <select name="modulo" id="pmodulo" onChange="pegaNome(this)">
+                <option value=""> Selecione </option>
+                <?php foreach ($this->dadosModuloContrato as $key => $reg) { ?>
+                    <option value="<?php echo $reg['Codigo'] ?>"><?php echo $reg['Nome'] ?></option>
+                <?php } ?>
+            </select>
+
+			Data Inicio:
+
+            <input name="inicioVigencia" id="inicioVigencia" value="" class="dateBR" type="text" size="10">
+
+            <div id="erroModulo" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">A data de inicio de vigencia é inválida ou não foi informada </b>
+            </div>
+            <div id="erroModulo2" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">Existe campo não preenchido! </b>
+            </div>
+
+            <br>
+            <div class="clear"></div>
+
+            <!-- Old vao ser usados para dar um update do fimVigencia -->
+            <input type="hidden" name="inicioVigenciaOld" value="<?php echo $inicioVigenciaOld ?>">
+            <input type="hidden" name="idModulo" value="<?php echo $idModulo ?>">
+            <input type="hidden" name="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId']; ?>">
+            <!--PASSANDO CONTRATO E FAMILIA PARA O CONTROLLER FAZER A PESQUISA NO BANCO DA UNIMED-->
+            <input type="hidden" name="contrato" value="<?php echo $this->dados['Contrato']; ?>">
+            <input type="hidden" name="familia" value="<?php echo $this->dados['Familia']; ?>">
+
+            <!-- AQUI PEGAREMOS A Nome PARA COLOCAR NO BD ENTAO O INPUT EH ESCONDIDO -->
+            <input type="hidden" name="NomePlano" id="NomePlano" value="">
+        </form>
+        <input id="vaiajax" class="botao" type="submit" name="confirmar" value="Confirmar">
+        <input  class="botao" type="button" value="Cancelar" id="cancelar">
+
+    </div>
+    <br>
+
+    <div id="carregaModulo" class="hide" > 
+			Aguarde... 
+        <br>
+        <img src="<?php echo $this->baseUrl() ?>/imagens/carregando.gif"/> 
+    </div>
+
+</div> 
+
+<!--LOCAL DE ATENDIMENTO-->
+<div id="altlocal" title="Alterar local de atendimento">
+    <table border="1">
+        <tr>
+            <td>Nome do Local de Atendimento</td>
+            <td>Data Inicio</td>
+            <td class="limpo">Data Fim</td>
+        </tr>	
+        <?php
+        $idlcat = null;
+
+        foreach ($this->dadosLocalHistorico as $value) {
+            if ($this->date($value['FimVigencia']) == null) {
+                $idlcat = $value['idlcat'];
+            }
+            ?>
+            <?php if ($value['Nome'] != null) { ?>
+                <tr>
+                    <td><?php echo $value['Nome'] ?></td>
+                    <td><?php echo $this->date($value['InicioVigencia']) ?></td>
+                    <td><?php echo $this->date($value['FimVigencia']) ?></td>
+                </tr>
+                <?php
+            }
+            ?>
+
+            <?php
+        }
+        ?>
+    </table>
+    <button type="submit" id="exibirLcat" class="botao" >Inserir novo Local</button> 
+    <div id="conteudoLcat">
+        <form id="alteraLcat" action="/beneficiario/altlocal" method="post" >
+            <input type="hidden" name="id" value="<?php echo $this->id ?>">
+            <select name="local" id="plocal" onChange="pegaNomeLcat(this)">
+                <option></option>
+                <?php if ($this->dadosLocalContrato == null) { ?>
+                    <?php
+                } else {
+                    foreach ($this->dadosLocalContrato as $key => $reg) {
+                        ?>
+                        <option value="<?php echo $reg['Codigo'] ?>"><?php echo $reg['NomeReduzido'] ?></option>
+                        <?php
+                    }
+                }
+                ?>
+            </select>
+
+			Data Inicio:
+            <input name="inicioVigenciaLcat" class="dateBR" type="text" size="10" id="inicioVigenciaLcat" >
+            <div id="erroLcat" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">A data de inicio de vigencia é inválida ou não foi informada </b>
+            </div>
+            <div id="erroLcat2" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">Existe campo não preenchido! </b>
+            </div>
+
+            <br/>
+
+            <!-- Old vao ser usados para dar um update do fimVigencia -->
+            <input type="hidden" name="idlcat" value="<?php echo $idlcat ?>">
+            <input type="hidden" name="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId']; ?>">
+            
+            <!--PASSANDO CONTRATO E FAMILIA PARA O CONTROLLER FAZER A PESQUISA NO BANCO DA UNIMED-->
+            <input type="hidden" name="contrato" value="<?php echo $this->dados['Contrato']; ?>">
+            <input type="hidden" name="familia" value="<?php echo $this->dados['Familia']; ?>">
+            
+            <!-- AQUI PEGAREMOS A Nome PARA COLOCAR NO BD ENTAO O INPUT EH ESCONDIDO -->
+            <input type="hidden" name="NomeLcat" id="NomeLcat" value="">
+        </form>
+        <input  class="botao" id="altLcat" name="confirmar" value="Confirmar">
+        <input  class="botao" type="button" value="Cancelar" id="cancelar">
+    </div>
+
+    <div id="carregaLcat" class="hide" > 
+			Aguarde... 
+        <br>
+        <img src="<?php echo $this->baseUrl() ?>/imagens/carregando.gif"/> 
+    </div>
+</div> 
+
+<!-- LOTAÇÃO -->
+<div id="altlotacao" title="Alterar lotação do usuario">
+    <table border="1">
+        <tr>
+            <td>Nome do Modulo</td>
+            <td>Data Inicio</td>
+            <td>Data Fim</td>
+        </tr>		
+        <?php
+        $moduloOld = null;
+        $inicioVigenciaOld = null;
+        $idlotacao = null;
+
+        foreach ($this->dadosLotacaoHistorico as $value) {
+            if ($this->date($value['FimVigencia']) == null) {
+                $moduloOld = $value['Codigo'];
+                $inicioVigenciaOld = $this->date($value['InicioVigencia']);
+                $idlotacao = $value['idLotacao'];
+            }
+            ?>
+            <?php if ($value['Nome'] != null) { ?>
+                <tr>
+                    <td><?php echo $value['Nome'] ?></td>
+                    <td><?php echo $this->date($value['InicioVigencia']) ?></td>
+                    <td><?php echo $this->date($value['FimVigencia']) ?></td>
+                </tr>
+                <?php
+            }
+        }
+        ?>
+    </table>
+    <button type="submit" id="exibirLotacao" class="botao" >Inserir nova Lotação</button> 
+    <div id="conteudoLotacao">
+        <form action="/beneficiario/altlotacao" method="post" id="dadosLotacao">
+            <input type="hidden" name="id" value="<?php echo $this->id ?>">
+            <select name="lotacao" id="plotacao" onChange="pegaNomeLotacao(this)";>
+                    <option></option>
+<?php if ($this->dadosLotacaoContrato == null) { ?>
+
+                            <?php
+                        } else {
+                            foreach ($this->dadosLotacaoContrato as $key => $reg) {
+                                ?>
+                        <option value="<?php echo $reg['Codigo'] ?>"><?php echo $reg['Nome'] ?></option>
+                        <?php
+                    }
+                }
+                ?>
+            </select>
+
+			Data Inicio:
+            <input class="dateBR" name="inicioVigenciaLotacao" class="data" type="text" size="10" id="inicioVigenciaLotacao">
+            <div id="erroLotacao" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">A data de inicio de vigencia é inválida ou não foi informada </b>
+            </div>
+            <div id="erroLotacao2" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">Existe campo não preenchido! </b>
+            </div>
+
+            <br/>
+            <!-- Old vao ser usados para dar um update do fimVigencia -->
+            <input type="hidden" name="inicioVigenciaOld" value="<?php echo $inicioVigenciaOld ?>">
+            <input type="hidden" name="idLotacao" value="<?php echo $idlotacao ?>">
+            <input type="hidden" name="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId']; ?>">
+
+            <!--PASSANDO CONTRATO E FAMILIA PARA O CONTROLLER FAZER A PESQUISA NO BANCO DA UNIMED-->
+            <input type="hidden" name="contrato" value="<?php echo $this->dados['Contrato']; ?>">
+            <input type="hidden" name="familia" value="<?php echo $this->dados['Familia']; ?>">
+            
+            <!-- AQUI PEGAREMOS A Nome PARA COLOCAR NO BD ENTAO O INPUT EH ESCONDIDO -->
+            <input type="hidden" name="NomeLotacao" id="NomeLotacao" value="">
+
+        </form>
+        <input  class="botao" type="submit" name="confirmar" value="Confirmar" id="confirmaLotacao">
+        <input  class="botao" type="button" value="Cancelar" id="cancelar">
+    </div>
+    <div id="carregaLotacao" class="hide" > 
+			Aguarde... 
+        <br>
+        <img src="<?php echo $this->baseUrl() ?>/imagens/carregando.gif"/> 
+    </div>
+</div> 
+
+<!--ENDERECO-->
+<div id="altendereco" title="Alterar Endereco">
+
+    <!-- 1 LINHA DE LABEL -->
+    <b> Endereços desse beneficiario </b>
+
+    <?php
+    $idEndereco = null;
+
+    foreach ($this->dadosEnderecoHistorico as $value) {
+        if ($this->date($value['FimVigencia']) == null) {
+            $idEndereco = $value['idEndereco'];
+        }
+    }
+    ?>
+
+
+    <div id="exibeTodosEnderecos">
+
+        <table>
+            <tr>
+                <td><b> Seq: </b></td>
+                <td><b> Rua </b></td>
+                <td><b> Bairro </b></td>
+                <td><b> Cidade </b></td>
+                <td><b> Tipo </b></td>
+                <td><b> Inicio </b></td>
+                <td><b> Fim </b></td>
+            </tr>
+
+            <?php
+            //#####################################################################
+            //
+			//      AQUIIII COMEÇA O FOREACH 
+            //
+			//
+			//#####################################################################
+
+
+
+
+            foreach ($this->dadosEnderecoHistorico as $k => $r) {
+                ?>
+
+                <tr>
+                    <td><?php echo $r['Seq']; ?> &nbsp;</td>
+                    <td><?php echo ($r['Logradouro'] != null) ? $r['Logradouro'] . ' nº' . $r['NumLogradouro'] : ""; ?> &nbsp;</td>
+                    <td><?php echo $r['Bairro']; ?> &nbsp;</td>
+                    <td><?php echo $r['NomeCidade']; ?> &nbsp;</td>
+                    <td><?php echo ($r['Tipo'] == 1) ? "Comercial" : ($r['Tipo'] == 2) ? "Residencial" : "" ; ?> &nbsp;</td>
+                    <td><?php echo $this->date($r['InicioVigencia']); ?> &nbsp;</td>
+                    <td><?php echo $this->date($r['FimVigencia']); ?> &nbsp; </td>
+                </tr>
+
+                <?php
+                //#####################################################################
+                ##############   AQUIIII TA FECHANDO O FOREACH               ##########
+                //#####################################################################
+                $seq = $r['Seq'];
+                ($seq == null) ? $seq = 0 : $seq = $seq;
+            }
+            ?>
+        </table>
+    </div>	
+
+
+    <button type="submit" id="exibirEndereco" class="botao" >Inserir novo endereco</button> 
+
+    <div id="conteudoEndereco1">
+        <form action="/beneficiario/cadendereco" id="conteudoEndereco" method="POST">	
+            <input type="hidden" name="idBeneficiarioUnimed" id="idBeneficiarioUnimed" value="<?php echo $this->dados['AutoId']; ?>">	
+            <input type="hidden" name="idEndereco" id="idEndereco" value="<?php echo $idEndereco ?>">		
+            <input type="hidden" name="iniCaixaVig" id="iniCaixaVig" value="<?php $data = date("d/m/Y");
+            echo $data; ?>">
+
+            <div class="clear"> &nbsp; </div>
+            <p><b> Endereço </b></p>
+
+            <!-- NOMES LINHA 10 -->
+            <div class="span-21">
+                <div class="span-3"> Tipo </div> 
+                <div class="span-7"> Logradouro </div> 
+                <div class="span-2"> Número </div>
+                <div class="span-4"> Complemento </div>
+                <div class="span-4"> Caixa postal </div> 
+            </div>	
+
+            <!-- INPUTS LINHA 10 -->
+            <div class="span-21">
+                <!-- ESSE É O SEQ E ESTA OCULTO -->
+                <input type="hidden" name="endSeq" id="endSeq" size="2" value="<?php echo $seq += 1; ?>" />
+                <div class="span-3"> 
+                    <select name="endtipo" id="endtipo">
+                        <option> </option>
+                        <option value="1">Comercial</option>
+                        <option value="2">Residencial</option>
+                    </select>
+                </div>
+                <div class="span-6"> <input type="text" name="Logradouro" id="Logradouro" size="40" value="" /> </div>
+                <div class="span-2 push-1"> <input type="text" name="NumLogradouro" id="NumLogradouro" size="6" maxlength="6" value="" /> </div>
+                <div class="span-4 push-1"> <input type="text" name="ComplLogradouro" id="ComplLogradouro" size="15" value="" /> </div>				
+                <div class="span-4 push-1">  <input type="text" name="CaixaPostal" id="CaixaPostal" size="15" value="" /> 
+                </div>
+            </div>
+
+            <!-- NOMES LINHA 11 -->
+            <div class="span-21">
+                <div class="span-6"> Cidade </div>
+                <div class="span-4"> Bairro </div>
+                <div class="span-3"> CEP </div> 
+                <div class="span-4"> Ponto de referência </div>
+            </div>
+
+            <!-- INPUTS LINHA 11 -->
+            <div class="span-21">
+                <div class="span-6">   
+                    <input type="hidden" name="idCidade" id="idCidade">
+                    <input type="text" name="Cidade" id="Cidade" size="24" value="" readonly="true" />
+                    <button class="cidade" ></button>
+                </div>					
+                <div class="span-4">  <input type="text" name="Bairro" id="Bairro" size="20" value="" /> </div>
+                <div class="span-3">  <input type="text" name="CEP" id="CEP" size="8" class="cep" value="" onblur="return getEndereco()" /> </div>
+                <div class="span-4">  <input type="text" name="PontoReferencia" id="PontoReferencia" size="20" value="" /> </div>
+            </div>	
+
+            <br />
+
+
+            <input  class="botao" name="confirmaEndereco" id="confirmaEndereco" value="Cadastrar novo endereço" >
+
+            <div id="erroEndereco" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">A data de inicio de vigencia é inválida ou não foi informada </b>
+            </div>
+            <div id="erroEndereco2" class="hide" > 
+                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"/>  <b class="error">Existe campo não preenchido! </b>
+            </div>
+
+        </form>	
+        <!-- BOTÃO DE INSERIR -->	
+    </div>
+</div>
+<!-- PARTE PRINCIPAL DA PÁGINA - FECHE AQUI PARA SE LOCALIZAR -->
+<div class="span-23">
+    <!--CIDADE-->
+    <div id="pesquisa" title="Pesquisa de cidade">
+        <div class="span-12">
+			Nome da cidade 
+            <input type="text" name="cidadeNome" id="cidadeNome" /> 
+            <button class="pesquisa" onclick="$( '#carregaCid').show(),$('#res_pesquisa').load('/beneficiario/pesqcidade',{t:1,q:$('#cidadeNome').val()})"> Pesquisar </button>
+        </div>
+        <div class="span-12" id="res_pesquisa">
+            <div id="carregaCid" class="hide">
+                <center> <h2 class="branco">Aguarde, estamos localizando a cidade</h2> <img src="<?php echo $this->baseUrl() ?>/imagens/carregando.gif"  /></center>
+            </div>
+        </div>	
+    </div> 
+    <!--NATURALIDADE-->
+    <div id="pesquisa_naturalidade" title="Pesquisa de cidade de naturalidade">		
+        <div class="span-12">
+			Nome da cidade 
+            <input type="text" name="cidadeNomeNaturalidade" id="cidadeNomeNaturalidade" /> 
+            <button class="pesquisa" onclick="$( '#carregaNat').show(),$('#res_pesquisa_naturalidade').load('/beneficiario/pesqcidade',{t:2,q:$('#cidadeNomeNaturalidade').val()})"> Pesquisar </button>
+        </div>
+        <div class="span-12" id="res_pesquisa_naturalidade">
+            <div id="carregaNat" class="hide">
+                <center> <h2 class="branco">Aguarde, estamos localizando a cidade</h2> <img src="<?php echo $this->baseUrl() ?>/imagens/carregando.gif"  /></center>
+            </div>
+        </div>
+    </div> 
+
+
+    <!-- TABS -->
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1"><h3 class="branco">Beneficiario <?php echo $this->dados['Nome']; ?> </h3>  </a></li>
+            <!--<li><a href="#tabs-2">Anexar arquivos</a></li>
+				<li><a href="#tabs-3">Finalizar cadastro</a></li> -->
+        </ul>
+        <!-- TABS - PÁGINAS -->
+        <div id="tabs-1">
+
+            <form name="novobeneficiario" id="novobeneficiario" method="POST" action="/beneficiario/alt ">	
+                <button type="submit" class="botao" id="confirma" >Confirmar alteração</button> 
+
+
+                <p><b><h4 class="branco">Dados do beneficiario </h4></b></p>
+
+                <div class="span-21 quadroGrande">
+                    <input type="hidden" name="idBeneficiario" 
+                           value="<?php echo $this->dados['idBeneficiario']; ?>" />
+
+                    <!-- NOMES LINHA 1 -->
+                    <div class="span-21">
+                        <div class="span-4"> Contrato </div> 
+                        <div class="span-4"> Familia </div>
+                        <div class="span-6"> Grau de Dependência </div>
+                        <div class="span-3"> Inicio Vigencia </div>
+                    </div>		
+
+                    <!-- INPUTS LINHA 1 -->
+                    <div class="span-21">
+                        <div class="span-4">  
+                            <input type="text" name="contrato" id="contrato" size="15" value="<?php echo $this->dados['Contrato']; ?>" readonly="true" />
+                        </div> 
+                        <div class="span-4">  
+                            <input type="text" name="Familia" readonly id="Familia" size="15" value="<?php echo $this->dados['Familia']; ?>" />
+                        </div>					
+                        <div class="span-6">
+                            <select name="RDP" id="RDP"> 
+                                <?php if ($this->dados['RDP'] == 0) { ?>
+                                    <option value="0">Titular</option>
+                                    <?php } else { ?>							
+                                    <option>Selecione</option>
+                                    <?php
+                                    foreach ($this->rdp as $r => $s) {
+                                        if ($this->dados['RDP'] == $r) {
+                                            echo '<option value="' . $r . '" selected>' . $s . '</option>';
+                                        } else {
+                                            echo '<option value="' . $r . '">' . $s . '</option>';
+                                        }
+                                    }
+                                    ?>							
+                                <?php } ?> 
+                            </select>
+                        </div>
+                        <div class="span-3"> 
+                            <input type="text" name="InicioVigencia" id="InicioVigencia" size="12" value="<?php echo $this->date($this->dados['InicioVigencia']); ?>"/>
+                        </div>				
+                    </div>	
+
+                    <!-- NOMES LINHA 2 -->
+                    <div class="span-21">
+                        <div class="span-8"> Nome</div> 
+                        <div class="span-3"> Sexo </div>
+                        <div class="span-3"> Nascimento </div>
+                        <div class="span-3"> Estado civil </div>
+                        <div class="span-3 DecNascidoVivo hide"> Dec. Nascido Vivo </div>
+                    </div>					
+
+                    <!-- INPUTS LINHA 2 -->					
+                    <div class="span-21">
+                        <div class="span-8">  
+                            <input type="text" name="Nome" id="Nome" size="42" value="<?php echo $this->dados['Nome']; ?>"/> 
+                        </div> 
+                        <div class="span-3">           
+                            <select name="Sexo" id="Sexo">
+                                <?php if ($this->dados['Sexo'] == 'F') { ?>
+                                    <option value="F" selected>Feminino</option>
+                                    <option value="M" >Masculino</option>
+                                <?php } else { ?>
+                                    <option value="M" selected>Masculino</option>
+                                    <option value="F" >Feminino</option>
+                                <?php } ?>				
+                            </select>
+                        </div>
+
+                        <div class="span-3"> 
+                            <input type="text" name="DataNascimento" id="DataNascimento" class="dateBR" size="12" value="<?php echo $this->date($this->dados ['DataNascimento']); ?>" />
+                            <br>
+                            <div id="erroData" class="hide error"> <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png" /> Data errada </div>
+                        </div>				
+                        <div class="span-3"> 	
+                            <select name="EstadoCivil" id="EstadoCivil">				
+<?php
+// AQUI PRESTAR MUITA ATENÇÃO PARA NÃO CAGAR
+// CAGA NAO
+
+switch ($this->dados['EstadoCivil']) {
+    case "A":
+        ?>
+                                        <option value="A" selected >Separado</option>
+                                        <option value="D">Divorciado</option>
+                                        <option value="M">Casado</option>
+                                        <option value="S">Solteiro</option>
+                                        <option value="U">União estável</option>
+                                        <option value="W">Viúvo</option>
+        <?php
+        break;
+    case "D":
+        ?>
+                                        <option value="A" >Separado</option>
+                                        <option value="D" selected>Divorciado</option>
+                                        <option value="M">Casado</option>
+                                        <option value="S">Solteiro</option>
+                                        <option value="U">União estável</option>
+                                        <option value="W">Viúvo</option>
+        <?php
+        break;
+    case "M":
+        ?>
+                                        <option value="A" >Separado</option>
+                                        <option value="D">Divorciado</option>
+                                        <option value="M"selected>Casado</option>
+                                        <option value="S">Solteiro</option>
+                                        <option value="U">União estável</option>
+                                        <option value="W">Viúvo</option>
+        <?php
+        break;
+    case "S":
+        ?>
+                                        <option value="A" >Separado</option>
+                                        <option value="D">Divorciado</option>
+                                        <option value="M">Casado</option>
+                                        <option value="S"selected>Solteiro</option>
+                                        <option value="U">União estável</option>
+                                        <option value="W">Viúvo</option>
+        <?php
+        break;
+    case "U":
+        ?>
+                                        <option value="A" >Separado</option>
+                                        <option value="D">Divorciado</option>
+                                        <option value="M">Casado</option>
+                                        <option value="S">Solteiro</option>
+                                        <option value="U"selected>União estável</option>
+                                        <option value="W">Viúvo</option>
+        <?php
+        break;
+    case "W":
+        ?>
+                                        <option value="A" >Separado</option>
+                                        <option value="D">Divorciado</option>
+                                        <option value="M">Casado</option>
+                                        <option value="S">Solteiro</option>
+                                        <option value="U">União estável</option>
+                                        <option value="W"selected >Viúvo</option>
+        <?php
+        break;
+
+    default:
+        ?>
+                                        <option value="" selected >Selecione</option>
+                                        <option value="A" >Separado</option>
+                                        <option value="D">Divorciado</option>
+                                        <option value="M">Casado</option>
+                                        <option value="S">Solteiro</option>
+                                        <option value="U">União estável</option>
+                                        <option value="W">Viúvo</option>
+        <?php
+        break;
+}
+?>	
+                            </select>
+                        </div>
+                        <div class="span-3 DecNascidoVivo hide"> 
+                            <input type="text" name="DecNascidoVivo" id="DecNascidoVivo" value="<?php echo $this->dadosRegistro['DecNascidoVivo']?>"/>
+                        </div>
+                    </div>	
+
+                    <!-- NOMES LINHA 3-->
+                    <div class="span-21">
+                        <div class="span-8"> Naturalidade</div> 
+                        <div class="span-3"> CPF </div>
+                        <div class="span-4"> PIS </div>
+                    </div>	
+
+                    <!-- INPUTS LINHA 3 -->	
+                    <div class="span-21">
+                        <div class="span-8">
+                            <input type="hidden" name="idNaturalidade" id="idNaturalidade" value="<?php echo ($this->dados['Naturalidade'] != null and $this->dados['Naturalidade'] != 0) ? $this->dados['Naturalidade'] : ""; ?>"/>
+                            <input type="text" name="Naturalidade" id="Naturalidade" size="34" readonly="true" value="<?php echo ($this->dados['Naturalidade'] != null and $this->dados['Naturalidade'] != 0) ? $this->dados['NomeCidade'] . " / " . $this->dados['UF'] : ""; ?>"/>							
+                            <button class="naturalidade" ></button> 
+                        </div>
+                        <div class="span-3">  
+                            <input class="cpf" type="text" name="Cnp" id="Cnp" size="12" value="<?php echo $this->dados['Cnp']; ?>" />  
+                        </div>		
+                        <div class="span-4">  
+                            <input type="text" name="PIS" id="PIS" class="pis" size="12" value="<?php echo $this->dadosRegistro['PIS']; ?>" /> 
+                        </div>
+                    </div>
+
+                    <!-- NOVA LINHA INCLUIDA CPF E PIS -->
+                    <div class="span-22">
+                        <div class="span-4"> RG</div>					
+                        <div class="span-4"> Orgão emissor</div>					
+                        <div class="span-3"> UF</div>
+                        <div class="span-4"> Data expedição</div>	
+                    </div>
+
+                    <div class="span-22">	
+                        <div class="span-4"> 
+                            <input type="text" name="RG" onKeyUp="verificaRg(this)" id="RG" class="rg" size="16" value="<?php echo $this->dadosRegistro['RG']; ?>" />  
+                        </div> 	
+
+                        <!-- ORÇÃO EXPEDITOR -->
+                        <div class="span-4"> 
+<?php echo $this->Orgaoexpeditor('Orgaoexpeditor'); ?>
+                        </div>						
+                        <!-- UF RG -->
+                        <div class="span-3"> 
+<?php echo $this->Estado('UFRG', $this->dadosRegistro['UF']); ?>
+                        </div>	
+
+                        <!-- DAT EXPED -->
+                        <div class="span-4">
+                            <input type="text" class="dateBR" name="dataExped" id="dataExped" size="12" /> 
+                            <div id="erroExped" class="hide error">
+                                <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png"  />
+                                Data errada
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- NOMES LINHA 4-->
+                    <div class="span-21">
+                        <div class="span-8"> Nome mãe</div> 
+                        <div class="span-6"> Nome pai  </div>
+                        <div class="span-3"> Nome Conjuge </div>
+                    </div>
+
+                    <!-- INPUTS LINHA 4 -->
+                    <div class="span-21">
+                        <div class="span-8"> <input type="text" name="NomeMae" id="NomeMae" size="40" 
+                                                    value="<?php echo $this->dados['NomeMae']; ?>" />  </div> 
+                        <div class="span-6"> <input type="text" name="NomePai" id="NomePai" size="28" 
+                                                    value="<?php echo $this->dados['NomePai']; ?>" /> </div>
+                        <div class="span-3"> <input type="text" name="NomeConjuge" id="NomeConjuge" size="28" 
+                                                    value="<?php echo $this->dados['NomeConjuge']; ?>" /> </div>					
+                    </div>
+
+                    <!-- NOMES LINHA 5 -->
+                    <div class="span-21">
+                        <div class="span-3"> 
+                            <?php 
+                                echo ($this->dados['RDP'] == 0)?'Admissão':'&nbsp'
+                            ?>
+                        </div> 
+                        <div class="span-3"> Matricula  </div>
+                    </div>
+
+                    <!-- INPUTS LINHA 5 -->
+                    <div class="span-21">
+                        <div class="span-3">
+                            <?php 
+                                echo ($this->dados['RDP'] == 0)?'<input type="text" name="DataAdmissao" id="DataAdmissao" size="10" class="dateBR" value="<?php echo $this->date($this->dados["DataAdmissao"]); ?" />&nbsp;':'&nbsp'
+                            ?>     
+                            <br>
+                            <div id="erroAdmissao" class="hide error"> <img src="<?php echo $this->baseUrl() ?>/imagens/erro.png" /> Data errada </div>
+                        </div>
+                        <div class="span-6"> 
+                            <input type="text" name="Matricula" id="Matricula" size="10"  value="<?php echo $this->dados['Matricula']; ?>" /> &nbsp; 
+                        </div>
+                    </div>
+
+                    <!-- NOMES LINHA 6 -->
+                    <div class="span-21">
+                        <div class="span-8"> E-mail </div> 
+                        <div class="span-2"> Tipo Tel.   </div>
+                        <div class="span-3"> DDD  </div>
+                        <div class="span-4"> Telefone </div>
+                    </div>	
+
+                    <!-- INPUTS LINHA 6 -->
+                    <div class="span-21">
+                        <div class="span-8">
+                            <input type="text" name="Email" id="Email" size="38" value="<?php echo $this->dadosEmail['Email'] ?>" />
+                        </div> 
+                        <div class="span-2"> 
+                            <select name="Tipo" id="Tipo">
+                                <option> </option>
+<?php if ($this->dadosTelefone['Tipo'] == 1) { ?>
+                                    <option value="1" selected >Fixo</option>
+                                    <option value="2">Movel</option>
+                                    <option value="3">Fax</option>
+                                <?php }
+                                if ($this->dadosTelefone['Tipo'] == 2) { ?>
+                                    <option value="1">Fixo</option>
+                                    <option value="2" selected>Movel</option>
+                                    <option value="3">Fax</option>
+                                <?php }
+                                if ($this->dadosTelefone['Tipo'] == 3) { ?>
+                                    <option value="1">Fixo</option>
+                                    <option value="2">Movel</option>
+                                    <option value="3" selected>Fax</option>
+                                <?php }
+                                if ($this->dadosTelefone['Tipo'] == 0 or $this->dadosTelefone['Tipo'] == null) { ?>
+                                    <option value="1">Fixo</option>
+                                    <option value="2">Movel</option>
+                                    <option value="3">Fax</option>
+                                <?php } ?>
+                            </select> 
+                        </div>	
+
+                        <div class="span-3"> <input type="text" name="DDD" id="DDD" size="2" maxlength="2" class="ddd" value="<?php echo $this->dadosTelefone['DDD'] ?>" /> </div>				
+                        <div class="span-4"> <input  type="text" name="Numero" id="Numero" size="8" class="telefone" value="<?php echo $this->dadosTelefone['Numero'] ?>" /> </div>						
+                    </div>	
+
+                    <div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>				
+
+                    <div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+                    <hr>
+
+                    <!-- DADOS AGORA REFERENTES AO ENDEREÇO DO USUÁRIO COMPLETO E DADOS --> 
+                    <b>Endereços do beneficiario </b> <button class="endereco" ></button>	</a> 
+
+
+<?php foreach ($this->dadosEndereco as $k => $r) { ?>
+                        <br>
+                        <!-- NOMES LINHA 9  -->
+                        <div class="span-21">
+                            <div class="span-3"><b> Seq: </b> </div>
+                            <div class="span-8"><b> Logradouro </b></div>
+                            <div class="span-3"><b> Número </b></div>
+                            <div class="span-4"><b> Complemento</b></div>
+                        </div>
+
+                        <!-- INPUTS LINHA 9  -->
+                        <div class="span-21">
+                            <div class="span-3" id="endseq"> <?php echo $r['Seq']; ?>&nbsp;  </div>
+                            <div class="span-8" id="endlogradouro"> <?php echo $r['Logradouro']; ?>&nbsp;  </div>
+                            <div class="span-3" id="endnumero"> <?php echo $r['NumLogradouro']; ?> &nbsp;</div>
+                            <div class="span-4" id="endcomplemento"> <?php echo $r['ComplLogradouro']; ?> &nbsp;	</div>
+                        </div>
+
+
+                        <!-- NOMES LINHA 10 -->
+                        <div class="span-21">
+                            <div class="span-3"><b> Tipo </b></div> 
+                            <div class="span-8"><b> Bairro </b></div>
+                            <div class="span-8"><b> Cidade</b></div>
+                        </div>	
+
+                        <!-- INPUTS LINHA 10  -->
+                        <div class="span-21">
+                            <div class="span-3" id="endtipo"><?php echo ($r['Tipo'] == 1) ? "Comercial" : ($r['Tipo'] == 2) ? "Residencial" : "" ; ?>&nbsp;</div>	
+                            <div class="span-8" id="endbairro"> <?php echo $r['Bairro']; ?> &nbsp;</div>
+                            <div class="span-8" id="endcidade">   
+                                    <!--  <input type="hidden" name="idCidade" id="idCidade"> -->
+    <?php echo ($r['Cidade'] != null and $r['Cidade'] != 0) ? $r['NomeCidade'] . " / " . $r['UF'] : ""; ?>
+                            </div>				
+                        </div>	
+
+                        <!-- NOMES LINHA 11 -->
+                        <div class="span-21">
+                            <div class="span-3"> <b> CEP </b> </div> 
+                            <div class="span-4"> <b> Ponto de referência </b></div>
+                        </div>	
+
+                        <!-- INPUTS LINHA 11 -->
+                        <div class="span-21">
+                            <div class="span-3" id="endcep"> <?php echo $r['CEP']; ?>&nbsp; </div>					
+                            <div class="span-15" id="endpontoref"> <?php echo $r['PontoReferencia']; ?> &nbsp;</div>
+                        </div>	
+
+                        <div class="clear"> <!-- LIMPA LINHA  --> </div>
+
+                        <!-- NOMES LINHA 12 -->
+                        <div class="span-21">
+                            <div class="span-3"> <b>Caixa postal</b> </div> 
+                            <div class="span-3"> <b>Inicio vigência</b></div>
+                            <div class="span-3"> <b>Fim vigência </b></div>	
+                        </div>
+
+                        <!-- INPUTS LINHA 12 -->
+                        <div class="span-21">
+                            <div class="span-3" id="endcaixapostal">  <?php echo $r['CaixaPostal']; ?>&nbsp; </div>
+                            <div class="span-3" id="enddtinicio"> <?php echo $this->date($r['InicioVigencia']); ?> &nbsp;</div>					
+                            <div class="span-3" id="enddtfim"> <?php echo $this->date($r['FimVigencia']); ?> &nbsp;</div>	
+                        </div>
+
+                        <div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+                        <hr>			
+<?php } ?>
+
+                    <!-- INPUTS LINHA 7 [PLANO] -->	
+                    <div class="span-21">
+                        <div class="span-10"><b>Plano</b></div> 
+                        <div class="span-3"><b>Inicio</b></div>
+                        <div class="span-3"><b>Fim</b></div>
+                        <input type="hidden" name="Modulo" value="<? echo $this->dadosModulo['Codigo'] ?>">
+                    </div>
+
+                    <div class="span-21">
+<?php if ($this->dadosModulo['Nome'] == null) { ?>
+                            <div class="span-10">SEM MODULO</div>
+                            <div class="span-3">&nbsp;</div>
+                            <div class="span-3">&nbsp;</div>
+                            <?php } else { ?>
+                            <div class="span-10" id="plano"><?php echo $this->dadosModulo['Nome'] ?></div>
+                            <div class="span-3" id="dtiniciomodulo"><?php echo $this->date($this->dadosModulo['InicioVigencia']) ?></div>
+                            <div class="span-3" id="dtfimmodulo">&nbsp;</div>
+                            <?php
+                        }
+                        ?>
+                       
+                        <div class="span-3">
+                 <?php // if ($this->dados['RDP'] == 0) { ?>  <button class="modulo" ></button> <?php // } ?>    
+                        </div> 
+                            
+                    </div>	
+
+                    <!-- NOMES LINHA 8 [LCAT] -->
+                    <div class="span-21">
+                        <div class="span-10"><b>Local</b></div> 
+                        <div class="span-3"><b>Inicio</b></div>
+                        <div class="span-3"><b>Fim</b></div>
+                    </div>
+
+                    <!-- INPUTS LINHA 8 [LCAT] -->
+                    <div class="span-21">
+<?php if ($this->dadosLocal['Nome'] == null) { ?>
+                            <div class="span-10">SEM LOCAL DE ATENDIMENTO</div>
+                            <div class="span-3">&nbsp;</div>
+                            <div class="span-3">&nbsp;</div>
+    <?php } else { ?>
+                            <div class="span-10"><?php echo $this->dadosLocal['Nome'] ?></div>
+                            <div class="span-3"><?php echo $this->date($this->dadosLocal['InicioVigencia']) ?></div>
+                            <div class="span-3">&nbsp;</div>
+    <?php
+}
+?>
+
+                        <div class="span-3"> 
+                            <?php // if ($this->dados['RDP'] == 0) { ?>  <button class="local" ></button> <?php // } ?> 
+                        </div>
+                    </div>	
+
+                    <!-- NOMES LINHA 8 [LOTAÇÃO] -->
+                    <div class="span-21">
+                        <div class="span-10"><b>Lotação</b></div> 
+                        <div class="span-3"><b>Inicio</b></div>
+                        <div class="span-3"><b>Fim</b></div>	
+                    </div>
+
+                    <!-- INPUTS LINHA 8 [LOTAÇÃO] -->	
+                    <div class="span-21">
+<?php
+if ($this->dadosLotacao['Nome'] == null) {
+    ?>
+                            <div class="span-10">SEM LOTAÇÃO</div>
+                            <div class="span-3">&nbsp;</div>
+                            <div class="span-3">&nbsp;</div>
+    <?php } else { ?>
+                            <div class="span-10"><?php echo $this->dadosLotacao['Nome'] ?></div>
+                            <div class="span-3"><?php echo $this->date($this->dadosLotacao['InicioVigencia']) ?></div>
+                            <div class="span-3">&nbsp;</div>
+                            <?php
+                        }
+                        ?>
+                             
+                        <div class="span-3"> 
+                    <?php if ($this->dados['RDP'] == 0) { ?> <button class="lotacao" ></button> <?php } ?>
+                            
+                        </div>
+
+                    </div>
+
+                    <div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>
+
+                    <hr>
+                    <br>			
+                    <b>Inserir arquivos compactados </b>
+                    <input type="file" class="multi" accept="zip|rar" maxlength="2"/>
+                    <br>
+                    <hr>	
+
+                    <button type="submit" class="botao" id="confirma" >Confirmar alteração</button> 
+
+                </div>				
+        </div>
+
+        <!-- LIMPA DIVS VOANDO -->
+        <div class="clear"></div>
+        <p>&nbsp;</p>		
+        </form>
+
+        <br>
+        <br>
+    </div>
+</div>
+
+<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+
+
+<?php
+// CHAMADA DE JS  
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+
+//PARA FORMULARIO
+$this->headScript()->appendFile($this->baseUrl() . '/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/formularios/jquery.validate.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/formularios/arruma.js');
+
+//chamando JS da view
+$this->headScript()->appendFile($this->baseUrl() . '/js/views/exibealt.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/views/validarRg.js');
+
+
+//AJAX 
+$this->headScript()->appendFile($this->baseUrl() . '/js/ajax/lcat.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/ajax/modulo.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/ajax/lotacao.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/ajax/endereco.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/views/data.js');
+
+//CEP
+$this->headScript()->appendFile($this->baseUrl() . '/js/cep/cep.js');
+?>

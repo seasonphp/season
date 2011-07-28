@@ -1,0 +1,270 @@
+<?xml version='1.0' standalone='yes'?>
+<MovimentacaoCadastralAtualizacaoCompleta xmlns='MovimentacaoCadastralAtualizacaoCompleta.xsd'>
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>0</RDP>
+ <Familia>83</Familia>
+ <Matricula>12349</Matricula>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>0</GrauDependencia>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000083005</CodigoExterno>
+<Pessoa>
+<Nome>RONALDINHO GAUCHO</Nome>
+<DataNascimento>01/01/1984 00:00:00</DataNascimento>
+<Cnp>93334168700</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<Naturalidade>4</Naturalidade>
+<NomePai>RONALDINHO PAI</NomePai>
+<NomeMae>RONALDINHO MAE</NomeMae>
+<Invalidez>false</Invalidez>
+<Emails>
+<Email>RONALDINHO@MAIL.COM.BR</Email>
+<Seq>1</Seq>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Emails>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>2312454</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>102</NumLogradouro>
+<NomeLogradouro>AV MAL HUMBERTO A CASTELO</NomeLogradouro>
+<ComplLogradouro>ap 11</ComplLogradouro>
+<Bairro>BOQUEIRAO</Bairro>
+<Cidade>4</Cidade>
+<Cep>23432425</Cep>
+<PontoReferencia>APAS</PontoReferencia>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>19</DDD>
+<Numero>90238492</Numero>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Telefone>
+</Pessoa>
+ <Modulos>
+<Codigo>001076617</Codigo>
+<DataBaseCob>07/07/2011 00:00:00</DataBaseCob>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<QteMensRetr>0</QteMensRetr>
+</Modulos>
+</AtualizacaoCompleta> 
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>60</RDP>
+ <Familia>83</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>60</GrauDependencia>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000083609</CodigoExterno>
+<Pessoa>
+<Nome>TIO DO GAUCHO</Nome>
+<DataNascimento>01/01/1945 00:00:00</DataNascimento>
+<Cnp>07321701840</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>D</EstadoCivil>
+<Naturalidade>1</Naturalidade>
+<NomePai>PAI DO TIO</NomePai>
+<NomeMae>MAE DO TIO</NomeMae>
+<NomeConjuge>CONJUGE DO TIO</NomeConjuge>
+<Invalidez>false</Invalidez>
+<Emails>
+<Email>TIO@GMAIL.COM</Email>
+<Seq>1</Seq>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Emails>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>2342342342</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>102</NumLogradouro>
+<NomeLogradouro>AV MAL HUMBERTO A CASTELO</NomeLogradouro>
+<ComplLogradouro>ap 11</ComplLogradouro>
+<Bairro>BOQUEIRAO</Bairro>
+<Cidade>4</Cidade>
+<Cep>23432425</Cep>
+<PontoReferencia>APAS</PontoReferencia>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>19</DDD>
+<Numero>90238492</Numero>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Telefone>
+</Pessoa>
+ <Modulos>
+<Codigo>001076617</Codigo>
+<DataBaseCob>07/07/2011 00:00:00</DataBaseCob>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<QteMensRetr>0</QteMensRetr>
+</Modulos>
+<Titular>
+<Codigo>10766000083005</Codigo>
+</Titular>
+</AtualizacaoCompleta> 
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>13</RDP>
+ <Familia>83</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>10</GrauDependencia>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000083137</CodigoExterno>
+<Pessoa>
+<Nome>FILHO DO RONALDINHO GAUCHO</Nome>
+<DataNascimento>01/01/2000 00:00:00</DataNascimento>
+<Cnp>48524788801</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<Naturalidade>8</Naturalidade>
+<NomePai>PAI DO FILHO</NomePai>
+<NomeMae>MAE DO FILHO</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>1231245</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>102</NumLogradouro>
+<NomeLogradouro>AV MAL HUMBERTO A CASTELO</NomeLogradouro>
+<ComplLogradouro>ap 11</ComplLogradouro>
+<Bairro>BOQUEIRAO</Bairro>
+<Cidade>4</Cidade>
+<Cep>23432425</Cep>
+<PontoReferencia>APAS</PontoReferencia>
+<Tipo>2</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>19</DDD>
+<Numero>90238492</Numero>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Telefone>
+</Pessoa>
+ <Modulos>
+<Codigo>001076617</Codigo>
+<DataBaseCob>07/07/2011 00:00:00</DataBaseCob>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<QteMensRetr>0</QteMensRetr>
+</Modulos>
+<Titular>
+<Codigo>10766000083005</Codigo>
+</Titular>
+</AtualizacaoCompleta> 
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>50</RDP>
+ <Familia>83</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>50</GrauDependencia>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000083501</CodigoExterno>
+<Pessoa>
+<Nome>PAI DO GAUCHO</Nome>
+<DataNascimento>09/08/1978 00:00:00</DataNascimento>
+<Cnp>12682812120</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>M</EstadoCivil>
+<Naturalidade>5</Naturalidade>
+<NomePai>PAI DO PAI</NomePai>
+<NomeMae>MAE DO PAI</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>1231245411</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>102</NumLogradouro>
+<NomeLogradouro>AV MAL HUMBERTO A CASTELO</NomeLogradouro>
+<ComplLogradouro>ap 11</ComplLogradouro>
+<Bairro>BOQUEIRAO</Bairro>
+<Cidade>4</Cidade>
+<Cep>23432425</Cep>
+<PontoReferencia>APAS</PontoReferencia>
+<Tipo>2</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>19</DDD>
+<Numero>90238492</Numero>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Telefone>
+</Pessoa>
+ <Modulos>
+<Codigo>001076617</Codigo>
+<DataBaseCob>07/07/2011 00:00:00</DataBaseCob>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<QteMensRetr>0</QteMensRetr>
+</Modulos>
+<Titular>
+<Codigo>10766000083005</Codigo>
+</Titular>
+</AtualizacaoCompleta> 
+</MovimentacaoCadastralAtualizacaoCompleta>

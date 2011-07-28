@@ -1,0 +1,16 @@
+<div id="subconteudo" class="span-22">
+	<div class="span-7">
+		<h4 class="branco">Titulo:&nbsp<?php echo $this->noticia[0]['titulo'];?></h4>
+	</div>
+	<div class="span-9 last push-5" style="text-align:right;">
+		<h4 class="branco">Data:&nbsp<?php echo $this->Date($this->noticia[0]['data']);?></h4>
+	</div>
+	<div class="span-22 last" id="imagem">
+		<img class="push-4"src="<?php echo 'imagens'.$img = $this->noticia[0]['img']; ?>" width="400" height="400"></img>
+	</div>
+	
+	<div class="span-22 last">
+		</br></br>
+		<?php echo $this->noticia[0]['descricao'];?>
+	</div>
+</div>

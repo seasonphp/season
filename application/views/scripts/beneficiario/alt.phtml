@@ -1,0 +1,36 @@
+<style>
+info, push-1, a{
+	font-size:14px;
+	text-decoration:none;
+	text-style:none;
+}
+
+info, push-1, a:hover{
+	background-color:#006600;
+	color:#fff;
+	font-size:16px;
+
+}
+
+</style>
+
+<div class="span-23">
+	
+	<div class="success"> <h2> CADASTRO EFETUADO COM SUCESSO! </h2> </div>
+	<br>
+	<hr>
+	<div class="info"> <h3> O que você deseja fazer agora? Escolha as opções: </h3>
+	<br>
+		<div class="push-1">
+			<a href="/beneficiario/dependentes/familia/<?php echo $this->codFamilia; ?>/id/<?php echo $this->id; ?>/nome/<?php echo $this->nome; ?>">Adicionar um beneficiario dependente de <?php echo $this->nome; ?> </a>
+			<br>
+			<a href="/beneficiario/novo">Adicionar um novo beneficiario titular<a/>
+			<br>
+			<a href="/beneficiario/enviaralteracoes">Enviar alteração/inclusão de beneficiario</a> 
+		</div>
+		<div class="clear"><br></div>
+	</div>
+
+</div>
+ 
+	

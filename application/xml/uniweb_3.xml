@@ -1,0 +1,229 @@
+<?xml version='1.0' standalone='yes'?>
+<MovimentacaoCadastralAtualizacaoCompleta xmlns='MovimentacaoCadastralAtualizacaoCompleta.xsd'>
+<AtualizacaoCompleta>
+<Contrato>1678400</Contrato>
+<RDP>0</RDP>
+ <Familia>305</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>0</GrauDependencia>
+<InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>16784000305009</CodigoExterno>
+<Pessoa>
+<Nome>ADALBERTO DI PARDO</Nome>
+<DataNascimento>03/04/1969 00:00:00</DataNascimento>
+<Cnp>10832900885</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<NomePai>NOME DO PAI</NomePai>
+<NomeMae>MARILDA MOURA DI PARDO</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>34234234</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NomeLogradouro>R LIBERDADE 160</NomeLogradouro>
+<ComplLogradouro>AP 54</ComplLogradouro>
+<Bairro>BOQUEIRAO</Bairro>
+<Cidade>1716</Cidade>
+<Cep>11025030</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+<FimVigencia>22/06/2003 00:00:00</FimVigencia>
+</Endereco>
+<Endereco>
+<Seq>2</Seq>
+<NomeLogradouro>RUA DA LIBERDADE, 160 AP 54</NomeLogradouro>
+<ComplLogradouro></ComplLogradouro>
+<Bairro>EMBARE              </Bairro>
+<Cidade>1716</Cidade>
+<Cep>11025030</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>01/08/2002 00:00:00</InicioVigencia>
+<FimVigencia>02/08/2002 00:00:00</FimVigencia>
+</Endereco>
+<Endereco>
+<Seq>3</Seq>
+<NomeLogradouro>R LIBERDADE 160 </NomeLogradouro>
+<ComplLogradouro>AP 54               </ComplLogradouro>
+<Bairro>BOQUEIRAO           </Bairro>
+<Cidade>1716</Cidade>
+<Cep>11025030</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+<FimVigencia>22/06/2003 00:00:00</FimVigencia>
+</Endereco>
+<Endereco>
+<Seq>4</Seq>
+<NomeLogradouro>RUA DA LIBERDADE, 160 AP 54</NomeLogradouro>
+<ComplLogradouro></ComplLogradouro>
+<Bairro>EMBARE              </Bairro>
+<Cidade>1716</Cidade>
+<Cep>11025030</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>01/08/2002 00:00:00</InicioVigencia>
+<FimVigencia>02/08/2002 00:00:00</FimVigencia>
+</Endereco>
+<Endereco>
+<Seq>5</Seq>
+<NomeLogradouro>R LIBERDADE 160 </NomeLogradouro>
+<ComplLogradouro>AP 54               </ComplLogradouro>
+<Bairro>BOQUEIRAO           </Bairro>
+<Cidade>1716</Cidade>
+<Cep>11025030</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>13</DDD>
+<Numero>32367991</Numero>
+<InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+<SeqEnd>1</SeqEnd>
+</Telefone>
+</Pessoa>
+ <Lotacao>
+<Codigo>67840001</Codigo>
+<InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+<FimVigencia>31/07/2011 00:00:00</FimVigencia>
+</Lotacao>
+<Lotacao>
+<Codigo>67840002</Codigo>
+<InicioVigencia>01/08/2011 00:00:00</InicioVigencia>
+</Lotacao>
+</AtualizacaoCompleta> 
+<AtualizacaoCompleta>
+<Contrato>1678400</Contrato>
+<RDP>2</RDP>
+ <Familia>305</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>2</GrauDependencia>
+<InicioVigencia>01/07/2003 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>16784000305025</CodigoExterno>
+<Pessoa>
+<Nome>LUCIENE MARIA B DA SILVA</Nome>
+<DataNascimento>06/07/1981 00:00:00</DataNascimento>
+<Cnp>01064786480</Cnp>
+<Tipo>2</Tipo>
+<Sexo>f</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<NomePai>NAO INFORMADO</NomePai>
+<NomeMae>IRENE MARIA BENTO</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>999999999</Numero>
+</Registro>
+<Endereco>
+<Seq></Seq>
+<NomeLogradouro></NomeLogradouro>
+<ComplLogradouro></ComplLogradouro>
+<Bairro></Bairro>
+<Cidade></Cidade>
+<Cep></Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia></InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+</Pessoa>
+ <Titular>
+<Codigo>16784000305009</Codigo>
+</Titular>
+<Lotacao>
+<Codigo>67840001</Codigo>
+<InicioVigencia>01/07/2003 00:00:00</InicioVigencia>
+<FimVigencia>31/07/2011 00:00:00</FimVigencia>
+</Lotacao>
+<Lotacao>
+<Codigo>67840002</Codigo>
+<InicioVigencia>01/08/2011 00:00:00</InicioVigencia>
+</Lotacao>
+</AtualizacaoCompleta> 
+<AtualizacaoCompleta>
+<Contrato>1678400</Contrato>
+<RDP>30</RDP>
+ <Familia>305</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>10</GrauDependencia>
+<InicioVigencia>29/04/2005 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>16784000305300</CodigoExterno>
+<Pessoa>
+<Nome>BEATRIZ BENTO DI PARDO</Nome>
+<DataNascimento>11/04/2005 00:00:00</DataNascimento>
+<Cnp></Cnp>
+<Tipo>2</Tipo>
+<Sexo>f</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<NomePai>NAO INFORMADO</NomePai>
+<NomeMae>LUCIENE MARIA BENTO DA SILVA</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>999999999</Numero>
+</Registro>
+<Endereco>
+<Seq></Seq>
+<NomeLogradouro></NomeLogradouro>
+<ComplLogradouro></ComplLogradouro>
+<Bairro></Bairro>
+<Cidade></Cidade>
+<Cep></Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia></InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+</Pessoa>
+ <Titular>
+<Codigo>16784000305009</Codigo>
+</Titular>
+<Lotacao>
+<Codigo>67840001</Codigo>
+<InicioVigencia>29/04/2005 00:00:00</InicioVigencia>
+<FimVigencia>31/07/2011 00:00:00</FimVigencia>
+</Lotacao>
+<Lotacao>
+<Codigo>67840002</Codigo>
+<InicioVigencia>01/08/2011 00:00:00</InicioVigencia>
+</Lotacao>
+</AtualizacaoCompleta> 
+</MovimentacaoCadastralAtualizacaoCompleta>

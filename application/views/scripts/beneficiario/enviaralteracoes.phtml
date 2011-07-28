@@ -1,0 +1,128 @@
+<!-- PESQUISAS, FORMULÁRIO RELATÓRIOS TUDO COMPLETO  -->
+
+<?php
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+
+ 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');  
+  /* CSS PARA EFEITO NOS BOTOES */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');
+
+ 
+?>
+
+ 
+
+
+<div class="span-23">
+
+
+			<!--  <button class="pesquisa" onClick="procura()">Pesquisar</button> -->
+			<a href="/beneficiario/" class="voltar" >Voltar</a>
+			
+			<br>
+			
+			<br>
+			<h3 class="push-2"> Alterações realizadas </h3> <b class="push-3">Selecione a alteração que deseja aplicar.</b>
+			<br>
+			
+			
+			<hr>
+		<form name="alteracoes" method="POST" action="/beneficiario/confirmaalteracoes">
+			<!--  LISTA DE PENDENCIA - quadro para arrumar isso  -->
+			
+		<div class="span-22 push-1">		
+			<div class="span-21">
+				<b>
+					<div class="span-2"> Seleção</div>
+					<div class="span-7">Nome do beneficiario </div>
+					<div class="span-3">Dependencia </div>
+					<div class="span-5">Tipo Movimentação</div>
+					<div class="span-2">Ação </div>
+				</b>
+			</div>
+			
+			
+			<?php 	
+				
+			
+			//EXIBE DADOS DA LOTE QUANTO STATUS FOR ATIVO
+			foreach($this->listaBeneficiario as $key=>$reg){?>
+				<div class="span-21">
+					<label> 
+						<div class="span-2"><input name="benef[]" type="checkbox" id="checkbox" value="<?php echo $reg['idBeneficiario']?>" checked="checked" /></div>
+						<div class="span-7 descreve" title="<?php echo $reg['Nome']; ?>"><?php echo $reg['Nome']; ?>&nbsp; </div>
+						<div class="span-3"title="<?php echo $this->NomeRDP($reg['RDP'])?>"><?php echo $this->NomeRDP($reg['RDP'])?>&nbsp;</div>
+						<div class="span-5 descreve"><?php echo ($reg['status'] == 1)? "Inclusão" : ($reg['status'] == 2)? "Alteração" : "Suspensão" ;?></div>
+						<div class="span-3"> <a class="deletar" alt="Excluir" href="/beneficiario/deletar/id/<?php echo $reg['idBeneficiario']; ?>"></a></div>
+					</label>
+				</div>			
+			<?php } ?>		
+			
+			<br>
+		</div>
+			<br>
+		<button class="confirmar" onClick="alteracoes()">Confirmar alterações para unimed</button> 
+	
+		</form>
+			
+		<br>				
+								
+				
+</div>
+
+<!-- CHAMADA E USO DE JS -->
+
+<?php
+
+ /* js/jquery-ui/development-bundle/ui  */
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+
+  
+  
+  /* CHAMA EFEITO DO LIGHTBOX */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+
+?>
+
+<script>
+	$(function() {
+		$( ".voltar" ).button({
+            icons: {
+                primary: "ui-icon-circle-arrow-w"
+            }
+        });
+
+		$( ".confirmar" ).button({
+            icons: {
+                primary: "ui-icon-circle-check"
+            }
+        });		
+		
+		$( ".deletar" ).button({
+            icons: {
+                primary: "ui-icon-trash"
+            }
+        });
+	});
+</script>
+		
+
+<!-- FUNÇÃO PARA ENVIAR A PÁGINA A CRIAÇÃO DE NOVO FORMULÁRIO --> 
+<script>
+function novoform()
+{
+document.location.href='beneficiario/';
+}
+</script>
+	

@@ -1,0 +1,119 @@
+<!-- PESQUISAS, FORMULÁRIO RELATÓRIOS TUDO COMPLETO  -->
+
+<?php
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+
+ 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');  
+  /* CSS PARA EFEITO NOS BOTOES */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');
+
+ 
+?>
+
+ 
+
+
+<div class="span-23">
+	<div class="span-3">
+		<a href="/beneficiario" class="voltar" >Voltar</a>
+	</div>
+	<div class="span-9">
+		<h2> Relatórios de movimentações </h2> 
+	</div>	
+	<div class="span-3 success"><b> Hoje: </b> <?php $data=date("d/m/Y"); echo $data;?></div>	
+	<div class="clear"></div>
+	<br>
+		<div class="span-12 success push-2">
+			<div class="span-11">
+				<div class="span-3"><b style="font-size:18px;">Lote</b></div>
+				<div class="span-4"><b style="font-size:18px;">Data de criação</b></div>
+				<div class="span-3"><b style="font-size:18px;">Ação</b></div>
+				<div class="clear"><br></div>
+			</div>
+		
+	
+		<?php
+		foreach($this->lotes as $i => $r)
+		{?>
+			<div class="span-11">
+				<div class="span-3"><b style="font-size:16px;"><?php echo $r['contrato']; ?></b>&nbsp;</div>
+				<div class="span-4"><b style="font-size:16px;"><?php echo $this->Date($r['data']); ?></b>&nbsp;</div>
+				<div class="span-3"> <a class="salvar" target="_blank" href="/<?php echo $r['caminho']; ?>">Exibir pdf</a> </div>
+				<div class="clear"><br></div>
+			</div>
+		<?php
+		}
+		?>
+			
+		</div>	
+
+		<div class="span-6 info push-3">
+			<h2> Informativo </h2>
+			
+			Os relatórios são comprovantes de movimentações cadastrais efetuadas por essa empresa.
+			<br>
+			As alterações de beneficiários é de responsabilidade única do usuário autenticado.
+			<br>
+			Para dúvidas contatar a <b>UNIMED</b>.
+			<br>
+			
+			<div class="clear"><br></div>
+		</div>
+				
+</div>
+
+<!-- CHAMADA E USO DE JS -->
+
+<?php
+
+ /* js/jquery-ui/development-bundle/ui  */
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+
+  
+  
+  /* CHAMA EFEITO DO LIGHTBOX */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+
+?>
+
+	<script>
+	$(function() {
+		$( ".voltar" ).button({
+            icons: {
+                primary: "ui-icon-circle-arrow-w"
+            }
+        });
+	});
+	</script>
+	
+		<script>
+	$(function() {
+		$( ".confirmar" ).button({
+            icons: {
+                primary: "ui-icon-circle-check"
+            }
+        });		
+		
+		$( ".salvar" ).button({
+            icons: {
+                primary: "ui-icon-disk"
+            }
+        });
+	});
+	</script>
+	
+	
+
+
+	

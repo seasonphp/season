@@ -1,0 +1,107 @@
+<?xml version="1.0" standalone="yes"?>
+<MovimentacaoCadastralAtualizacaoCompleta xmlns="MovimentacaoCadastralAtualizacaoCompleta.xsd">
+  <AtualizacaoCompleta>
+    <Contrato>1678400</Contrato>
+    <RDP>0</RDP>
+    <Familia>1</Familia>
+    <ClassificadorOrigem>111111111</ClassificadorOrigem>
+    <IncluidoComoRN>false</IncluidoComoRN>
+    <GrauDependencia>0</GrauDependencia>
+    <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+    <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+    <CodigoExterno>16784000001000</CodigoExterno>
+    <Pessoa>
+      <Nome>ALBERTO RODRIGUES CONDE</Nome>
+      <DataNascimento>05/09/1935 00:00:00</DataNascimento>
+      <Cnp>04797523891</Cnp>
+      <Sexo>M</Sexo>
+      <EstadoCivil>M</EstadoCivil>
+      <Naturalidade>1716</Naturalidade>
+      <NomePai>joão</NomePai>
+      <NomeMae>APARECIDA ASSUNCION CONDE RODRIGUES</NomeMae>
+      <NomeConjuge>maria</NomeConjuge>
+      <Endereco>
+        <Seq>1</Seq>
+        <NomeLogradouro>R GEN CAMARA 90</NomeLogradouro>
+        <Bairro>CANTO DO FORTE</Bairro>
+        <Cidade>1502</Cidade>
+        <Cep>11700700</Cep>
+        <PontoReferencia>BX.SANTISTA/ESTADUAL</PontoReferencia>
+        <Tipo>1</Tipo>
+        <ParaCorrespondencia>true</ParaCorrespondencia>
+        <ParaCobranca>true</ParaCobranca>
+        <ParaFaturamento>true</ParaFaturamento>
+        <ParaPublicacao>false</ParaPublicacao>
+        <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+        <FimVigencia>22/06/2003 00:00:00</FimVigencia>
+        <CardioAutoId>74199</CardioAutoId>
+      </Endereco>
+      <Endereco>
+        <Seq>2</Seq>
+        <NomeLogradouro>R GEN CAMARA 90</NomeLogradouro>
+        <Bairro>CENTRO</Bairro>
+        <Cidade>1716</Cidade>
+        <Cep>11010903</Cep>
+        <Tipo>1</Tipo>
+        <ParaCorrespondencia>true</ParaCorrespondencia>
+        <ParaCobranca>true</ParaCobranca>
+        <ParaFaturamento>true</ParaFaturamento>
+        <ParaPublicacao>false</ParaPublicacao>
+        <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+        <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+        <CardioAutoId>496592</CardioAutoId>
+      </Endereco>
+      <Telefone>
+        <Seq>1</Seq>
+        <Tipo>1</Tipo>
+        <DDD>13</DDD>
+        <Numero>32311456</Numero>
+        <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+        <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+        <SeqEnd>1</SeqEnd>
+        <CardioAutoId>26874</CardioAutoId>
+      </Telefone>
+    </Pessoa>
+    <Modulos>
+      <Codigo>001678410</Codigo>
+      <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+      <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+      <MotivoRescisao>0</MotivoRescisao>
+      <CardioAutoId>363459</CardioAutoId>
+      <Participativo>false</Participativo>
+    </Modulos>
+    <Modulos>
+      <Codigo>21</Codigo>
+      <ModuloBase>001678410</ModuloBase>
+      <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+      <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+      <MotivoRescisao>0</MotivoRescisao>
+      <CardioAutoId>2432734</CardioAutoId>
+      <Participativo>false</Participativo>
+    </Modulos>
+    <Modulos>
+      <Codigo>20</Codigo>
+      <ModuloBase>001678410</ModuloBase>
+      <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+      <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+      <MotivoRescisao>0</MotivoRescisao>
+      <CardioAutoId>2348470</CardioAutoId>
+      <Participativo>false</Participativo>
+    </Modulos>
+    <Modulos>
+      <Codigo>22</Codigo>
+      <ModuloBase>001678410</ModuloBase>
+      <InicioVigencia>12/06/2008 00:00:00</InicioVigencia>
+      <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+      <MotivoRescisao>0</MotivoRescisao>
+      <CardioAutoId>2209081</CardioAutoId>
+      <Participativo>false</Participativo>
+    </Modulos>
+    <Lotacao>
+      <Codigo>67840001</Codigo>
+      <InicioVigencia>21/06/2003 00:00:00</InicioVigencia>
+      <FimVigencia>01/01/0001 00:00:00</FimVigencia>
+      <CardioAutoId>26486</CardioAutoId>
+    </Lotacao>
+  </AtualizacaoCompleta>
+</MovimentacaoCadastralAtualizacaoCompleta>

@@ -1,0 +1,70 @@
+<!-- ADMIN INDEX, CONFIGURAÇÕES, COMO ADMINISTRAÇÃO DE USUÁRIOS - ALTERAR PLANO - ALTERAR DADOS PESSOAIS -->
+<?php
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');   
+
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+
+ 
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+	
+?> 
+<div style="margin-left:25px;">
+    
+    <?php 
+        
+        if($this->resultado == '1'){ 
+        
+        echo "<div class='erro'> Você tentou adicionar uma empresa que já existe no sistema.</div><div class='clear'><br></div>";
+        
+        } ?>
+    
+<table id="jqgrid1tb"></table>
+<div id="jqgrid1pg"></div>
+
+<table id="flex1" style="display:none"></table>
+</div>
+<script type="text/javascript">
+	$(function(){ 
+		$("#jqgrid1tb").jqGrid({
+			url: '/empresa/empresas',
+			datatype: 'json',
+			colModel: [
+				//{name:'id', index:'id', label: 'id', sorttype:'int', width:50, align:'center', hidden:true},
+				{name:'Nome', index:'Nome', label: 'Nome', sorttype:'int', width:100, align:'left'},
+				{name:'Cnp', index:'Cnp', label: "CNPJ", width:50, align:'center', sorttype:'text'},
+				{name:'Url', index:'Url', label: "Site", width:50, sorttype:'text'},
+			],
+			/*jsonReader: {
+				total: 'total_pages',
+				records: 'total'
+			},*/
+			loadonce: true, /*carrega todos os dados de uma vez*/
+			rowNum: 18,
+			sortname: 'id',
+			sortable: true,
+			editurl: "/empresa/config",
+			viewrecords: true,
+			pager: '#jqgrid1pg',
+			caption: 'Importar empresas do banco de dados UNIMED(CARDIO)',
+			width:900,
+			height:420,			
+			onSelectRow: function(id){ 		window.location="/empresa/adicionar/id/"+id;}
+		});
+		$('#jqgrid1tb').navGrid('#jqgrid1pg', {edit: false, add: false, del: false,refresh: true},{},{}, {}, {multipleSearch: true});
+		$('#jqgrid1tb').filterToolbar({stringResult:true, searchOnEnter:false});
+		$('#jqgrid1tb').navSeparatorAdd('#jqgrid1pg');
+	});
+	
+</script>
+
+
+<div class="span-23">
+	
+</div><!-- FIM DO SPAN -->

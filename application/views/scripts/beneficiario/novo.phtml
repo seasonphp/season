@@ -1,0 +1,921 @@
+<!-- NOVO FORMULÁRIO  -->
+
+<!-- ESTILO INSERIDO PARA ARRUMR O PUSH (tira o mrgin:button)  -->
+<style>
+.push-1 {margin:0 -40px 0 40px;}
+</style>
+
+<?php
+ // CHAMADA DE CSS
+	$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');	
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');
+	
+
+	
+?>
+
+<div id="pesquisa" title="Pesquisa de cidade">
+	<div class="span-12">Nome da cidade 
+		<input type="text" name="cidadeNome" id="cidadeNome" /> 
+		<button class="pesquisa" onclick="$( '#carregaCid').show(),$('#res_pesquisa').load('/beneficiario/pesqcidade',{t:1,q:$('#cidadeNome').val()})"> Pesquisar </button>
+	</div>
+	<div class="span-12" id="res_pesquisa">
+		<div id="carregaCid" class="hide">
+			<center> 
+				<h2 class="branco">Aguarde, estamos localizando a cidade</h2> 
+				<img src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  />
+			</center>
+		</div>
+	</div>	
+</div> 
+
+<div id="pesquisa_naturalidade" title="Pesquisa de cidade de naturalidade">		
+	<div class="span-12">
+		Nome da cidade <input type="text" name="cidadeNomeNaturalidade" id="cidadeNomeNaturalidade" /> <button class="pesquisa" onclick="$( '#carregaNat').show(),$('#res_pesquisa_naturalidade').load('/beneficiario/pesqcidade',{t:2,q:$('#cidadeNomeNaturalidade').val()})"> Pesquisar </button>
+	</div>
+	<div class="span-12" id="res_pesquisa_naturalidade">
+		<div id="carregaNat" class="hide">
+			<center> 
+				<h2 class="branco">Aguarde, estamos localizando a cidade</h2> 
+				<img src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  />
+			</center>
+		</div>
+	</div>
+</div> 
+
+<div class="span-23">
+	<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1"><h4 class="branco">Cadastro de beneficiario</h4> </a></li>
+			<!-- <li><a href="#tabs-2"><h4 class="branco">Adicionar dependente</h4></a></li> -->
+			<!-- antigas tabs	<li><a href="#tabs-3">Finalizar cadastro</a></li> -->
+			</ul>
+			
+			<!-- TABS - PÁGINAS -->
+	<div id="tabs-1">
+		
+		<p> 
+			<div class="span-14"><b> Dados do beneficiário </b></div>					
+			<div class="span-7">
+				<a class="baixar" target="_blank" href="/manual/manualdepreenchimento.pdf">Baixar manual de preenchimento</a> 
+			</div>
+		</p> 
+		
+			<div class="clear"> </div>
+		
+		<form name="novobeneficiario" id="novobeneficiario" method="POST" action="/beneficiario/cad ">	
+			<div class="span-22 quadroGrande">
+				<!-- NOMES LINHA 1 -->
+				<div class="span-21">
+					<div class="span-3"> Familia </div>
+					<div class="span-3 last"> Inicio Vigencia </div>
+
+				</div>
+				
+				<!-- INPUTS LINHA 1 -->
+				<div class="span-21">
+					<div class="span-3">  <input type="text" name="familia" readonly id="familia" size="9" value="<?php echo $this->nrfamilia?>"/> </div>
+					<div class="span-3"> <input type="text" name="InicioVigencia"  id="InicioVigencia" size="15" class="dateBR" value="<?php echo date('d/m/Y'); ?>" />
+						<br> <div id="msgErro" class="hide" > <img src="<?php echo $this->baseUrl()?>/imagens/erro.png"/> <b class="error">Data retroativa</b>  </div>
+					</div>
+				</div>
+				
+				<!-- NOMES LINHA 2 -->
+				<div class="span-21">
+					<div class="span-8"> Nome</div> 
+					<div class="span-3"> Sexo </div>
+					<div class="span-3"> Nascimento </div>
+					<div class="span-3"> Estado civil </div>
+					<div class="span-3 DecNascidoVivo hide"> Dec. Nascido Vivo </div>
+				</div>						
+					
+				<!-- INPUTS LINHA 2 -->
+				<div class="span-21">
+					<div class="span-8">  <input type="text" name="Nome" id="Nome" size="40" /> </div> 
+					<div class="span-3">           
+						<select name="Sexo" id="Sexo">
+							<option value="">Selecione</option>
+							<option value="F">Feminino</option>
+							<option value="M">Masculino</option>
+						</select>
+					</div>
+						
+					<div class="span-3"> 
+						<input type="text" name="DataNascimento" id="DataNascimento" size="12" class="dateBR" />
+							<div id="erroNasc" class="hide error">
+								<img src="<?php echo $this->baseUrl()?>/imagens/erro.png"  /> Data errada 
+							</div>	
+					</div>				
+					<div class="span-3"> 	
+						<select name="EstadoCivil" id="EstadoCivil">
+							<!-- OPTION VAZIA ZOA O IE <option> </option> -->
+							<option value="">Selecione</option>
+							<option value="A">Separado</option>
+							<option value="D">Divorciado</option>
+							<option value="M">Casado</option>
+							<option value="S">Solteiro</option>
+							<option value="U">União estável</option>
+							<option value="W">Viúvo</option>
+						</select>
+					</div>
+					<div class="span-3 DecNascidoVivo hide"> 
+						<input type="text" name="DecNascidoVivo" id="DecNascidoVivo"/>
+					</div>
+				</div>
+					
+				<!-- NOMES LINHA 3  -->
+				<div class="span-22">
+					<div class="span-8"> Naturalidade</div> 
+					<div class="span-5"> CPF</div> 
+					<div class="span-5 push-1"> PIS </div>
+				</div>
+				
+				<!-- INPUTS LINHA 3 -->
+				<div class="span-22">
+					<div class="span-8">   
+						<input type="hidden" name="idNaturalidade" id="idNaturalidade" />
+						<input type="text" name="Naturalidade" id="Naturalidade" size="32" readonly="true"/>	
+						<button class="naturalidade" ></button> 
+					</div>
+					<div class="span-5">  
+						<input type="text" name="Cnp" id="Cnp" size="15" class="cpf" /> 
+							<!-- OIII EU SOU O BLOQUEIA -->
+							<img id="erroimg" class="hide" src="<?php echo $this->baseUrl()?>/imagens/erro.png" alt="ESSE CPF JA ESTA CADASTRADO PARA ESSE CONTRATO" />
+							<img id="okimg" class="hide" src="<?php echo $this->baseUrl()?>/imagens/ok.png"  />
+							<img id="carregardp" class="hide" src="<?php echo $this->baseUrl()?>/imagens/carregardp.gif"  />
+							<input type="hidden" name="bloqueia" id="bloqueia" />
+						
+					</div>						
+					
+					<div class="span-5 push-1">  
+						<input type="text" name="PIS" id="PIS" class="pis" size="15"  /> 
+					</div>
+				</div>
+					
+				<!-- NOVA LINHA INCLUIDA CPF E PIS -->
+				<div class="span-22">
+					<div class="span-4"> RG</div>					
+					<div class="span-4"> Orgão emissor</div>					
+					<div class="span-3"> UF</div>
+					<div class="span-4"> Data expedição</div>	
+				</div>
+				
+				<div class="span-22">
+					<div class="span-4"> 
+						<input type="text" name="RG" id="RG" onKeyUp="verificaRg(this)" class="rg" size="16" />
+					</div>						
+					<!-- ORÇÃO EXPEDITOR -->
+					<div class="span-4"> 
+						<?php echo $this->Orgaoexpeditor('Orgaoexpeditor'); ?>
+					</div>						
+					<!-- UF RG -->
+					<div class="span-3"> 
+						<?php echo $this->Estado('UFRG'); ?>
+					</div>	
+					<!-- DAT EXPED -->
+					<div class="span-4">
+						<input type="text" class="dateBR" name="dataExped" id="dataExped" size="12" /> 
+						<img id="erroExped" class="hide" src="<?php echo $this->baseUrl()?>/imagens/erro.png"  />
+					</div>
+				</div>
+				
+				
+				
+					
+				<!-- NOMES LINHA 4 -->
+				<div class="span-21">
+					<div class="span-8"> Nome da Mãe</div> 
+					<div class="span-6"> Nome do Pai  </div>
+					<div class="span-3"> Nome Conjuge</div>
+				</div>
+									
+				<!-- INPUTS LINHA 4 -->
+				<div class="span-21">
+					<div class="span-8"> <input type="text" name="NomeMae" id="NomeMae" size="40" /> </div> 
+					<div class="span-6"> <input type="text" name="NomePai" id="NomePai" size="30" /> </div>
+					<div class="span-3"> <input type="text" name="NomeConjuge" id="NomeConjuge" size="28" /> </div>				
+				</div>
+					
+				<!-- NOMES LINHA 5 -->
+				<div class="span-21">
+					<div class="span-8"> E-mail</div> 
+					<div class="span-3"> Admissão  </div>
+					<div class="span-6"> Matricula  </div>
+				</div>
+								
+				<!-- INPUTS LINHA 5 -->
+				<div class="span-21">  
+					<div class="span-8"> <input type="text" name="Email" id="Email" class="email" size="40" /> </div>			
+					<div class="span-3"> <input type="text" name="DataAdmissao" id="DataAdmissao" size="12" class="dateBR" /><img id="erroAdmissao" class="hide" src="<?php echo $this->baseUrl()?>/imagens/erro.png"  /> </div>
+						
+					
+					
+					<div class="span-3"> <input type="text" name="Matricula" id="Matricula" size="10"  /> </div>
+				</div>				
+				
+				<!-- NOMES LINHA 6 -->
+				<div class="span-21">
+					<div class="span-2"> DDD  </div>
+					<div class="span-3"> Telefone </div> 
+					<div class="span-2"> Tipo   </div>
+				</div>
+								
+				<!-- INPUTS LINHA 6 -->
+				<div class="span-21">
+					<div class="span-2">  
+						<input type="text" name="DDD" id="DDD" size="2" maxlength="2" class="ddd" /> 
+					</div>
+					<div class="span-3">  <input  type="text" name="Numero" id="Numero" size="10" class="telefone" />  </div> 
+					<div class="span-2">
+						<select name="Tipo" id="Tipo">
+							<!-- OPTION VAZIA ZOA O IE <option> </option> -->
+							<option value="">Selecione</option>
+							<option value="1">Fixo</option>
+							<option value="2">Movel</option>
+							<option value="3">Fax</option>
+						</select>
+					</div>
+				</div>
+					
+				<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+				<hr>
+			</div>
+					
+			<p><b> Endereço </b></p>
+				
+			<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+			<!-- DADOS AGORA REFERENTES AO ENDEREÇO DO USUÁRIO COMPLETO E DADOS --> 
+					
+			<!-- NOMES LINHA 10 -->
+			<div class="span-21">
+				<div class="span-3"> Tipo </div> 
+				<div class="span-7"> Logradouro </div> 
+				<div class="span-2"> Número </div>
+				<div class="span-4"> Complemento </div>
+				<div class="span-4"> Caixa postal </div> 
+			</div>	
+			
+			<!-- INPUTS LINHA 10 -->
+			<div class="span-21">
+				<!-- ESSE É O SEQ E ESTA OCULTO -->
+				<input type="hidden" name="Seq" id="Seq" size="2" value="1" />
+				<div class="span-3"> 
+					<select name="Endtipo" id="Endtipo">
+						<option value="">Selecione</option>
+						<option value="1">Comercial</option>
+						<option value="2">Residencial</option>
+					</select>
+				</div>
+				<div class="span-6"> 
+					<input type="text" name="Logradouro" id="Logradouro" size="40" value="" /> 
+				</div>
+				<div class="span-3 push-1"> 
+					<input type="text" name="NumLogradouro" id="NumLogradouro" size="6" maxlength="6" value="" /> 
+				</div>
+				<div class="span-4"> 
+					<input type="text" name="ComplLogradouro" id="ComplLogradouro" size="15" value="" /> 
+				</div>				
+				<div class="span-4">  
+					<input type="text" name="CaixaPostal" id="CaixaPostal" size="15" value="" /> 
+				</div>
+			</div>
+					
+			<!-- NOMES LINHA 11 -->
+			<div class="span-21">
+				<div class="span-6"> Cidade </div>
+				<div class="span-4"> Bairro </div>
+				<div class="span-3"> CEP </div> 
+				<div class="span-4"> Ponto de referência </div>
+			</div>
+					
+			<!-- INPUTS LINHA 11 -->
+			<div class="span-21">
+				<div class="span-6">   
+					<input type="hidden" name="idCidade" id="idCidade"><input type="text" name="Cidade" id="Cidade" size="24" value="" readonly="true" />
+					<button class="cidade" ></button>
+				</div>					
+				<div class="span-4">  
+					<input type="text" name="Bairro" id="Bairro" size="20" value="" /> 
+				</div>
+				<div class="span-3">
+					<input type="text" name="CEP" id="CEP" size="8" class="cep"	value="" /> 
+				</div>
+				<div class="span-4">
+					<input type="text" name="PontoReferencia" id="PontoReferencia" size="20" value="" /> 
+				</div>
+			</div>	
+					
+			<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+					<hr>
+					
+					
+					
+					
+								<!-- NOMES LINHA 7  -->
+					<div class="span-6"><b>Plano</b></div> 
+					<div class="span-12">											
+						<select name="Modulo">
+							<option value="">Selecione</option>
+								<?php 
+									foreach($this->dadosModulo as $r=>$s){							
+										echo "<option value=".$s['Codigo'].">".$s['Nome']."</option>";
+									}
+								?>			
+						</select>					
+					</div> 
+					
+					<!-- NOMES LINHA 8 -->
+					<div class="span-6"><b> Local atendimento</b></div> 
+					<div class="span-12"> 
+						<select name="LocalAtendimento" id="localAtend">
+							<option value="">Selecione        </option>
+							<!-- OPTION VAZIA ZOA O IE <option> </option> -->
+								<?php						
+									foreach($this->dadosLocalAtendimento as $r=>$s){ 						
+										echo "<option value=".$s['Codigo'].">".$s['NomeReduzido']."</option>";
+									}
+								?>				
+						</select>
+					</div> 									
+					
+					<!-- NOMES LINHA 9 -->
+					<div class="span-6"><b>Lotação</b></div> 
+					<div class="span-12">  													
+						<select name="lotacao" id="lotacao">
+							<option value="">Selecione        </option>
+							
+								<?php
+									foreach($this->dadosLotacao as $r=>$s){ 
+										echo "<option value=".$s['Codigo'].">".$s['Nome']."</option>";
+									}
+									
+								?>											
+						</select>  
+					</div> 
+	
+					<br />
+					
+			<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>
+			
+					<hr>
+			<br>			
+			<b>Inserir arquivos compactados </b>
+			
+			<input type="file" class="multi" accept="zip|rar" maxlength="2"/>
+			<br>
+			<hr>	
+			<button class="submit" type="submit" >Finalizar cadastro</button> 
+			
+		</div>
+	</div>	
+				
+		</form>
+			
+			
+				
+
+	
+</div>	
+
+
+<div class="clear prepend-top"> <!-- ESPAÇO BOM  --> <br /></div>	
+
+<div></div>
+
+
+<?php
+ // CHAMADA DE JS  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js');
+	
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+
+//PARA FORMULARIO
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.validate.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/arruma.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/views/data.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/views/novo.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/views/validarRg.js');
+ 
+?>
+
+<!-- AJAX PARA TESTE DE CPF DUPLICADO -->
+<script>/*
+$(document).ready(function(){
+$('#Cnp').blur(function(){
+
+	var cpf = $('#Cnp').val();
+	
+	cpf = cpf.replace('.','');
+	cpf = cpf.replace('.','');
+	cpf = cpf.replace('-','');
+
+		if(cpf == null ){
+			alert('CPF VAZIO');
+		
+		}else{
+		
+			$('#okimg').hide('fast');
+			$('#erroimg').hide('fast');
+			$('#carregardp').show('fast');
+			
+			$('#bloqueia').val("");
+			$('#bloqueia').next("label").show('fast');
+			
+			var cpf = $('#Cnp').val();
+			var dados = $('#Cnp').serialize();
+			
+			$.ajax({
+			type:"POST",
+			data: dados,
+			url: '/ajax/testacpf',
+			
+			success: function(data){
+			
+					if(data == true){
+					
+					$('#carregardp').hide('fast');
+					$('#erroimg').hide('fast');
+					$('#okimg').show('fast');
+					$('#bloqueia').val("1");
+					$('#bloqueia').next("label").hide('fast');
+					
+					
+					}else{
+			
+					$('#carregardp').hide('fast');
+					$('#okimg').hide('fast');
+					$('#erroimg').show('fast');
+					$('#bloqueia').next("label").show('fast');
+					
+					
+					}
+			
+				}
+			
+			});
+		
+		}
+		
+	});
+	});
+*/
+</script>
+
+<!--  navegação de tabs -->
+<script>/*
+	$(function() {
+		$( "#tabs" ).tabs().find( ".ui-tabs-nav" ).sortable({ axis: "x" });
+
+	});	*/
+</script>
+
+	
+<!-- SCRIPT PARA MASCARA DE FORMULÁRIOS --> 
+<script type="text/javascript">/*
+	$(document).ready(function(){
+
+		$("#Cnp").mask("999.999.999-99");
+		$(".telefone").mask("9999-9999");
+		$(".dateBR").mask("99/99/9999");
+		$(".numero").mask("999999999");
+		$(".ddd").mask("99");
+		$(".cep").mask("99999-999");
+	});*/
+</script>	
+
+
+<!-- TRATAMENTO DE ERROS -->
+<script type="text/javascript">
+/*
+// QUANDO O DOCUMENTO ESTIVER PRONTO
+$(document).ready(function(){
+   // CONFIGURA A VALIDACAO DO FORMULARIO
+   $("#novobeneficiario").validate({
+      rules: {
+         Nome: {required: true},
+		 NomeMae: {required: true},
+		 Sexo: {required: true},
+		 EstadoCivil: {required: true},
+         data: {required: true, dateBR: true},
+		 email: {required: true},
+		 RG: {required: true},
+		 PIS: {required: true},
+		 Logradouro: {required: true},
+		 Endtipo: {required: true},
+		 Modulo: {required: true},
+		 bloqueia: {required: true},
+		 NumLogradouro: {required: true},
+		 Cidade: {required: true},
+		 Bairro: {required: true},
+		 RDP: {required: true},
+		 CEP: {required: true}
+      },
+      messages: {
+         Nome: {required: '<br>Informe o nome' },
+         NomeMae: {required: '<br>Informe o nome da mãe' },
+		 Sexo: {required: 'Informe o sexo' },
+		 EstadoCivil: {required: 'Informe o estado civil' },
+         email: {required: 'Informe o e-mail' },
+		 RG: {required: 'Informe o RG'},
+		 PIS: {required: '<br>Informe o PIS'},
+		 Modulo: {required: '<br>Informe o plano'},
+		 bloqueia: {required: '<br>verifique CPF'},
+		 Endtipo: {required: 'Informe'},
+		 NumLogradouro: {required: '<br> Informe'},
+		 Cidade: {required: '<br>Informe a cidade'},
+		 Bairro: {required: 'Informe o bairro'},
+		 CEP: {required: 'Informe o CEP'},
+		 RDP: {required: 'Informe o RDP'},
+		 Logradouro: {required: 'Informe o endereço'},
+         data: {required: 'Informe a data', dateBR: 'Digite uma data válida'}
+		 
+      }
+      ,
+	  //submitHandler:function(form) {
+     //    alert('ok');
+     // }
+   });
+
+
+});
+*/
+</script>
+
+
+<!-- BOTOES -->		
+<script>/*
+	$(function() {
+		$( ".submit" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        });
+		
+		$( ".naturalidade" ).button({
+            icons: {
+                primary: "ui-icon-search"
+            }
+        });
+		$( ".cidade" ).button({
+            icons: {
+                primary: "ui-icon-search"
+            }
+        });
+		
+		$( ".pesquisa" ).button({
+            icons: {
+                primary: "ui-icon-search"
+            }
+        });
+		
+		$( ".baixar" ).button({
+            icons: {
+                primary: "ui-icon-script"
+            }
+        });
+		
+	});*/
+</script>
+
+
+<!-- SCRIPT LIGHTBOX -->
+<script>/*
+	// increase the default animation speed to exaggerate the effect
+	$.fx.speeds._default = 1000;
+	$(function() {
+		$( "#pesquisa" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 450,
+			width: 500,
+			hide: "explode"
+		});
+		$( "#pesquisa_naturalidade" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 450,
+			width: 500,
+			hide: "explode"
+		});		
+		$( "#altmodulo" ).dialog({
+			autoOpen: false,
+			show: "blind",
+			height: 550,
+			width: 800,
+			hide: "explode"
+		});
+
+		$( ".cidade" ).click(function() {
+		    //alert('Cidade');
+			$( "#pesquisa" ).dialog( "open" );
+			return false;
+		});
+
+		$( ".naturalidade" ).click(function() {
+			$( "#pesquisa_naturalidade" ).dialog( "open" );
+			return false;
+		});
+	});
+	function selLocalidade(cod,texto){
+	   $( "#Naturalidade").val(texto);
+	   $( "#idNaturalidade").val(cod);
+	   $( "#pesquisa_naturalidade" ).dialog( "close" );
+	}
+	function selCidade(cod,texto){
+	   $( "#Cidade").val(texto);
+	   $( "#idCidade").val(cod);
+	   $( "#pesquisa" ).dialog( "close" );
+	   $('#Cidade').next("label").hide('fast');
+	   $('#Cidade').removeClass("error");
+	   
+	}	*/
+</script>
+
+
+
+
+
+
+<!-- FUNÇÃO PARA IMPEDIR DATAS RETROATIVAS -->
+<script>/*
+$(document).ready(function(){
+	$("#InicioVigencia").blur(function(){
+		//alert('SAIMOS DA DATA');
+		var dia = $("#InicioVigencia").val().substring(0,2);
+		var mes = $("#InicioVigencia").val().substring(3,5);
+		var ano = $("#InicioVigencia").val().substring(6);
+		
+		//PEGANDO E ARRUMANDO A DATA ATUAL 
+		hoje = new Date()
+		diaHoje = hoje.getDate()
+		mesHoje = hoje.getMonth()
+		anoHoje = hoje.getFullYear()
+	
+		if (dia < 10)
+			diaHoje = diaHoje
+		if (ano < 2000)
+			anoHoje = anoHoje
+
+		//O MES COMEÇA EM ZERO 
+		mesHoje = mesHoje + 1
+
+		if (mes < 10)
+		mesHoje = ("0" + mesHoje);
+		
+		if(dia == 00){
+			//alert('TA PENSANDO Q É MALANDRO?'); 
+			$("#msgErro").show();
+			$("#InicioVigencia").val("");
+			
+			
+			}else{
+		
+					if(ano >= anoHoje){
+						if(mes == mesHoje){
+							if(dia >= diaHoje){
+								//alert('AQUI PODI 1');
+								$("#msgErro").hide();
+							}else{
+								$("#msgErro").show();
+								$("#InicioVigencia").val("");
+							
+							}
+						}else if (mes < mesHoje && ano == anoHoje){
+							$("#msgErro").show();
+							$("#InicioVigencia").val("");
+						
+						}else{
+							//alert('AQUI PODI 2');
+							$("#msgErro").hide();
+						}				
+					}else{
+						$("#msgErro").show();
+						$("#InicioVigencia").val("");
+					}
+
+				  }			
+	});
+	});*/
+</script>
+
+
+
+
+<!-- FUNÇÃO PARA IMPEDIR DATAS MAIORES QUE HOJE NASCIMENTO -->
+<script>/*
+$(document).ready(function(){
+	$("#data").blur(function(){
+		//alert('SAIMOS DA DATA');
+		var dia = $("#data").val().substring(0,2);
+		var mes = $("#data").val().substring(3,5);
+		var ano = $("#data").val().substring(6);
+		
+		//PEGANDO E ARRUMANDO A DATA ATUAL 
+		hoje = new Date()
+		diaHoje = hoje.getDate()
+		mesHoje = hoje.getMonth()
+		anoHoje = hoje.getFullYear()
+	
+		if (dia < 10)
+			diaHoje = diaHoje
+		if (ano < 2000)
+			anoHoje = anoHoje
+
+		//O MES COMEÇA EM ZERO 
+		mesHoje = mesHoje + 1
+
+		if (mes < 10)
+		mesHoje = ("0" + mesHoje);
+		
+		if(dia == 00){
+			//alert('TA PENSANDO Q É MALANDRO?'); 
+			$('#erroNasc').show();
+			$("#data").val("");
+			
+			
+			}else{
+		
+					if(ano <= anoHoje){
+						if(mes == mesHoje){
+							if(dia <= diaHoje){
+								//alert('AQUI PODI 1');
+								$('#erroNasc').hide();
+								
+							}else{
+								$('#erroNasc').show();
+								$("#data").val("");
+							
+							}
+						}else if (mes > mesHoje && ano == anoHoje){
+							$('#erroNasc').show();
+							$("#data").val("");
+						
+						}else{
+							//alert('AQUI PODI 2');
+							$('#erroNasc').hide();
+							
+						}				
+					}else{
+						$('#erroNasc').show();
+						$("#data").val("");
+					}
+
+				  }			
+	});
+	});*/
+</script>
+
+
+
+<!-- FUNÇÃO PARA IMPEDIR DATAS MAIORES QUE HOJE DATA DE EXPEDIÇÃO  -->
+<script>/*
+$(document).ready(function(){
+	$("#dataExped").blur(function(){
+		//alert('SAIMOS DA DATA');
+		var dia = $("#dataExped").val().substring(0,2);
+		var mes = $("#dataExped").val().substring(3,5);
+		var ano = $("#dataExped").val().substring(6);
+		
+		//PEGANDO E ARRUMANDO A DATA ATUAL 
+		hoje = new Date()
+		diaHoje = hoje.getDate()
+		mesHoje = hoje.getMonth()
+		anoHoje = hoje.getFullYear()
+	
+		if (dia < 10)
+			diaHoje = diaHoje
+		if (ano < 2000)
+			anoHoje = anoHoje
+
+		//O MES COMEÇA EM ZERO 
+		mesHoje = mesHoje + 1
+
+		if (mes < 10)
+		mesHoje = ("0" + mesHoje);
+		
+		if(dia == 00){
+			//alert('TA PENSANDO Q É MALANDRO?'); 
+			$('#erroExped').show();
+			$("#dataExped").val("");
+			
+			}else{
+		
+					if(ano <= anoHoje){
+						if(mes == mesHoje){
+							if(dia <= diaHoje){
+								$('#erroExped').hide();
+								
+							}else{
+								$('#erroExped').show();
+								$("#dataExped").val("");
+								
+							
+							}
+						}else if (mes > mesHoje && ano == anoHoje){
+							$('#erroExped').show();
+							$("#dataExped").val("");
+							
+						
+						}else{
+							$('#erroExped').hide();
+							
+						}				
+					}else{
+							$('#erroExped').show();
+							$("#dataExped").val("");
+							
+					}
+
+				  }			
+	});
+	});*/
+</script>
+
+
+<!-- FUNÇÃO PARA IMPEDIR DATAS MAIORES QUE HOJE ADMISSÃO -->
+<script>/*
+$(document).ready(function(){
+	$("#DataAdmissao").blur(function(){
+		//alert('SAIMOS DA DATA');
+		var dia = $("#DataAdmissao").val().substring(0,2);
+		var mes = $("#DataAdmissao").val().substring(3,5);
+		var ano = $("#DataAdmissao").val().substring(6);
+		
+		//PEGANDO E ARRUMANDO A DATA ATUAL 
+		hoje = new Date()
+		diaHoje = hoje.getDate()
+		mesHoje = hoje.getMonth()
+		anoHoje = hoje.getFullYear()
+	
+		if (dia < 10)
+			diaHoje = diaHoje
+		if (ano < 2000)
+			anoHoje = anoHoje
+
+		//O MES COMEÇA EM ZERO 
+		mesHoje = mesHoje + 1
+
+		if (mes < 10)
+		mesHoje = ("0" + mesHoje);
+		
+		if(dia == 00){
+			//alert('TA PENSANDO Q É MALANDRO?'); 
+			$('#erroAdmissao').show();
+			$("#DataAdmissao").val("");
+			
+			
+			}else{
+		
+					if(ano <= anoHoje){
+						if(mes == mesHoje){
+							if(dia <= diaHoje){
+								$('#erroAdmissao').hide();
+								
+							}else{
+								$('#erroAdmissao').show();
+								$("#DataAdmissao").val("");
+							
+							
+							}
+						}else if (mes > mesHoje && ano == anoHoje){
+							$('#erroAdmissao').show();
+							$("#DataAdmissao").val("");
+						
+						
+						}else{
+							$('#erroAdmissao').hide();
+							
+						}				
+					}else{
+							$('#erroAdmissao').show();
+							$("#DataAdmissao").val("");
+						
+					}
+
+				  }			
+	});
+	});*/
+</script>
+
+

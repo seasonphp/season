@@ -1,0 +1,132 @@
+<?xml version='1.0' standalone='yes'?>
+<MovimentacaoCadastralAtualizacaoCompleta xmlns='MovimentacaoCadastralAtualizacaoCompleta.xsd'>
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>10</RDP>
+ <Familia>24</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>10</GrauDependencia>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000024106</CodigoExterno>
+<Pessoa>
+<Nome>FILHO DA SABRINA</Nome>
+<DataNascimento>01/01/2008 00:00:00</DataNascimento>
+<Cnp>37224215600</Cnp>
+<Tipo>2</Tipo>
+<Sexo>m</Sexo>
+<EstadoCivil>S</EstadoCivil>
+<Naturalidade>1</Naturalidade>
+<NomePai>SABRINO</NomePai>
+<NomeMae>SABRINA</NomeMae>
+<NomeConjuge>SABRINO</NomeConjuge>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>234235256</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NumLogradouro>345</NumLogradouro>
+<NomeLogradouro>R PROF CLOVIS DE SOUZA</NomeLogradouro>
+<ComplLogradouro>AP 1</ComplLogradouro>
+<Bairro>CJ RES TANCREDO</Bairro>
+<Cidade>1840</Cidade>
+<Cep>11350490</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>13</DDD>
+<Numero>90920443</Numero>
+<InicioVigencia>07/07/2011 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Telefone>
+</Pessoa>
+ <Titular>
+<Codigo>10766000024009</Codigo>
+</Titular>
+</AtualizacaoCompleta> 
+<AtualizacaoCompleta>
+<Contrato>1076600</Contrato>
+<RDP>0</RDP>
+ <Familia>24</Familia>
+ <IncluidoComoRN>false</IncluidoComoRN>
+<GrauDependencia>0</GrauDependencia>
+<InicioVigencia>21/12/2006 00:00:00</InicioVigencia>
+ <FimVigencia></FimVigencia>
+ <CodigoExterno>10766000024009</CodigoExterno>
+<Pessoa>
+<Nome>SABRINA MENDES M DA SILVA</Nome>
+<DataNascimento>24/10/1981 00:00:00</DataNascimento>
+<Cnp>22275798897</Cnp>
+<Tipo>2</Tipo>
+<Sexo>f</Sexo>
+<EstadoCivil>M</EstadoCivil>
+<Naturalidade>0</Naturalidade>
+<NomeMae>INDIA MARA MENDES M SILVA</NomeMae>
+<Invalidez>false</Invalidez>
+<Registro>
+<Tipo>1</Tipo>
+<Numero>1324455</Numero>
+</Registro>
+<Registro>
+<Tipo>9</Tipo>
+<Numero>1234</Numero>
+</Registro>
+<Endereco>
+<Seq>1</Seq>
+<NomeLogradouro>R PROF CLOVIS DE SOUZA 22</NomeLogradouro>
+<ComplLogradouro>AP 1</ComplLogradouro>
+<Bairro>CJ RES TANCREDO</Bairro>
+<Cidade>1840</Cidade>
+<Cep>11350490</Cep>
+<Tipo>1</Tipo>
+<ParaCorrespondencia>true</ParaCorrespondencia>
+<ParaCobranca>true</ParaCobranca>
+<ParaFaturamento>true</ParaFaturamento>
+<ParaPublicacao>true</ParaPublicacao>
+<InicioVigencia>21/12/2006 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+</Endereco>
+<Telefone>
+<Seq>1</Seq>
+<Tipo>1</Tipo>
+<DDD>13</DDD>
+<Numero>34629739</Numero>
+<InicioVigencia>21/12/2006 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+<SeqEnd>1</SeqEnd>
+</Telefone>
+<Telefone>
+<Seq>2</Seq>
+<Tipo>1</Tipo>
+<DDD>13</DDD>
+<Numero>34629739</Numero>
+<InicioVigencia>21/12/2006 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+<SeqEnd>2</SeqEnd>
+</Telefone>
+<Telefone>
+<Seq>3</Seq>
+<Tipo>1</Tipo>
+<DDD>13</DDD>
+<Numero>34629739</Numero>
+<InicioVigencia>21/12/2006 00:00:00</InicioVigencia>
+<FimVigencia></FimVigencia>
+<SeqEnd>3</SeqEnd>
+</Telefone>
+</Pessoa>
+ </AtualizacaoCompleta> 
+</MovimentacaoCadastralAtualizacaoCompleta>

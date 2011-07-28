@@ -1,0 +1,137 @@
+<!-- PÁGINA/ QUE EXIBE OS XMLs para gera-los (baixa-los) -->
+
+
+<div class="span-22 push-2">
+
+
+
+	<div class="span-19 success">
+		<h3> LISTA DE NOVOS XML </h3>
+		<br />
+		<div class="span-2"> <b>Lote</b> </div>
+		<div class="span-3"> <b>Data de geração</b> </div>
+		<div class="span-4"> <b>Usuario</b> </div>
+		<div class="span-3"> <b>Contrato</b> </div>
+		<div class="span-3"> <b>Comando</b> </div>
+		<div class="span-3"> <b>Relatório</b> </div>
+		<p>&nbsp;</p>
+		<div class="span-18"> <hr> </div>
+		
+		<form name="gerarxml" id="gerarxml" method="POST" action="/xml/gerar ">	
+		
+		
+		<?php 	
+		//EXIBE DADOS DA LOTE QUANTO STATUS FOR ATIVO
+		foreach($this->xml as $key=>$reg){
+		?>
+
+		<div class="span-2"> 	<?php		echo $reg['AutoId']; ?> </div>
+		<div class="span-3">    <?php		echo $this->date($reg['dt_lote']); ?> </div>
+		<div class="span-4">	<?php echo $reg['idLogin']; ?> </div>
+		<div class="span-3">	<?php echo $reg['contrato']; ?> </div>
+		<div class="span-3">  <a href='/xml/gerar/lote/<?php echo $reg['AutoId'];?>'>GERAR </a> </div>
+		 <div class="span-3">  <a class="relatorio" href='/pdf/xml/lote/<?php echo $reg['AutoId'];?>/contrato/<?php echo $reg['contrato']; ?>'>VER</a> </div>
+
+		<?php } ?>
+		
+		
+		</form>
+	</div>
+	
+		
+	<div class="span-19 erro">
+		<h3> LISTA DE XML JA BAIXADOS </h3>
+		<br />
+		<div class="span-2"> <b>Lote</b> </div>
+		<div class="span-3"> <b>Data de geração</b> </div>
+		<div class="span-4"> <b>Usuario</b> </div>
+		<div class="span-3"> <b>Contrato</b> </div>
+		<div class="span-3"> <b>Comando</b> </div>
+		<div class="span-3"> <b>Relatório</b> </div>
+		<p>&nbsp;</p>
+		
+		<div class="span-18"> <hr> </div>
+		
+		<form name="gerarxml" id="gerarxml" method="POST" action="/xml/gerar ">	
+		
+			<?php 	
+			//EXIBE DADOS DA LOTE QUANTO STATUS FOR ATIVO
+			foreach($this->xmlBaixados as $key=>$reg){
+			?>
+
+<div class="span-2"> 	<?php		echo $reg['AutoId']; ?> </div>
+		<div class="span-3">    <?php		echo $this->date($reg['dt_lote']); ?> </div>
+		<div class="span-4">	<?php echo $reg['idLogin']; ?> </div>
+		<div class="span-3">	<?php echo $reg['contrato']; ?> </div>
+		<div class="span-3">  <a href='/xml/gerar/lote/<?php echo $reg['AutoId'];?>'>GERAR </a> </div>
+		 <div class="span-3">  <a class="relatorio" href='/pdf/xml/lote/<?php echo $reg['AutoId'];?>/contrato/<?php echo $reg['contrato']; ?>'>VER</a> </div>
+
+			<?php } ?>
+			
+		
+		</form>
+	</div>
+	
+	
+</div>	
+	
+	
+
+
+
+
+
+
+<?php
+
+
+ // CHAMADA DE CSS
+	$this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');	
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');
+	
+  
+ // CHAMADA DE JS  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+  
+    $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js'); 
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+  
+  $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+
+//PARA FORMULARIO
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/formularios/validador.js');
+  
+?>
+
+
+
+
+<script>
+	$(function() {
+		$( ".submit" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        });		
+		
+		$( ".relatorio" ).button({
+            icons: {
+                primary: "ui-icon-search"
+            }
+        });
+	});
+</script>

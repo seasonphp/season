@@ -1,0 +1,208 @@
+<!-- PESQUISAS, FORMULÁRIO RELATÓRIOS TUDO COMPLETO  -->
+
+<?php
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+
+ 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');  
+  /* CSS PARA EFEITO NOS BOTOES */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');
+
+ 
+?>
+
+ 
+
+
+<div class="span-23">
+
+
+			<!--  <button class="pesquisa" onClick="procura()">Pesquisar</button> -->
+			<button class="voltar" onClick="novoform()">Voltar</button>
+			
+			<br>
+			
+			<br>
+			<h3 class="push-2"> Alterações realizadas com sucesso </h3> <b class="push-3"></b>
+			<br>
+			
+			
+			<hr>
+		<form name="comprovante" id="comprovante" action="/pdf" >
+			<!--  LISTA DE PENDENCIA - quadro para arrumar isso  -->
+			
+			<div class="span-20 push-2">
+
+		
+			<div class="success">
+			<img class="logo" src="<?php echo $this->baseUrl()?>/imagens/pequeno.png"/>
+			Comprovante de movimentações cadastrais empresarial
+			<br>
+			<h3> Empresa: <?php echo Zend_Auth::getInstance()->getStorage()->read()->usuario ?> </h3>
+		
+			<br>
+			<br>
+			<b> Contrato: </b><?php echo $this->contrato; ?>
+			<br>
+			<b> Dia de envio: </b> <?php $data=date("d/m/Y"); echo $data; ?>
+			<br>
+				Lote: <?php echo $this->lote; ?>
+				<input type="hidden" name="lote" value="<?php echo $this->lote; ?>" />
+				<div class="clear"></div>
+			<br>
+			<hr>
+			<b> Beneficiarios </b>
+			<br>
+				<div class="span-18">
+					<b>
+						<div class="span-7">Nome</div>
+						<div class="span-3">CPF</div>
+						<div class="span-6">Plano</div>
+						<div class="span-1">Dependencia</div>
+					</b>
+				</div>
+				<?php
+					foreach($this->lista as $i=>$v){ ?>
+						<div class="span-18">
+						<div class="span-7"><?php echo $v['Nome']; ?>&nbsp;</div>
+						<div class="span-3"><?php echo $v['Cnp']; ?>&nbsp;</div>
+						<div class="span-6"><?php echo $v['NomePlano']; ?>&nbsp;</div>
+						<div class="span-1"><?php echo $this->NomeRDP($v['RDP']); ?>&nbsp;</div>
+						</div>	
+				<?php	}
+				?>
+				
+				<br>
+				<div class="clear"></div>
+			</div>
+
+			
+			<br>
+			</div>
+			<br>
+	
+			<div class="clear"> </div>
+			<a class="confirmar" id="gerador">Gerar PDF</a> 
+				<div id="carrega" class='hide' > Aguarde, gerando pdf... <br>
+							<img src="<?php echo $this->baseUrl()?>/imagens/carregando.gif"  />
+				</div> 
+			<br><br>
+			<div id="botao" class="hide">
+				<a class="ver" href="/" target="_blank" >Vizualizar PDF</a> 
+			</div>
+		
+		</form>
+			
+		<br>				
+								
+				
+</div>
+
+<!-- CHAMADA E USO DE JS -->
+
+<?php
+
+ /* js/jquery-ui/development-bundle/ui  */
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+
+  
+  
+  /* CHAMA EFEITO DO LIGHTBOX */
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+ $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+ $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+
+?>
+
+	<script>
+	$(function() {
+		$( ".voltar" ).button({
+            icons: {
+                primary: "ui-icon-circle-arrow-w"
+            }
+        });
+	});
+	</script>
+	
+	<script>
+	$(function() {
+		$( ".confirmar" ).button({
+            icons: {
+                primary: "ui-icon-circle-check"
+            }
+        });		
+		
+		$( ".ver" ).button({
+            icons: {
+                primary: "ui-icon-search"
+            }
+        });
+	});
+	</script>
+	
+
+<!-- FUNÇÃO PARA ENVIAR A PÁGINA A CRIAÇÃO DE NOVO FORMULÁRIO --> 
+<script>
+function novoform()
+{
+document.location.href='beneficiario/';
+}
+</script>
+
+
+<!-- PARA IMPRESSÃO, RECEBE A DIV -->
+<script language="javascript" type="text/javascript">
+function salva(id, pg) {
+	alert('PDF SALVO');
+
+}
+</script>
+
+
+<script>
+$('#gerador').click(function(){
+
+		
+		$('#gerador').hide();
+		$('#carrega').show('fast');
+		$('#botao').hide();
+		
+		var contrato = <?php echo $this->contrato; ?>;
+		var lote = <?php echo $this->lote; ?>;
+
+		
+		
+
+		$.ajax({
+		type:"POST",
+			//MONTANDO OS DADOS PARA ENVIAR 
+		data: "contrato="+contrato+"&lote="+lote,
+		url: $('#comprovante').attr('action'),
+		
+		success: function(data){
+		
+				if(data != null){					
+					$('#carrega').hide('fast');				
+					$('#botao').show();
+					$('.ver').attr('href',"/"+data);	
+				}else{
+					$('#carrega').hide('fast');
+					$('#botao').hide();
+					alert('ERRO NA GERAÇÃO DO PDF!');
+				
+				}
+			}
+		
+		});
+		
+		
+	});
+</script>

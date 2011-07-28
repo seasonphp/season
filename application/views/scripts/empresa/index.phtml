@@ -1,0 +1,84 @@
+<!-- ADMIN INDEX, CONFIGURAÇÕES, COMO ADMINISTRAÇÃO DE USUÁRIOS - ALTERAR PLANO - ALTERAR DADOS PESSOAIS -->
+<?php
+	$this->headLink()->appendStylesheet($this->baseUrl().'/css/estilo.css');   
+
+/* JQGrid Docs: http://www.trirand.com/jqgridwiki/doku.php?id=wiki:jqgriddocs*/
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/js/jquery-ui/css/le-frog/jquery-ui-1.8.11.custom.css');
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/css/ui-redmond/ui.multiselect.css'); 
+	 $this->headLink()->appendStylesheet($this->baseUrl().'/css/jqgrid/ui.jqgrid.css');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/i18n/grid.locale-pt-br.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/js/ui.multiselect.js');
+	 $this->headScript()->appendFile($this->baseUrl().'/js/jqgrid/jquery.jqGrid.min.js');
+	
+?> 
+
+<div class="span-21">
+<button class="botao" onClick="importar()">Importar usuarios</button>
+<br />
+<br>
+<hr>
+</div>
+<div class="clear"></div>
+<br>
+<div style="margin-left:25px;">
+<table id="jqgrid1tb"></table>
+<div id="jqgrid1pg"></div>
+
+<table id="flex1" style="display:none"></table>
+</div>
+<script type="text/javascript">
+	$(function(){ 
+		$("#jqgrid1tb").jqGrid({
+			url: '/empresa/jsonusuario',
+			datatype: 'json',
+			colModel: [
+				{name:'id', index:'id', label: 'id', sorttype:'int', width:40, align:'center', hidden:true, editable: true},
+				{name:'nome', index:'nome', label: 'Nome', width:40, align:'left',sorttype:'text', editable: true},
+				{name:'cnp', index:'cnp', label: "CNPJ", width:10, align:'center', sorttype:'text', editable: true},
+				{name:'usuario', index:'usuario', label: "Usuario", width:10, sorttype:'text', editable: true},
+				{name:'senha', index:'senha', label: "Senha", width:10, sorttype:'text',hidden:true, editable: true},
+				{name:'email', index:'email', label: "Email", width:20, sorttype:'text', editable: true},
+				{name:'contratante', index:'contrante', label: "Contrato", width:15, sorttype:'int', editable: true},
+				{name:'site', index:'site', label: "Site", width:20, sorttype:'text', editable: true},
+			
+			],
+			/*jsonReader: {
+				total: 'total_pages',
+				records: 'total'
+			},*/
+			loadonce: true, /*carrega todos os dados de uma vez*/
+			rowNum: 11,
+			sortname: 'id',
+			sortable: true,
+			editurl: "/empresa/config",
+			viewrecords: true,
+			pager: '#jqgrid1pg',
+			caption: 'Cadastro e administração de usuarios',
+			width:900,
+			height:255,			
+			//onSelectRow: function(id){ 		window.location="/empresa/adicionar/id/"+id;}
+		});
+		$('#jqgrid1tb').navGrid('#jqgrid1pg', {edit: true, add: true, del: true,refresh: true},{},{}, {}, {multipleSearch: true});
+		$('#jqgrid1tb').filterToolbar({stringResult:true, searchOnEnter:false});
+		$('#jqgrid1tb').navSeparatorAdd('#jqgrid1pg');
+	});
+	
+</script>
+
+<script>
+	$(function() {
+		$( ".botao" ).button({
+            icons: {
+                primary: "ui-icon-plus"
+            }
+        });
+	});
+	</script>
+	
+<script>
+function importar()
+{
+document.location.href='empresa/importar';
+}
+</script>

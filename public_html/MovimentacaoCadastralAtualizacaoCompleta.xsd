@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by Portable (Portable) -->
+<xs:schema xmlns:mstns="MovimentacaoCadastralAtualizacaoCompleta.xsd" xmlns="MovimentacaoCadastralAtualizacaoCompleta.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" targetNamespace="MovimentacaoCadastralAtualizacaoCompleta.xsd" elementFormDefault="qualified" attributeFormDefault="qualified" id="MovimentacaoCadastralAtualizacaoCompleta">
+	<xs:element name="MovimentacaoCadastralAtualizacaoCompleta" msdata:IsDataSet="true" msdata:Locale="pt-BR" msdata:EnforceConstraints="False">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="AtualizacaoCompleta">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Contrato" type="xs:integer"/>
+							<xs:element name="CodigoCartao" type="xs:integer" minOccurs="0"/>
+							<xs:element name="Tipo" type="xs:integer" minOccurs="0"/>
+							<xs:element name="RDP" type="xs:integer"/>
+							<xs:element name="Familia" type="xs:integer"/>
+							<xs:element name="ClassificadorOrigem" type="xs:string" minOccurs="0"/>
+							<xs:element name="IncluidoComoRN" type="xs:boolean" minOccurs="0"/>
+							<xs:element name="GrauDependencia" type="xs:string"/>
+							<xs:element name="InicioVigencia" type="xs:string"/>
+							<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+							<xs:element name="CodigoExterno" type="xs:integer"/>
+							<xs:element name="Pessoa" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Nome" type="xs:string"/>
+										<xs:element name="NomeReduzido" type="xs:string" minOccurs="0"/>
+										<xs:element name="DataNascimento" type="xs:string" minOccurs="0"/>
+										<xs:element name="Cnp" type="xs:string" minOccurs="0"/>
+										<xs:element name="Tipo" type="xs:integer" minOccurs="0"/>
+										<xs:element name="Sexo" type="xs:string" minOccurs="0"/>
+										<xs:element name="EstadoCivil" type="xs:string" minOccurs="0"/>
+										<xs:element name="Naturalidade" type="xs:integer" minOccurs="0"/>
+										<xs:element name="NomePai" type="xs:string" minOccurs="0"/>
+										<xs:element name="NomeMae" type="xs:string" minOccurs="0"/>
+										<xs:element name="NomeConjuge" type="xs:string" minOccurs="0"/>
+										<xs:element name="Pai" type="xs:integer" minOccurs="0"/>
+										<xs:element name="Mae" type="xs:integer" minOccurs="0"/>
+										<xs:element name="Classe" type="xs:integer" minOccurs="0"/>
+										<xs:element name="FaixaReceita" type="xs:integer" minOccurs="0"/>
+										<xs:element name="FaixaPatrimonial" type="xs:integer" minOccurs="0"/>
+										<xs:element name="CanalDivulgacao" type="xs:integer" minOccurs="0"/>
+										<xs:element name="ComplCanalDivulg" type="xs:string" minOccurs="0"/>
+										<xs:element name="Escolaridade" type="xs:string" minOccurs="0"/>
+										<xs:element name="Nacionalidade" type="xs:string" minOccurs="0"/>
+										<xs:element name="NaturezaOcup" type="xs:integer" minOccurs="0"/>
+										<xs:element name="OcupProfissional" type="xs:integer" minOccurs="0"/>
+										<xs:element name="Invalidez" type="xs:boolean" minOccurs="0"/>
+										<xs:element name="DataFalecimento" type="xs:string" minOccurs="0"/>
+										<xs:element name="JuntaComercial" type="xs:string" minOccurs="0"/>
+										<xs:element name="DataFundacao" type="xs:string" minOccurs="0"/>
+										<xs:element name="CapitalSocial" type="xs:decimal" minOccurs="0"/>
+										<xs:element name="Regiao" type="xs:integer" minOccurs="0"/>
+										<xs:element name="RamoAtividade" type="xs:integer" minOccurs="0"/>
+										<xs:element name="SegmentoMercado" type="xs:integer" minOccurs="0"/>
+										<xs:element name="Url" type="xs:string" minOccurs="0"/>
+										<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+										<xs:element name="Emails" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Email" type="xs:string"/>
+													<xs:element name="Seq" type="xs:integer"/>
+													<xs:element name="CodPessoa" type="xs:integer" minOccurs="0"/>
+													<xs:element name="InicioVigencia" type="xs:string"/>
+													<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+													<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Registro" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Tipo" type="xs:integer"/>
+													<xs:element name="Numero" type="xs:integer"/>
+													<xs:element name="OrgaoExp" type="xs:integer" minOccurs="0"/>
+													<xs:element name="UFExp" type="xs:string" minOccurs="0"/>
+													<xs:element name="DataExp" type="xs:string" minOccurs="0"/>
+													<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Endereco" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Seq" type="xs:integer"/>
+													<xs:element name="NumLogradouro" type="xs:integer" minOccurs="0"/>
+													<xs:element name="NomeLogradouro" type="xs:string"/>
+													<xs:element name="ComplLogradouro" type="xs:string" minOccurs="0"/>
+													<xs:element name="Bairro" type="xs:string" minOccurs="0"/>
+													<xs:element name="Cidade" type="xs:string"/>
+													<xs:element name="Cep" type="xs:string" minOccurs="0"/>
+													<xs:element name="PontoReferencia" type="xs:string" minOccurs="0"/>
+													<xs:element name="CaixaPostal" type="xs:integer" minOccurs="0"/>
+													<xs:element name="Tipo" type="xs:integer"/>
+													<xs:element name="ParaCorrespondencia" type="xs:boolean"/>
+													<xs:element name="ParaCobranca" type="xs:boolean"/>
+													<xs:element name="ParaFaturamento" type="xs:boolean"/>
+													<xs:element name="ParaPublicacao" type="xs:boolean"/>
+													<xs:element name="InicioVigencia" type="xs:string"/>
+													<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+													<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Telefone" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Seq" type="xs:integer"/>
+													<xs:element name="Tipo" type="xs:integer"/>
+													<xs:element name="DDI" type="xs:integer" minOccurs="0"/>
+													<xs:element name="DDD" type="xs:integer" minOccurs="0"/>
+													<xs:element name="Numero" type="xs:integer"/>
+													<xs:element name="Ramal" type="xs:string" minOccurs="0"/>
+													<xs:element name="InicioVigencia" type="xs:string"/>
+													<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+													<xs:element name="Operadora" type="xs:integer" minOccurs="0"/>
+													<xs:element name="SeqEnd" type="xs:integer" minOccurs="0"/>
+													<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Modulos" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Codigo" type="xs:string"/>
+										<xs:element name="ModuloBase" type="xs:string" minOccurs="0"/>
+										<xs:element name="CodigoIntercambio" type="xs:integer" minOccurs="0"/>
+										<xs:element name="CodigoOrigem" type="xs:string" minOccurs="0"/>
+										<xs:element name="NomeOrigem" type="xs:string" minOccurs="0"/>
+										<xs:element name="DataBaseCob" type="xs:string" minOccurs="0"/>
+										<xs:element name="InicioVigencia" type="xs:string"/>
+										<xs:element name="Vendedor" type="xs:integer" minOccurs="0"/>
+										<xs:element name="DataAquisicao" type="xs:string" minOccurs="0"/>
+										<xs:element name="QteMensRetr" type="xs:integer" minOccurs="0"/>
+										<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+										<xs:element name="MotivoRescisao" type="xs:integer" minOccurs="0"/>
+										<xs:element name="ProcessoRescisao" type="xs:string" minOccurs="0"/>
+										<xs:element name="MovCadRescisao" type="xs:integer" minOccurs="0"/>
+										<xs:element name="DataRegistroResc" type="xs:string" minOccurs="0"/>
+										<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+										<xs:element name="Participativo" type="xs:boolean" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Titular" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Codigo" type="xs:string"/>
+										<xs:element name="ClassificadorOrigem" type="xs:string" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Lotacao" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Codigo" type="xs:integer"/>
+										<xs:element name="CodigoOrigem" type="xs:string" minOccurs="0"/>
+										<xs:element name="NomeOrigem" type="xs:string" minOccurs="0"/>
+										<xs:element name="InicioVigencia" type="xs:string"/>
+										<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+										<xs:element name="ClassifOrigem" type="xs:string" minOccurs="0"/>
+										<xs:element name="MovCadInicio" type="xs:integer" minOccurs="0"/>
+										<xs:element name="MovCadFinal" type="xs:integer" minOccurs="0"/>
+										<xs:element name="DataRegistroFinal" type="xs:string" minOccurs="0"/>
+										<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="LocalAtendimento" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="LcAt" type="xs:string"/>
+										<xs:element name="Tipo" type="xs:integer" minOccurs="0"/>
+										<xs:element name="InicioVigencia" type="xs:string"/>
+										<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+										<xs:element name="ClassifDestino" type="xs:integer" minOccurs="0"/>
+										<xs:element name="MovCadAbertura" type="xs:integer" minOccurs="0"/>
+										<xs:element name="MovCadFechamento" type="xs:integer" minOccurs="0"/>
+										<xs:element name="DataRegistroFechamento" type="xs:string" minOccurs="0"/>
+										<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Cobertura" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Grupo" type="xs:integer"/>
+										<xs:element name="CarPrimConting" type="xs:integer"/>
+										<xs:element name="CarDemaisConting" type="xs:integer" minOccurs="0"/>
+										<xs:element name="UnidPrimConting" type="xs:string"/>
+										<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Doencas" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Doenca" type="xs:integer"/>
+										<xs:element name="InicioVigencia" type="xs:string"/>
+										<xs:element name="Controle" type="xs:string"/>
+										<xs:element name="ValorAgravo" type="xs:decimal" minOccurs="0"/>
+										<xs:element name="FimVigencia" type="xs:string" minOccurs="0"/>
+										<xs:element name="CardioAutoId" type="xs:long" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

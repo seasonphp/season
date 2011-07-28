@@ -1,0 +1,472 @@
+<!-- VIEW QUE EXIBE DADOS DO BENE -->
+<?php
+// CHAMADA DE CSS
+$this->headLink()->appendStylesheet($this->baseUrl() . '/js/jquery-ui/development-bundle/themes/le-frog/jquery.ui.all.css');
+$this->headLink()->appendStylesheet($this->baseUrl() . '/css/estilo.css');
+?>
+<style>
+    #suspende{
+        color:#600;
+    }
+
+    #suspende:hover{
+        color:#f00;
+        font-size:17px;
+        font-weight:bold
+    }
+
+</style>
+
+<div class="span-23">
+    <div id="tabs">
+        <ul>
+            <li>
+                <a href="#tabs-1">
+                    <h3 class="branco">Beneficiario  </h3>
+                </a>
+            </li>
+            <?php
+            //SE RDP = 0 mostra... se não...
+            $rdp = $this->dados['RDP'];
+            if ($rdp == 0) {
+                ?>
+                <li>
+                    <a href="#tabs-2">
+                        <h3 class="branco"> Dependentes </h3>
+                    </a>
+                </li>
+                <?php
+            }
+            ?>
+            <!-- <li><a href="#tabs-3">Finalizar cadastro</a></li> -->
+        </ul>
+
+        <!-- TABS - PÁGINAS -->
+        <div id="tabs-1">
+            <?php if ($rdp == 0) { ?>
+                <form name="dependentes" id="dependentes" method="POST" action="/beneficiario/dependentes/familia/<?php echo $this->dados['Familia']; ?>/id/<?php echo $this->id; ?>/nome/<?php echo $this->dados['Nome']; ?>">	
+                    <button type="submit" class="dependentes" >Adicionar dependentes de <?php echo $this->dados['Nome']; ?></button> 
+                </form>
+                <?php
+            } else {
+                echo "<b> Beneficiario dependente  </b>";
+            }
+            ?>
+
+            <form name="novobeneficiario" id="novobeneficiario" method="POST" action="/beneficiario/exibealt/id/<?php echo $this->id; ?> ">
+                <br>
+                <button type="submit" class="botao"> Alterar dados </button>
+                <div class="clear"><br></div>
+                <br>
+                <a class="suspender" id="suspende" alt="ATENÇÃO! Essa opção é para suspender o beneficiario" href="/beneficiario/suspender/id/<?php echo $this->id; ?>/nome/<?php echo $this->dados['Nome']; ?>">Suspender Beneficiário</a>
+                <p><b><h4 class="branco"><b> Dados de </b> <?php echo $this->dados['Nome']; ?> </h4></b></p>
+                <div class="span-21 quadroGrande">
+                    <input type="hidden" name="idBeneficiario" value="<?php echo $this->id; ?>" />
+                    <!-- NOMES LINHA 1 -->
+                    <div class="span-21">
+                        <div class="span-3"> <b> Contrato </b>  </div> 
+                        <div class="span-3"> <b> Familia </b></div>
+                        <div class="span-6"> <b> Grau Dependencia </b> </div>
+                        <div class="span-3"> <b> Inicio Vigencia </b> </div>					
+                    </div>	
+
+                    <!-- INPUTS LINHA 1 -->
+                    <div class="span-21">
+                        <div class="span-3"><?php echo $this->dados['Contrato']; ?> </div> 
+                        <div class="span-3"><?php echo $this->dados['Familia']; ?></div>
+                        <div class="span-6"><?php echo $this->NomeRDP($this->dados['RDP']); ?></div>		
+                        <div class="span-3"> <?php echo $this->date($this->dados['InicioVigencia']); ?> </div>				
+                    </div>				
+
+                    <br />	
+
+                    <!-- NOMES LINHA 2 -->
+                    <div class="span-21">
+                        <div class="span-6"> <b> Nome </b></div> 
+                        <div class="span-3"> <b> Sexo </b></div>
+                        <div class="span-3"> <b> Nascimento </b></div>
+                        <div class="span-3"> <b> Estado civil </b></div>
+                    </div>		
+
+                    <!-- INPUTS LINHA 2 -->
+                    <div class="span-21">
+                        <div class="span-6"><?php echo $this->dados['Nome']; ?>  </div> 
+                        <div class="span-3">
+                            <?php
+                            $sexo = $this->dados['Sexo'];
+                            if ($sexo == 'F') {
+                                echo "Feminino";
+                            } else {
+                                echo "Masculino";
+                            }
+                            ?>					
+                        </div>
+                        <div class="span-3"><?php echo $this->date($this->dados['DataNascimento']); ?> </div>				
+                        <div class="span-3"> 														  
+                            <?php
+                            switch ($this->dados['EstadoCivil']) {
+                                case "A":
+                                    echo "Separado";
+                                    break;
+                                case "D":
+                                    echo "Divorciado";
+                                    break;
+                                case "M":
+                                    echo "Casado";
+                                    break;
+                                case "S":
+                                    echo "Solteiro";
+                                    break;
+                                case "U":
+                                    echo "União estável";
+                                    break;
+                                case "W":
+                                    echo "Viúvo";
+                                    break;
+                            }
+                            ?>
+                        </div>
+                    </div>	
+
+                    <br class="clear">
+
+                    <!-- NOMES LINHA 3 -->
+                    <div class="span-21">
+                        <div class="span-6"><b> Naturalidade </b></div> 
+                        <div class="span-3"><b> CPF </b> </div>
+                        <div class="span-3"><b> RG </b></div>
+                        <div class="span-3"><b> PIS </b> </div>
+                    </div>	
+
+                    <!-- INPUTS LINHA 3 -->
+                    <div class="span-21">
+                        <div class="span-6"><?php echo ($this->dados['Naturalidade'] != null and $this->dados['Naturalidade'] != 0) ? $this->dados['NomeCidade'] . " / " . $this->dados['UF'] : "<div class='naoinformado'>Não informado</div>"; ?></div> 
+                        <div class="span-3"><?php echo ($this->dados['Cnp'] != null) ? $this->dados['Cnp'] : "<div class='naoinformado'>Não informado</div>"; ?> </div>
+                        <div class="span-3"><?php echo ($this->dados['RG'] != null) ? $this->dados['RG'] : "<div class='naoinformado'>Não informado</div>"; ?> </div>
+                        <div class="span-3"><?php echo ($this->dados['PIS'] != null) ? $this->dados['PIS'] : "<div class='naoinformado'>Não informado</div>"; ?> </div>
+                    </div>	
+
+                    <!-- NOMES LINHA 4 -->
+                    <div class="span-21">
+                        <div class="span-6"> <b> Nome mae </b> </div> 
+                        <div class="span-6"> <b> Nome pai </b> </div>
+                        <div class="span-6"> <b> Nome conjugue </b> </div>
+                    </div>		
+
+                    <!-- INPUTS LINHA 4 -->
+                    <div class="span-21">
+                        <div class="span-6"> <?php echo ($this->dados['NomeMae'] == "SOLICITADO NAO INFORMADO") ? "<div class='naoinformado'>Não informado</div>" : $this->dados['NomeMae']; ?> </div> 
+                        <div class="span-6"> <?php echo $this->dados['NomePai']; ?>  </div>
+                        <div class="span-6"> <?php echo $this->dados['NomeConjuge']; ?> </div>				
+                    </div>	
+
+                    <!-- NOMES LINHA 5 -->
+                    <div class="span-21">
+                        <div class="span-6"> <b> Admissão </b></div> 
+                        <div class="span-6"> <b> Matricula </b></div>
+                    </div>	
+
+                    <!-- INPUTS LINHA 5 -->
+                    <div class="span-21">
+                        <div class="span-6"> <?php echo ($this->dados['DataAdmissao'] != null) ? $this->dados['DataAdmissao'] : "<div class='naoinformado'>Não informado</div>"; ?>    </div> 
+                        <div class="span-6"> <?php echo ($this->dados['Matricula'] != null) ? $this->dados['Matricula'] : "<div class='naoinformado'>Não informado</div>"; ?>   </div>	
+                    </div>	
+
+                    <!-- NOMES LINHA 6 -->
+                    <div class="span-21">
+                        <div class="span-6"> <b>E-mail</b> </div> 
+                        <div class="span-2"> <b>Tipo Tel. </b></div>
+                        <div class="span-3"> <b>DDD  </b></div>
+                        <div class="span-4"> <b>Telefone </b></div>
+                    </div>	
+
+                    <!-- INPUTS LINHA 6 -->
+                    <div class="span-21">
+                        <div class="span-6"> 
+                            <?php echo ($this->dadosEmail['Email'] != null ) ? $this->dadosEmail['Email'] : "<div class='naoinformado'>Não informado</div>"; ?>
+                        </div> 
+                        <div class="span-2"> 
+                            <?php
+                            if ($this->dadosTelefone['Tipo'] == 1) {
+                                echo "Fixo";
+                            }
+                            if ($this->dadosTelefone['Tipo'] == 2) {
+                                echo "Movel";
+                            }
+                            if ($this->dadosTelefone['Tipo'] == 3) {
+                                echo "Fax";
+                            }
+                            if ($this->dadosTelefone['Tipo'] == null) {
+                                echo "&nbsp;";
+                            }
+                            ?>	 
+                        </div>		
+                        <div class="span-3"> 
+                            <?php echo $this->dadosTelefone['DDD'] ?>&nbsp;
+                        </div>				
+                        <div class="span-4"> 
+                            <?php echo ($this->dadosTelefone['Numero'] != null ) ? $this->dadosTelefone['Numero'] : "<div class='naoinformado'>Não informado</div>"; ?>
+                        </div>
+                        <br />
+                        <br />
+                    </div>		
+
+                    <hr>
+
+                    <b> Endereço </b>
+                    <!-- DADOS AGORA REFERENTES AO ENDEREÇO DO USUÁRIO COMPLETO E DADOS --> 
+                    <?php foreach ($this->dadosEndereco as $k => $r) { ?>
+                        <br>
+                        <!-- 1 LINHA DE LABEL -->
+                        <div class="span-21">
+                            <div class="span-3"><b> Seq: </b> </div>
+                            <div class="span-8"><b> Logradouro </b></div>
+                            <div class="span-3"><b> Número </b></div>
+                            <div class="span-6"><b> Complemento</b></div>
+                        </div>
+
+                        <!-- LINHA DE INPUTS -->
+                        <div class="span-21">
+                            <div class="span-3"> <?php echo $r['Seq']; ?>&nbsp;  </div>
+                            <div class="span-8"> <?php echo $r['Logradouro']; ?>&nbsp;  </div>				
+                            <div class="span-3"> <?php echo $r['NumLogradouro']; ?> &nbsp;</div>					
+                            <div class="span-6"> <?php echo $r['ComplLogradouro']; ?> &nbsp;	</div>
+                        </div>
+
+                        <!-- 2 LINHA DE LABEL -->
+                        <div class="span-21">
+                            <div class="span-3"><b> Tipo </b></div> 
+                            <div class="span-8"><b> Bairro </b></div>
+                            <div class="span-8"><b> Cidade</b></div>
+                        </div>
+
+                        <!-- LINHA DE INPUTS -->
+                        <div class="span-21">
+                            <div class="span-3"> <?php echo($r['Tipo'] == 1) ? "Residencial" : "Comercial"; ?></div>
+                            <div class="span-8"> <?php echo $r['Bairro']; ?> &nbsp;</div>					
+                            <div class="span-8"> <?php echo ($r['Cidade'] != null) ? $r['NomeCidade'] . " / " . $r['UF'] : "<div class='naoinformado'>Não informado</div>"; ?> &nbsp;</div>					
+                        </div>
+
+                        <!-- 3 LINHA DE LABEL -->
+                        <div class="span-21">
+                            <div class="span-3"> <b> CEP </b> </div> 
+                            <div class="span-15"> <b> Ponto de referência </b></div>
+                        </div>
+                        <!-- LINHA DE INPUTS -->
+                        <div class="span-21">
+                            <div class="span-3"> <?php echo $r['CEP']; ?>&nbsp; </div>					
+                            <div class="span-8"> <?php echo $r['PontoReferencia']; ?> &nbsp;</div>
+                        </div>
+
+                        <div class="clear"> <!-- LIMPA LINHA  --> </div>
+
+                        <!-- 3 LINHA DE LABEL -->
+                        <div class="span-21">
+                            <div class="span-3"> <b>Caixa postal</b> </div> 
+                            <div class="span-4"> <b>Inicio vigência</b></div>
+                            <div class="span-4"> <b>Fim vigência </b></div>
+                        </div>
+
+                        <!-- LINHA DE INPUTS -->
+                        <div class="span-21">
+                            <div class="span-3">  <?php echo $r['CaixaPostal']; ?>&nbsp;</div>
+                            <div class="span-4"> <?php echo $this->date($r['InicioVigencia']); ?>&nbsp;</div>		
+                            <div class="span-4"> <?php echo $this->date($r['FimVigencia']); ?>&nbsp;</div>
+                            <br />
+                            <br />
+                        </div>
+
+                        <hr>					
+                        <br />
+                        <!-- 4 LINHA DE LABEL -->
+                    <?php } ?>		
+                    <!-- NOMES LINHA 7 -->
+                    <div class="span-21">
+                        <div class="span-10"> <b> Modulo </b></div> 
+                        <div class="span-3"> <b> Inicio </b> </div>
+                    </div>
+
+                    <!-- LINHA DE INPUTS -->
+                    <div class="span-21">
+                        <?php foreach ($this->dadosModulo as $value) { ?>
+                            <div class="span-10"><?php echo $value['Nome'] ?></div>
+                            <div class="span-3"><?php echo $this->date($value['InicioVigencia']) ?></div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <!-- 9 LINHA DE LABEL -->
+                    <div class="span-21">
+                        <div class="span-10"> <b>Local atendimento</b></div> 
+                        <div class="span-3"> <b>Inicio </b></div>
+                    </div>
+
+                    <!-- LINHA DE INPUTS -->
+                    <div class="span-21">
+                        <div class="span-10"> 	
+                            <?php
+                            if ($this->dadosAtendimento['NomeReduzido'] == null) {
+                                echo "SEM LOCAL DE ATENDIMENTO";
+                            } else {
+                                echo $this->dadosAtendimento['NomeReduzido'];
+                            }
+                            ?>
+                        </div> 
+                        <div class="span-3">  
+                            <?php
+                            if ($this->dadosAtendimento['InicioVigencia'] != null) {
+                                echo $this->date($this->dadosAtendimento['InicioVigencia']);
+                            }
+                            ?>					
+                        </div>
+                    </div>
+
+                    <!-- 10 LINHA DE LABEL -->
+                    <div class="span-21">
+                        <div class="span-10"> <b> Lotação </b> </div> 
+                        <div class="span-3"> <b> Inicio </b> </div>
+                    </div>
+
+                    <!-- LINHA DE INPUTS -->
+                    <div class="span-21">
+                        <div class="span-10">  													
+                            <?php
+                            if ($this->dadosLotacao['Nome'] == null) {
+                                echo "SEM LOTAÇÃO";
+                            } else {
+                                echo $this->dadosLotacao['Nome'];
+                            }
+                            ?>
+                        </div> 
+                        <div class="span-3">  
+                            <?php
+                            if ($this->dadosLotacao['InicioVigencia'] != null) {
+                                echo $this->date($this->dadosLotacao['InicioVigencia']);
+                            }
+                            ?>  
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                    <br>				
+                    <button type="submit" class="botao" >Alterar dados</button> 
+                </div>		
+        </div>
+
+        <!-- LIMPA DIVS VOANDO -->
+        <div class="clear">
+        </div>
+        <!-- TABS - PÁGINAS -->
+        <?php if ($rdp == 0) { ?>
+            <div id="tabs-2">
+                <p>Dependentes</p>
+                <br>
+                <div class="span-19">
+                    <div class="info">Lista de dependentes</div>
+                    <div class="span-9"><b> Nome </div>
+                    <div class="span-4">Tipo dep. </div>
+                    <div class="span-3">Codigo</div>
+                    <div class="span-2">Exibir </b></div>
+    <?php
+    //if dependentes == null echo "Esse beneficiairo não possue dependentes";
+    $codigo = 0;
+    foreach ($this->dadosDependente as $r => $s) {
+        ?>
+                        <div class="span-9"><?php echo $s['Nome'] ?> </div>
+                        <div class="span-4"><?php echo $this->nomeRDP($s['RDP']) ?> </div>
+                        <div class="span-3"><?php echo $s['Codigo'] ?></div>
+                        <div class="span-2"> <a href="/beneficiario/exibe/id/<?php echo $s['AutoId'] ?>"> Exibir </a> </div>
+                    <?php } ?>
+                </div>	
+            </div>			
+            <div class="clear">
+            </div>	
+        <?php } ?>
+        <p>&nbsp;</p>
+        </form>
+        <br>
+    </div>
+</div>
+
+<?php
+// CHAMADA DE JS  
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/jquery-1.5.1.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/external/jquery.bgiframe-2.1.2.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.core.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.widget.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.mouse.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.button.js');
+
+//$this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.draggable.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.sortable.js');
+//$this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.position.js');
+//$this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.resizable.js');
+//$this->headScript()->appendFile($this->baseUrl().'/js/jquery-ui/development-bundle/ui/jquery.ui.dialog.js'); 
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.ui.tabs.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.MultiFile.js');
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.MetaData.js');
+
+$this->headScript()->appendFile($this->baseUrl() . '/js/jquery-ui/development-bundle/ui/jquery.effects.core.js');
+
+//PARA FORMULARIO
+$this->headScript()->appendFile($this->baseUrl() . '/js/formularios/jquery.maskedinput-1.1.4.pack.js');
+//$this->headScript()->appendFile($this->baseUrl().'/js/formularios/validador.js');  
+?>
+
+<!-- DESABILITAR TODOS OS INPUTS -->
+<script>
+    $(function() {
+        $("form").ready(function() {
+            // ReadOnly em todos os inputs
+            $("input", this).attr("disabled", true);
+            // Desabilita os select
+            $("select", this).attr("disabled", true);
+            return true;
+        });
+    });
+</script>
+
+<script>
+    $(function() {
+        $( "#tabs" ).tabs().find( ".ui-tabs-nav" ).sortable({ axis: "x" });
+
+    });	
+</script>
+
+<!-- SCRIPT PARA MASCARA DE FORMULÁRIOS --> 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#inicioVigencia").mask("99/99/9999");
+        $("#fimVigencia").mask("99/99/9999");
+        $("#nascimento").mask("99/99/9999");
+        $("#cnp").mask("999.999.999-99");
+        $("#admissao").mask("99/99/9999");
+
+        $("#telefone").mask("(99)-9999-9999");
+        $(".data").mask("99/99/9999");
+    });
+</script>	
+
+<script>
+    $(function() {
+        $( ".botao" ).button({
+            icons: {
+                primary: "ui-icon-wrench"
+            }
+        });
+        $( ".dependentes" ).button({
+            icons: {
+                primary: "ui-icon-person"
+            }	
+        });		
+		
+        $( ".suspender" ).button({
+            icons: {
+                primary: "ui-icon-trash"
+            }	
+        });
+
+    });
+</script>
