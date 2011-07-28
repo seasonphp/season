@@ -12,7 +12,7 @@ class AdminController extends Zend_Controller_Action
 	{		
 		
 		$empresa =  new Application_Model_DbTable_Empresa();
-		
+		//PV MECHEU AQUI DIA 28/07 testando GITHUB
 		$select = $empresa->select();
 		$select->where('id = ?', Zend_Auth::getInstance()->getStorage()->read()->id);
 		
