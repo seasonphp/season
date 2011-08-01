@@ -11,7 +11,7 @@ class EmpresaController extends Zend_Controller_Action
   		 /*
 		if ( ! Zend_Auth::getInstance()->hasIdentity() ){ 
 		   $this->_redirect('/auth/login');
-		}asasasasas a s as
+		}
 		*/
 		
     }
